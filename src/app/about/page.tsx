@@ -4,7 +4,6 @@ import {
   BuildingOffice2Icon, 
   ChartBarIcon, 
   UsersIcon,
-  TrophyIcon,
   HeartIcon
 } from '@heroicons/react/24/outline';
 
@@ -112,7 +111,7 @@ export default function AboutPage() {
               </p>
               <div className="mt-6 p-4 bg-green rounded-lg">
                 <p className="text-white font-semibold">
-                  "Making options trading as accessible as traditional investing"
+                  &quot;Making options trading as accessible as traditional investing&quot;
                 </p>
               </div>
             </div>

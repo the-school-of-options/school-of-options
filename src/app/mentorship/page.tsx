@@ -327,7 +327,7 @@ export default function MentorshipPage() {
               
               <div className="mt-8 p-4 bg-accent/10 rounded-lg">
                 <p className="text-navy font-semibold text-center">
-                  "No tips, no calls — only structured guidance to make you an independent, disciplined trader."
+                  &quot;No tips, no calls — only structured guidance to make you an independent, disciplined trader.&quot;
                 </p>
               </div>
             </div>

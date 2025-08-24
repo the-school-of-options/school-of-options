@@ -5,10 +5,7 @@ import {
   PlayIcon, 
   CalculatorIcon,
   CpuChipIcon,
-  ArrowRightIcon,
-  DocumentTextIcon,
-  TrendingUpIcon,
-  AcademicCapIcon
+  ArrowRightIcon
 } from '@heroicons/react/24/outline';
 
 export default function KnowledgeHubPage() {

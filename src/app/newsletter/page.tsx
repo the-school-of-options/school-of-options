@@ -5,7 +5,7 @@ import {
   EnvelopeIcon, 
   ClockIcon, 
   ChartBarIcon,
-  TrendingUpIcon,
+  ArrowTrendingUpIcon,
   BellIcon,
   CheckIcon
 } from '@heroicons/react/24/outline';
@@ -15,7 +15,7 @@ export default function NewsletterPage() {
     name: '',
     email: '',
     experience: '',
-    interests: []
+    interests: [] as string[]
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -39,17 +39,6 @@ export default function NewsletterPage() {
     });
   };
 
-  const handleInterestChange = (interest: string) => {
-    const updatedInterests = formData.interests.includes(interest)
-      ? formData.interests.filter(i => i !== interest)
-      : [...formData.interests, interest];
-    
-    setFormData({
-      ...formData,
-      interests: updatedInterests
-    });
-  };
-
   const newsletterFeatures = [
     {
       icon: ChartBarIcon,
@@ -57,7 +46,7 @@ export default function NewsletterPage() {
       description: 'Key support and resistance levels for Nifty and Bank Nifty'
     },
     {
-      icon: TrendingUpIcon,
+      icon: ArrowTrendingUpIcon,
       title: 'Market Analysis',
       description: 'Professional insights on market trends and volatility'
     },
@@ -84,15 +73,6 @@ export default function NewsletterPage() {
       subject: 'Weekly Outlook: Range-bound Market Expected',
       preview: 'Technical analysis suggests sideways movement. Best strategies for range-bound markets...'
     }
-  ];
-
-  const interests = [
-    'Daily Market Levels',
-    'Options Strategies',
-    'Volatility Analysis',
-    'Technical Analysis',
-    'Risk Management',
-    'Trading Psychology'
   ];
 
   const testimonials = [
