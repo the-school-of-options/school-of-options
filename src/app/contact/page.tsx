@@ -1,44 +1,12 @@
 'use client';
-
-import { useState } from 'react';
 import { 
   PhoneIcon, 
   EnvelopeIcon, 
-  MapPinIcon,
   ChatBubbleLeftRightIcon,
-  ClockIcon,
   QuestionMarkCircleIcon
 } from '@heroicons/react/24/outline';
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log('Contact form submitted:', formData);
-    setIsSubmitted(true);
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-    }, 3000);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
 
   const contactMethods = [
     {
@@ -67,20 +35,7 @@ export default function ContactPage() {
     }
   ];
 
-  const offices = [
-    {
-      city: 'Gurgaon',
-      address: 'Sector 44, Gurgaon, Haryana 122003',
-      type: 'Head Office',
-      timing: 'Mon-Fri: 9:00 AM - 6:00 PM'
-    },
-    {
-      city: 'Gaya',
-      address: 'Civil Lines, Gaya, Bihar 823001',
-      type: 'Regional Office',
-      timing: 'Mon-Fri: 10:00 AM - 5:00 PM'
-    }
-  ];
+
 
   const faqs = [
     {
@@ -102,7 +57,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="pt-16">
+    <div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -114,7 +69,7 @@ export default function ContactPage() {
             Have questions about our programs? Need support? We&apos;re here to help you succeed in your options trading journey.
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 max-w-2xl mx-auto">
             <div className="text-center">
               <div className="text-3xl font-bold text-green mb-2">24/7</div>
               <div className="text-gray-300">WhatsApp Support</div>
@@ -122,10 +77,6 @@ export default function ContactPage() {
             <div className="text-center">
               <div className="text-3xl font-bold text-green mb-2">&lt;2 hrs</div>
               <div className="text-gray-300">Response Time</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green mb-2">2 Cities</div>
-              <div className="text-gray-300">Office Locations</div>
             </div>
           </div>
         </div>
@@ -163,136 +114,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Contact Form & Office Info */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <h2 className="text-3xl font-bold text-navy mb-6">Send us a Message</h2>
-              
-              {!isSubmitted ? (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-semibold text-navy mb-2">Name *</label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green focus:border-transparent"
-                        placeholder="Your full name"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-semibold text-navy mb-2">Email *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green focus:border-transparent"
-                        placeholder="your@email.com"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-semibold text-navy mb-2">Phone</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green focus:border-transparent"
-                        placeholder="+91 98765 43210"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-semibold text-navy mb-2">Subject</label>
-                      <select
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green focus:border-transparent"
-                      >
-                        <option value="">Select a subject</option>
-                        <option value="mentorship">Mentorship Program</option>
-                        <option value="refund">Refund Query</option>
-                        <option value="technical">Technical Support</option>
-                        <option value="general">General Inquiry</option>
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-semibold text-navy mb-2">Message *</label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green focus:border-transparent"
-                      placeholder="Tell us how we can help you..."
-                    />
-                  </div>
-                  
-                  <button type="submit" className="btn-primary w-full text-lg py-4">
-                    Send Message
-                  </button>
-                </form>
-              ) : (
-                <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-green rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-green mb-2">Message Sent!</h3>
-                  <p className="text-gray-600">
-                    We&apos;ll get back to you within 24 hours.
-                  </p>
-                </div>
-              )}
-            </div>
 
-            {/* Office Information */}
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-3xl font-bold text-navy mb-6">Our Offices</h2>
-                
-                <div className="space-y-6">
-                  {offices.map((office) => (
-                    <div key={office.city} className="bg-white rounded-2xl p-6 shadow-lg">
-                      <div className="flex items-start mb-4">
-                        <MapPinIcon className="h-6 w-6 text-green mr-3 mt-1" />
-                        <div>
-                          <h3 className="text-xl font-bold text-navy">{office.city}</h3>
-                          <p className="text-green font-semibold">{office.type}</p>
-                        </div>
-                      </div>
-                      
-                      <p className="text-gray-600 mb-4">{office.address}</p>
-                      
-                      <div className="flex items-center text-gray-500">
-                        <ClockIcon className="h-5 w-5 mr-2" />
-                        <span>{office.timing}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* FAQ Section */}
       <section className="py-16 bg-white">

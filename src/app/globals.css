@@ -69,21 +69,65 @@ select:focus {
 /* Responsive text scaling */
 @media (max-width: 640px) {
   h1 {
-    font-size: 2rem;
+    font-size: 1.875rem;
     line-height: 1.1;
   }
   
   h2 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     line-height: 1.2;
   }
   
   .text-4xl {
+    font-size: 1.875rem;
+  }
+  
+  .text-5xl {
     font-size: 2.25rem;
   }
   
   .text-6xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-7xl {
     font-size: 3rem;
+  }
+}
+
+/* Better mobile spacing */
+@media (max-width: 640px) {
+  .py-20 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  .py-24 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  
+  .py-28 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  
+  .py-40 {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+/* Mobile-first button improvements */
+.btn-primary,
+.btn-secondary {
+  @apply text-center min-h-[48px] flex items-center justify-center;
+}
+
+@media (max-width: 640px) {
+  .btn-primary,
+  .btn-secondary {
+    @apply w-full px-4 py-3 text-base;
   }
 }
 

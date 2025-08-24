@@ -22,8 +22,10 @@ export default function Header() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
-              <div className="text-2xl font-bold text-navy">
-                The School of <span className="text-accent">Options</span>
+              <div className="text-xl sm:text-2xl font-bold text-navy">
+                <span className="hidden sm:inline">The School of </span>
+                <span className="sm:hidden">TSO </span>
+                <span className="text-accent">Options</span>
               </div>
             </Link>
           </div>
@@ -70,13 +72,13 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg border-t">
+            <div className="px-4 pt-4 pb-6 space-y-3">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-navy hover:text-accent block px-3 py-2 text-base font-medium"
+                  className="text-navy hover:text-accent block px-4 py-3 text-lg font-medium border-b border-gray-100 last:border-b-0"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
@@ -85,7 +87,7 @@ export default function Header() {
               <div className="pt-4">
                 <Link
                   href="/mentorship"
-                  className="btn-primary block text-center"
+                  className="btn-primary w-full text-center py-4"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Join Next Cohort

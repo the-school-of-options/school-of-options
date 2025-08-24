@@ -25,16 +25,16 @@ export default function ThreeStepBlueprint() {
   return (
     <section className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
             Our Proven Success Formula
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0">
             A systematic 3-step approach that transforms beginners into confident options traders
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
           {steps.map((step, index) => (
             <div key={step.title} className="relative">
               {/* Connection Line */}
@@ -43,18 +43,18 @@ export default function ThreeStepBlueprint() {
                      style={{ width: 'calc(100% - 2rem)' }} />
               )}
               
-              <div className="bg-gray-50 rounded-2xl p-8 text-center relative z-10 h-full flex flex-col">
-                <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
-                  <step.icon className="h-8 w-8 text-navy" />
+              <div className="bg-gray-50 rounded-2xl p-6 sm:p-8 text-center relative z-10 h-full flex flex-col">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <step.icon className="h-6 w-6 sm:h-8 sm:w-8 text-navy" />
                 </div>
                 
-                <h3 className="text-2xl font-bold text-navy mb-4">{step.title}</h3>
-                <p className="text-gray-600 mb-6 flex-grow">{step.description}</p>
+                <h3 className="text-xl sm:text-2xl font-bold text-navy mb-3 sm:mb-4">{step.title}</h3>
+                <p className="text-gray-600 mb-4 sm:mb-6 flex-grow text-sm sm:text-base">{step.description}</p>
                 
-                <ul className="space-y-3 text-left">
+                <ul className="space-y-2 sm:space-y-3 text-left">
                   {step.features.map((feature) => (
-                    <li key={feature} className="text-sm text-gray-600 flex items-start">
-                      <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0" />
+                    <li key={feature} className="text-xs sm:text-sm text-gray-600 flex items-start">
+                      <span className="w-2 h-2 bg-accent rounded-full mr-2 sm:mr-3 mt-1.5 sm:mt-2 flex-shrink-0" />
                       <span>{feature}</span>
                     </li>
                   ))}

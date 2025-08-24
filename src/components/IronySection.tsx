@@ -1,21 +1,21 @@
 export default function IronySection() {
   return (
-    <section className="py-20 lg:py-28 bg-gray-50">
+    <section className="py-16 sm:py-20 lg:py-28 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-6">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-4 sm:mb-6">
             The Great Options Paradox
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0">
             A striking contradiction that reveals the gap between knowledge and application
           </p>
         </div>
         
-        <div className="bg-white rounded-3xl p-8 md:p-12 lg:p-16 shadow-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-12">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 shadow-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center mb-8 sm:mb-12">
             <div className="text-center lg:text-left">
               <div className="inline-flex items-center justify-center w-24 h-24 bg-red-50 rounded-full mb-6">
-                <div className="text-4xl lg:text-5xl font-bold text-red-500">90%</div>
+                <div className="text-3xl lg:text-4xl font-bold text-red-500">90%</div>
               </div>
               <h3 className="text-2xl font-bold text-navy mb-4">Traders Lose Money</h3>
               <p className="text-lg text-gray-600 leading-relaxed">
@@ -25,7 +25,7 @@ export default function IronySection() {
             
             <div className="text-center lg:text-right">
               <div className="inline-flex items-center justify-center w-24 h-24 bg-accent/10 rounded-full mb-6">
-                <div className="text-4xl lg:text-5xl font-bold text-accent">3</div>
+                <div className="text-3xl lg:text-4xl font-bold text-accent">3</div>
               </div>
               <h3 className="text-2xl font-bold text-navy mb-4">Nobel Prize Winners</h3>
               <p className="text-lg text-gray-600 leading-relaxed">

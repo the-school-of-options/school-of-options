@@ -25,18 +25,18 @@ export default function NewsletterCTA() {
   return (
     <section className="py-16 lg:py-24 bg-accent">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="bg-white rounded-2xl p-8 md:p-12 shadow-xl">
-          <div className="flex justify-center mb-6">
-            <div className="w-16 h-16 bg-navy rounded-full flex items-center justify-center">
-              <EnvelopeIcon className="h-8 w-8 text-accent" />
+        <div className="bg-white rounded-2xl p-6 sm:p-8 md:p-12 shadow-xl">
+          <div className="flex justify-center mb-4 sm:mb-6">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-navy rounded-full flex items-center justify-center">
+              <EnvelopeIcon className="h-6 w-6 sm:h-8 sm:w-8 text-accent" />
             </div>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
             Get Daily Market Levels & Insights
           </h2>
           
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 px-4 sm:px-0">
             Join thousands of traders who start their day with our free newsletter at 8:30 AM
           </p>
           
@@ -47,14 +47,14 @@ export default function NewsletterCTA() {
           
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-              <div className="space-y-4 mb-6">
+              <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                 <input
                   type="text"
                   placeholder="Your Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent text-base"
                 />
                 
                 <input
@@ -63,13 +63,13 @@ export default function NewsletterCTA() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent text-base"
                 />
               </div>
               
               <button
                 type="submit"
-                className="btn-primary w-full text-lg py-4"
+                className="btn-primary w-full text-base sm:text-lg py-3 sm:py-4"
               >
                 Get Free Daily Newsletter
               </button>

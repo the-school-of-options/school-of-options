@@ -4,7 +4,7 @@ import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid';
 
 export default function WhatsAppWidget() {
   const handleWhatsAppClick = () => {
-    const phoneNumber = '919876543210'; // Replace with actual WhatsApp number
+    const phoneNumber = '919999007948'; // Replace with actual WhatsApp number
     const message = 'Hi! I\'m interested in learning more about The School of Options.';
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');

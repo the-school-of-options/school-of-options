@@ -97,7 +97,7 @@ export default function NewsletterPage() {
   ];
 
   return (
-    <div className="pt-16">
+    <div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

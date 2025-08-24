@@ -103,7 +103,7 @@ export default function MentorshipPage() {
   ];
 
   return (
-    <div className="pt-16">
+    <div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -375,9 +375,11 @@ export default function MentorshipPage() {
             </div>
           </div>
           
-          <button className="btn-primary text-lg px-12 py-4 mb-6">
-            Apply Now
-          </button>
+          <div className="flex justify-center mb-6">
+            <button className="btn-primary text-lg px-12 py-4">
+              Apply Now
+            </button>
+          </div>
           
           <p className="text-gray-300 text-sm">
             Next cohort starts January 15, 2025 • Limited to 50 students for personalized attention
