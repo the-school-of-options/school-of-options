@@ -22,8 +22,7 @@ async function RecentBlogs() {
         <BlogCard
           key={blog.id}
           blog={blog}
-          variant="compact"
-          showDate={false}
+          variant="default"
         />
       ))}
     </div>

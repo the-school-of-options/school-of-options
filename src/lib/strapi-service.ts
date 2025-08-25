@@ -283,7 +283,8 @@ class StrapiService {
 
       const blogs = response.data
         .map(blog => this.transformBlogPost(blog as StrapiBlog))
-        .filter((blog): blog is BlogPost => blog !== null);
+        .filter((blog): blog is BlogPost => blog !== null)
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Sort by latest first
 
       console.log(`✅ Successfully fetched ${blogs.length} blogs from Strapi`);
       return blogs;
@@ -298,21 +299,29 @@ class StrapiService {
     try {
       console.log(`🔄 Fetching blog by slug: ${slug}`);
       
-      // Using your exact API format with the missing & fixed
+      // First try the direct slug query
       const response = await this.fetchAPI(`/blogs?slug=${slug}&populate=*`) as StrapiResponse<StrapiAny[]>;
       
-      if (!response.data || !Array.isArray(response.data) || response.data.length === 0) {
-        console.warn(`⚠️ No blog found with slug: ${slug}`);
+      if (!response.data || !Array.isArray(response.data)) {
+        console.warn(`⚠️ No blog data received for slug: ${slug}`);
         return null;
       }
 
-      const blog = this.transformBlogPost(response.data[0] as StrapiBlog);
+      // Transform all blogs and find the one with matching slug
+      const allBlogs = response.data
+        .map(blog => this.transformBlogPost(blog as StrapiBlog))
+        .filter((blog): blog is BlogPost => blog !== null);
+
+      // Find the blog with the exact matching slug
+      const matchingBlog = allBlogs.find(blog => blog.slug === slug);
       
-      if (blog) {
-        console.log(`✅ Successfully fetched blog: ${blog.title}`);
+      if (!matchingBlog) {
+        console.warn(`⚠️ No blog found with slug: ${slug}`);
+        return null;
       }
       
-      return blog;
+      console.log(`✅ Successfully fetched blog: ${matchingBlog.title}`);
+      return matchingBlog;
     } catch (error) {
       console.error(`❌ Error fetching blog by slug (${slug}):`, error);
       return null;

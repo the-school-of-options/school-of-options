@@ -2,13 +2,11 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { 
-  ArrowRightIcon,
-  ClockIcon,
-  TagIcon,
   FolderIcon
 } from '@heroicons/react/24/outline';
 import { getAllBlogs } from '@/lib/strapi-service';
 import { getBlogCategories } from '@/data/blog-archive';
+import PaginatedBlogGrid from '@/components/PaginatedBlogGrid';
 
 interface CategoryPageProps {
   params: Promise<{
@@ -127,78 +125,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </div>
 
           {/* Articles */}
-          {allPosts.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
-                {allPosts.map((post) => (
-                  <article
-                    key={post.id}
-                    className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100"
-                  >
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-3 sm:mb-4">
-                      <span className="bg-accent text-navy px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
-                        {post.category}
-                      </span>
-                      <span className="text-gray-500 text-xs sm:text-sm">{post.date}</span>
-                    </div>
-
-                    {/* Content */}
-                    <h3 className="text-lg sm:text-xl font-bold text-navy mb-2 sm:mb-3 line-clamp-2 group-hover:text-accent transition-colors">
-                      {post.title}
-                    </h3>
-                    
-                    <p className="text-gray-600 mb-4 sm:mb-6 line-clamp-3 text-sm sm:text-base">
-                      {post.excerpt}
-                    </p>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {post.tags.slice(0, 2).map((tag) => (
-                        <span
-                          key={tag}
-                          className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs flex items-center"
-                        >
-                          <TagIcon className="h-3 w-3 mr-1" />
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Footer */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center text-xs text-gray-500">
-                        <ClockIcon className="h-3 w-3 mr-1" />
-                        {post.readTime}
-                      </div>
-                      
-                      <Link
-                        href={`/knowledge-hub/blogs/${post.slug}`}
-                        className="text-accent font-semibold hover:text-accent-dark flex items-center gap-1 text-sm group-hover:translate-x-1 transition-transform"
-                      >
-                        Read More
-                        <ArrowRightIcon className="h-3 w-3" />
-                      </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
-
-
-            </>
-          ) : (
-            <div className="text-center py-12">
-              <FolderIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-600 mb-2">No articles in this category</h3>
-              <p className="text-gray-500 mb-6">Check back soon for new content!</p>
-              <Link
-                href="/knowledge-hub/blogs"
-                className="text-accent font-semibold hover:text-accent-dark"
-              >
-                Browse All Articles →
-              </Link>
-            </div>
-          )}
+          <PaginatedBlogGrid 
+            blogs={allPosts}
+            itemsPerPage={9}
+            variant="default"
+            showTags={true}
+          />
         </div>
       </section>
 

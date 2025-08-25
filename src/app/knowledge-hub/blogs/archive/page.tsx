@@ -6,8 +6,8 @@ import {
   ArrowLeftIcon
 } from '@heroicons/react/24/outline';
 import { getAllBlogs } from '@/lib/strapi-service';
-import { getBlogArchive, getBlogCategories } from '@/data/blog-archive';
-import BlogCard from '@/components/BlogCard';
+import { getBlogCategories } from '@/data/blog-archive';
+import PaginatedBlogGrid from '@/components/PaginatedBlogGrid';
 
 export const metadata: Metadata = {
   title: 'Blog Archive - The School of Options',
@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 
 export default async function BlogArchivePage() {
   const allBlogs = await getAllBlogs();
-  const archive = getBlogArchive(allBlogs);
   const categories = getBlogCategories(allBlogs);
 
   return (
@@ -97,63 +96,36 @@ export default async function BlogArchivePage() {
                   <span className="font-semibold text-navy">{categories.length}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600 text-sm sm:text-base">Years</span>
-                  <span className="font-semibold text-navy">{archive.length}</span>
+                  <span className="text-gray-600 text-sm sm:text-base">Latest Post</span>
+                  <span className="font-semibold text-navy text-xs sm:text-sm">
+                    {allBlogs.length > 0 ? new Date(allBlogs[0].date).toLocaleDateString() : 'N/A'}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Main Content - Archive by Date */}
+          {/* Main Content - All Articles with Pagination */}
           <div className="lg:col-span-3">
-            <div className="space-y-8 sm:space-y-12">
-              {archive.map((yearData) => (
-                <div key={yearData.year} className="border-b border-gray-200 pb-8 sm:pb-12 last:border-b-0">
-                  
-                  {/* Year Header */}
-                  <div className="flex items-center justify-between mb-6 sm:mb-8">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-navy flex items-center">
-                      <CalendarIcon className="h-6 w-6 sm:h-8 sm:w-8 mr-2 sm:mr-3" />
-                      {yearData.year}
-                    </h2>
-                    <span className="text-gray-500 text-sm sm:text-base">
-                      {yearData.totalPosts} article{yearData.totalPosts !== 1 ? 's' : ''}
-                    </span>
-                  </div>
-
-                  {/* Months */}
-                  <div className="space-y-6 sm:space-y-8">
-                    {yearData.months.map((monthData) => (
-                      <div key={monthData.month}>
-                        
-                        {/* Month Header */}
-                        <h3 className="text-lg sm:text-xl font-semibold text-navy mb-4 flex items-center justify-between">
-                          <span>{monthData.monthName}</span>
-                          <span className="text-sm text-gray-500">
-                            {monthData.postCount} post{monthData.postCount !== 1 ? 's' : ''}
-                          </span>
-                        </h3>
-
-                        {/* Posts for this month */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                          {monthData.posts.map((post) => (
-                            <BlogCard
-                              key={post.id}
-                              blog={post}
-                              variant="compact"
-                              showDate={true}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
+            <div className="mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-navy flex items-center">
+                <CalendarIcon className="h-6 w-6 sm:h-8 sm:w-8 mr-2 sm:mr-3" />
+                All Articles
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Browse through all {allBlogs.length} articles, sorted by latest first
+              </p>
             </div>
 
-            {/* No content message if empty */}
-            {archive.length === 0 && (
+            {/* Paginated Blog Grid */}
+            {allBlogs.length > 0 ? (
+              <PaginatedBlogGrid
+                blogs={allBlogs}
+                itemsPerPage={12}
+                variant="default"
+                showTags={false}
+              />
+            ) : (
               <div className="text-center py-12">
                 <CalendarIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-gray-600 mb-2">No articles found</h3>

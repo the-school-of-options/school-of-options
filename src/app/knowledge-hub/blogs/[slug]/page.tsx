@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Metadata } from 'next';
 import { 
   ArrowLeftIcon, 
@@ -68,6 +69,51 @@ export default async function BlogPage({ params }: BlogPageProps) {
     return content
       .split('\n')
       .map((line, index) => {
+        // Handle image URLs (both markdown format and plain URLs)
+        const imageUrlRegex = /https?:\/\/[^\s]+\.(jpg|jpeg|png|gif|webp|svg)(\?[^\s]*)?/i;
+        const markdownImageRegex = /!\[([^\]]*)\]\(([^)]+)\)/;
+        
+        if (imageUrlRegex.test(line) || markdownImageRegex.test(line)) {
+          let imageUrl = '';
+          let altText = '';
+          
+          // Check for markdown image format first
+          const markdownMatch = line.match(markdownImageRegex);
+          if (markdownMatch) {
+            altText = markdownMatch[1] || 'Blog image';
+            imageUrl = markdownMatch[2];
+          } else {
+            // Plain URL format
+            const urlMatch = line.match(imageUrlRegex);
+            if (urlMatch) {
+              imageUrl = urlMatch[0];
+              altText = 'Blog image';
+            }
+          }
+          
+          if (imageUrl) {
+            return (
+              <div key={index} className="my-6 sm:my-8">
+                <div className="relative w-full rounded-lg overflow-hidden shadow-lg">
+                  <Image
+                    src={imageUrl}
+                    alt={altText}
+                    width={800}
+                    height={400}
+                    className="w-full h-auto object-contain"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+                  />
+                </div>
+                {altText && altText !== 'Blog image' && (
+                  <p className="text-center text-sm text-gray-500 mt-2 italic">
+                    {altText}
+                  </p>
+                )}
+              </div>
+            );
+          }
+        }
+        
         // Handle headers
         if (line.startsWith('# ')) {
           return (
@@ -123,13 +169,19 @@ export default async function BlogPage({ params }: BlogPageProps) {
           return <div key={index} className="mb-2 sm:mb-4"></div>;
         }
         
+        // Skip lines that are just image URLs (already handled above)
+        if (imageUrlRegex.test(line.trim()) && line.trim().match(imageUrlRegex)?.[0] === line.trim()) {
+          return null;
+        }
+        
         // Regular paragraphs
         return (
           <p key={index} className="text-gray-700 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">
             {line}
           </p>
         );
-      });
+      })
+      .filter(Boolean); // Remove null entries
   };
 
   return (

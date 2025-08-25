@@ -106,7 +106,7 @@ export default async function BlogsPage() {
 
           <Suspense fallback={<BlogGridSkeleton count={6} />}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {allBlogs.map((blog) => (
+              {allBlogs.slice(0, 6).map((blog) => (
                 <BlogCard
                   key={blog.id}
                   blog={blog}
