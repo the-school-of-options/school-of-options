@@ -3,12 +3,17 @@ import {
   BookOpenIcon, 
   ChartBarIcon, 
   PlayIcon, 
-  CalculatorIcon,
   CpuChipIcon,
   ArrowRightIcon
 } from '@heroicons/react/24/outline';
+import { strapiService } from '@/lib/strapi-service';
 
-export default function KnowledgeHubPage() {
+// Enable ISR - revalidate every hour
+export const revalidate = 3600;
+
+export default async function KnowledgeHubPage() {
+  const latestBlogs = await strapiService.getRecentBlogs(3); // Get the 3 most recent blogs
+  
   const resourceCategories = [
     {
       icon: BookOpenIcon,
@@ -49,19 +54,19 @@ export default function KnowledgeHubPage() {
         'Risk Management Masterclass'
       ]
     },
-    {
-      icon: CalculatorIcon,
-      title: 'Trading Tools',
-      description: 'Free calculators, analyzers, and tools to enhance your trading decisions',
-      href: '/knowledge-hub/tools',
-      color: 'bg-purple-500',
-      featured: [
-        'Options Profit/Loss Calculator',
-        'Volatility Analyzer',
-        'Greeks Calculator',
-        'Position Size Calculator'
-      ]
-    },
+    // {
+    //   icon: CalculatorIcon,
+    //   title: 'Trading Tools',
+    //   description: 'Free calculators, analyzers, and tools to enhance your trading decisions',
+    //   href: '/knowledge-hub/tools',
+    //   color: 'bg-purple-500',
+    //   featured: [
+    //     'Options Profit/Loss Calculator',
+    //     'Volatility Analyzer',
+    //     'Greeks Calculator',
+    //     'Position Size Calculator'
+    //   ]
+    // },
     {
       icon: CpuChipIcon,
       title: 'AI Resources',
@@ -77,29 +82,7 @@ export default function KnowledgeHubPage() {
     }
   ];
 
-  const latestContent = [
-    {
-      type: 'Blog',
-      title: 'The Psychology Behind Options Trading Losses',
-      excerpt: 'Understanding the behavioral biases that lead to consistent losses in options trading...',
-      readTime: '8 min read',
-      date: 'Dec 20, 2024'
-    },
-    {
-      type: 'Research',
-      title: 'Weekly Market Outlook: Nifty 50 Levels & Strategy',
-      excerpt: 'Key support and resistance levels for the upcoming week with recommended strategies...',
-      readTime: '5 min read',
-      date: 'Dec 19, 2024'
-    },
-    {
-      type: 'Video',
-      title: 'Live Trading Session: Iron Condor Strategy',
-      excerpt: 'Watch how to execute a perfect Iron Condor trade with real market examples...',
-      readTime: '25 min watch',
-      date: 'Dec 18, 2024'
-    }
-  ];
+
 
   return (
     <div>
@@ -198,32 +181,35 @@ export default function KnowledgeHubPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {latestContent.map((content) => (
-              <div key={content.title} className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg flex flex-col h-full">
+            {latestBlogs.map((blog) => (
+              <div key={blog.id} className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg flex flex-col h-full">
                 {/* Header with type and date */}
                 <div className="flex items-center justify-between mb-3 sm:mb-4">
                   <span className="bg-green text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
-                    {content.type}
+                    {blog.category}
                   </span>
-                  <span className="text-gray-500 text-xs sm:text-sm">{content.date}</span>
+                  <span className="text-gray-500 text-xs sm:text-sm">{blog.date}</span>
                 </div>
                 
                 {/* Title */}
                 <h3 className="text-lg sm:text-xl font-bold text-navy mb-2 sm:mb-3 line-clamp-2">
-                  {content.title}
+                  {blog.title}
                 </h3>
                 
                 {/* Excerpt - grows to fill space */}
                 <p className="text-gray-600 mb-4 sm:mb-6 flex-grow line-clamp-3 text-sm sm:text-base">
-                  {content.excerpt}
+                  {blog.excerpt}
                 </p>
                 
                 {/* Footer with read time and button - always at bottom */}
                 <div className="flex items-center justify-between mt-auto">
-                  <span className="text-xs sm:text-sm text-gray-500">{content.readTime}</span>
-                  <button className="text-green font-semibold hover:text-green-dark flex items-center gap-1 text-xs sm:text-sm">
+                  <span className="text-xs sm:text-sm text-gray-500">{blog.readTime}</span>
+                  <Link 
+                    href={`/knowledge-hub/blogs/${blog.slug}`}
+                    className="text-green font-semibold hover:text-green-dark flex items-center gap-1 text-xs sm:text-sm transition-colors"
+                  >
                     Read More →
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

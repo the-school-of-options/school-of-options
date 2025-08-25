@@ -28,14 +28,14 @@ export default function FlagshipProgram() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
           {/* Program Details */}
           <div>
-            <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-green">
+            <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">
               6-Month Options Trading Mentorship
             </h3>
             
             <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {features.map((feature) => (
                 <div key={feature} className="flex items-start">
-                  <CheckIcon className="h-5 w-5 sm:h-6 sm:w-6 text-green mr-2 sm:mr-3 mt-0.5 flex-shrink-0" />
+                  <CheckIcon className="h-5 w-5 sm:h-6 sm:w-6 text-accent mr-2 sm:mr-3 mt-0.5 flex-shrink-0" />
                   <span className="text-gray-300 text-sm sm:text-base">{feature}</span>
                 </div>
               ))}

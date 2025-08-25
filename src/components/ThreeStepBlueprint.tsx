@@ -43,12 +43,12 @@ export default function ThreeStepBlueprint() {
                      style={{ width: 'calc(100% - 2rem)' }} />
               )}
               
-              <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 text-center relative z-10 h-full flex flex-col">
+              <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 text-center relative z-10 h-full flex flex-col shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-accent/20 group">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 lg:mb-6">
                   <step.icon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-navy" />
                 </div>
                 
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-navy mb-2 sm:mb-3 lg:mb-4">{step.title}</h3>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-navy mb-2 sm:mb-3 lg:mb-4 group-hover:text-accent transition-colors">{step.title}</h3>
                 <p className="text-gray-600 mb-3 sm:mb-4 lg:mb-6 flex-grow text-xs sm:text-sm lg:text-base">{step.description}</p>
                 
                 <ul className="space-y-1.5 sm:space-y-2 lg:space-y-3 text-left">
