@@ -1,8 +1,11 @@
 import { MetadataRoute } from 'next'
 
+// Add these two lines:
+export const dynamic = 'force-static'
+export const revalidate = false
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://theschoolofoptions.com'
-
   return [
     {
       url: baseUrl,
