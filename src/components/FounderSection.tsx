@@ -101,7 +101,7 @@ export default function FounderSection() {
             <div className="space-y-4 sm:space-y-6">
               <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border-l-4 border-accent">
                 <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                  <span className="text-navy font-bold">After 20 years in trading and 10 years of teaching,</span> I've seen the same pattern repeat: 
+                  <span className="text-navy font-bold">After 20 years in trading and 10 years of teaching,</span> I&apos;ve seen the same pattern repeat: 
                   brilliant people losing money in options because they lack proper guidance and systematic approach.
                 </p>
               </div>
@@ -125,7 +125,7 @@ export default function FounderSection() {
             <div className="bg-gradient-to-r from-navy to-navy-dark rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl">
               <div className="flex items-start space-x-3 sm:space-x-4">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <span className="text-navy font-bold text-lg sm:text-xl">"</span>
+                  <span className="text-navy font-bold text-lg sm:text-xl">&quot;</span>
                 </div>
                 <p className="text-white font-medium text-base sm:text-lg leading-relaxed italic">
                   My mission is not just to teach options trading, but to create a generation of disciplined, 
