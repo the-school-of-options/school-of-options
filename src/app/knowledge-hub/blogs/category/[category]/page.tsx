@@ -2,21 +2,17 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { 
-  ArrowLeftIcon, 
   ArrowRightIcon,
   ClockIcon,
   TagIcon,
   FolderIcon
 } from '@heroicons/react/24/outline';
 import { getAllBlogs } from '@/lib/strapi-service';
-import { getBlogCategories, paginateBlogs } from '@/data/blog-archive';
+import { getBlogCategories } from '@/data/blog-archive';
 
 interface CategoryPageProps {
   params: Promise<{
     category: string;
-  }>;
-  searchParams: Promise<{
-    page?: string;
   }>;
 }
 
@@ -50,9 +46,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   };
 }
 
-export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
+export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category: categorySlug } = await params;
-  const { page } = await searchParams;
   
   const allBlogs = await getAllBlogs();
   const categories = getBlogCategories(allBlogs);
@@ -62,10 +57,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     notFound();
   }
 
-  // Pagination
-  const currentPage = parseInt(page || '1');
-  const postsPerPage = 9;
-  const paginatedResult = paginateBlogs(category.posts, currentPage, postsPerPage);
+  // For static export, show all posts without pagination
+  const allPosts = category.posts;
 
   return (
     <div className="min-h-screen bg-white">
@@ -134,10 +127,10 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           </div>
 
           {/* Articles */}
-          {paginatedResult.items.length > 0 ? (
+          {allPosts.length > 0 ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
-                {paginatedResult.items.map((post) => (
+                {allPosts.map((post) => (
                   <article
                     key={post.id}
                     className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100"
@@ -191,46 +184,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
                 ))}
               </div>
 
-              {/* Pagination */}
-              {paginatedResult.totalPages > 1 && (
-                <div className="flex items-center justify-center space-x-4">
-                  {paginatedResult.hasPrevPage && (
-                    <Link
-                      href={`/knowledge-hub/blogs/category/${category.id}?page=${paginatedResult.currentPage - 1}`}
-                      className="flex items-center px-4 py-2 text-sm font-medium text-navy bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      <ArrowLeftIcon className="h-4 w-4 mr-2" />
-                      Previous
-                    </Link>
-                  )}
-                  
-                  <div className="flex items-center space-x-2">
-                    {Array.from({ length: paginatedResult.totalPages }, (_, i) => i + 1).map((pageNum) => (
-                      <Link
-                        key={pageNum}
-                        href={`/knowledge-hub/blogs/category/${category.id}?page=${pageNum}`}
-                        className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                          pageNum === paginatedResult.currentPage
-                            ? 'bg-accent text-navy'
-                            : 'text-gray-700 hover:bg-gray-100'
-                        }`}
-                      >
-                        {pageNum}
-                      </Link>
-                    ))}
-                  </div>
-                  
-                  {paginatedResult.hasNextPage && (
-                    <Link
-                      href={`/knowledge-hub/blogs/category/${category.id}?page=${paginatedResult.currentPage + 1}`}
-                      className="flex items-center px-4 py-2 text-sm font-medium text-navy bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      Next
-                      <ArrowRightIcon className="h-4 w-4 ml-2" />
-                    </Link>
-                  )}
-                </div>
-              )}
+
             </>
           ) : (
             <div className="text-center py-12">
