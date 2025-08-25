@@ -66,7 +66,14 @@ select:focus {
   outline-offset: 2px;
 }
 
-/* Responsive text scaling */
+/* Remove outlines from navigation links */
+nav a:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Enhanced responsive text scaling */
 @media (max-width: 640px) {
   h1 {
     font-size: 1.875rem;
@@ -76,6 +83,11 @@ select:focus {
   h2 {
     font-size: 1.5rem;
     line-height: 1.2;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.3;
   }
   
   .text-4xl {
@@ -92,6 +104,60 @@ select:focus {
   
   .text-7xl {
     font-size: 3rem;
+  }
+}
+
+/* Tablet responsive adjustments (768px breakpoint focus) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .text-6xl {
+    font-size: 3.5rem;
+  }
+  
+  .text-7xl {
+    font-size: 4rem;
+  }
+}
+
+/* Specific tablet optimizations at 768px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Better text scaling for tablets */
+  .text-4xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-5xl {
+    font-size: 3rem;
+  }
+  
+  /* Improved spacing for tablet */
+  .py-16 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  
+  .py-20 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  
+  .py-24 {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+  
+  /* Better container spacing */
+  .px-4 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  /* Grid improvements */
+  .gap-8 {
+    gap: 1.5rem;
+  }
+  
+  .gap-16 {
+    gap: 2rem;
   }
 }
 
@@ -118,16 +184,49 @@ select:focus {
   }
 }
 
-/* Mobile-first button improvements */
+/* Enhanced mobile-first button improvements */
 .btn-primary,
 .btn-secondary {
-  @apply text-center min-h-[48px] flex items-center justify-center;
+  @apply text-center min-h-[48px] flex items-center justify-center transition-all duration-200;
 }
 
 @media (max-width: 640px) {
   .btn-primary,
   .btn-secondary {
     @apply w-full px-4 py-3 text-base;
+  }
+}
+
+/* Responsive container improvements */
+@media (max-width: 640px) {
+  .max-w-7xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .max-w-6xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .max-w-5xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Enhanced grid responsiveness */
+@media (max-width: 768px) {
+  .grid-cols-1.md\:grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  
+  .grid-cols-1.md\:grid-cols-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  
+  .grid-cols-1.lg\:grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
 

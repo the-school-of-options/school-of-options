@@ -11,24 +11,24 @@ export default function IronySection() {
           </p>
         </div>
         
-        <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 shadow-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center mb-8 sm:mb-12">
-            <div className="text-center lg:text-left">
-              <div className="inline-flex items-center justify-center w-24 h-24 bg-red-50 rounded-full mb-6">
-                <div className="text-3xl lg:text-4xl font-bold text-red-500">90%</div>
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-16 shadow-xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-16 items-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+            <div className="text-center md:text-left">
+              <div className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 bg-red-50 rounded-full mb-4 md:mb-6">
+                <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-red-500">90%</div>
               </div>
-              <h3 className="text-2xl font-bold text-navy mb-4">Traders Lose Money</h3>
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <h3 className="text-xl md:text-2xl font-bold text-navy mb-3 md:mb-4">Traders Lose Money</h3>
+              <p className="text-base md:text-lg text-gray-600 leading-relaxed">
                 Despite countless resources and strategies available, the vast majority of options traders consistently lose money in the markets.
               </p>
             </div>
             
-            <div className="text-center lg:text-right">
-              <div className="inline-flex items-center justify-center w-24 h-24 bg-accent/10 rounded-full mb-6">
-                <div className="text-3xl lg:text-4xl font-bold text-accent">3</div>
+            <div className="text-center md:text-right">
+              <div className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 bg-accent/10 rounded-full mb-4 md:mb-6">
+                <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-accent">3</div>
               </div>
-              <h3 className="text-2xl font-bold text-navy mb-4">Nobel Prize Winners</h3>
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <h3 className="text-xl md:text-2xl font-bold text-navy mb-3 md:mb-4">Nobel Prize Winners</h3>
+              <p className="text-base md:text-lg text-gray-600 leading-relaxed">
                 Three brilliant economists won the Nobel Prize for mathematically decoding options pricing and risk management.
               </p>
             </div>
@@ -43,12 +43,12 @@ export default function IronySection() {
             </div>
           </div>
           
-          <div className="mt-12 text-center">
-            <div className="bg-navy rounded-2xl p-8 lg:p-10">
-              <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
+          <div className="mt-8 md:mt-10 lg:mt-12 text-center">
+            <div className="bg-navy rounded-2xl p-6 md:p-8 lg:p-10">
+              <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-3 md:mb-4">
                 The School of Options Bridges This Gap
               </h3>
-              <p className="text-lg lg:text-xl text-gray-300 leading-relaxed max-w-4xl mx-auto">
+              <p className="text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed max-w-4xl mx-auto">
                 We transform Nobel Prize-winning complexity into practical, systematic education. 
                 Our mission is to provide the missing link between theoretical knowledge and profitable trading reality.
               </p>

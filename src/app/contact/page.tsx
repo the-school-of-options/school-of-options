@@ -58,54 +58,54 @@ export default function ContactPage() {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-20">
+      {/* Hero Section - Enhanced Responsiveness */}
+      <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6">
             Get in <span className="text-green">Touch</span>
           </h1>
           
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto px-4 sm:px-0">
             Have questions about our programs? Need support? We&apos;re here to help you succeed in your options trading journey.
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mt-8 sm:mt-12 max-w-2xl mx-auto">
             <div className="text-center">
-              <div className="text-3xl font-bold text-green mb-2">24/7</div>
-              <div className="text-gray-300">WhatsApp Support</div>
+              <div className="text-2xl sm:text-3xl font-bold text-green mb-1 sm:mb-2">24/7</div>
+              <div className="text-gray-300 text-sm sm:text-base">WhatsApp Support</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-green mb-2">&lt;2 hrs</div>
-              <div className="text-gray-300">Response Time</div>
+              <div className="text-2xl sm:text-3xl font-bold text-green mb-1 sm:mb-2">&lt;2 hrs</div>
+              <div className="text-gray-300 text-sm sm:text-base">Response Time</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Methods */}
-      <section className="py-16 bg-white">
+      {/* Contact Methods - Enhanced Responsiveness */}
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
               Multiple Ways to Reach Us
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 px-4 sm:px-0">
               Choose the method that works best for you
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12 lg:mb-16">
             {contactMethods.map((method) => (
-              <div key={method.title} className="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
-                <div className={`w-16 h-16 ${method.color} rounded-full flex items-center justify-center mx-auto mb-6`}>
-                  <method.icon className="h-8 w-8 text-white" />
+              <div key={method.title} className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 text-center hover:shadow-lg transition-shadow">
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 ${method.color} rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6`}>
+                  <method.icon className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-white" />
                 </div>
                 
-                <h3 className="text-xl font-bold text-navy mb-3">{method.title}</h3>
-                <p className="text-gray-600 mb-4">{method.description}</p>
-                <p className="font-semibold text-navy mb-4">{method.contact}</p>
+                <h3 className="text-lg sm:text-xl font-bold text-navy mb-2 sm:mb-3">{method.title}</h3>
+                <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">{method.description}</p>
+                <p className="font-semibold text-navy mb-3 sm:mb-4 text-sm sm:text-base">{method.contact}</p>
                 
-                <button className="btn-primary w-full">
+                <button className="btn-primary w-full text-sm sm:text-base">
                   {method.action}
                 </button>
               </div>

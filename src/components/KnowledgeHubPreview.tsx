@@ -43,67 +43,67 @@ export default function KnowledgeHubPreview() {
   ];
 
   return (
-    <section className="py-16 lg:py-24 bg-gray-50">
+    <section className="py-12 sm:py-16 lg:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
             Knowledge Hub - Free for Everyone
           </h2>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4 sm:px-0">
             Even if you never join our mentorship, we&apos;ll still make you smarter about Options than 90% of traders. 
             Access our comprehensive library of free resources.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
           {resources.slice(0, 3).map((resource) => (
             <Link
               key={resource.title}
               href={resource.href}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow group"
+              className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-shadow group"
             >
-              <div className="w-16 h-16 bg-green rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <resource.icon className="h-8 w-8 text-white" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-green rounded-full flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
+                <resource.icon className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-white" />
               </div>
               
-              <h3 className="text-xl font-bold text-navy mb-4 group-hover:text-green transition-colors">
+              <h3 className="text-lg sm:text-xl font-bold text-navy mb-3 sm:mb-4 group-hover:text-green transition-colors">
                 {resource.title}
               </h3>
               
-              <p className="text-gray-600 mb-4">
+              <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
                 {resource.description}
               </p>
               
-              <div className="flex items-center text-green font-semibold group-hover:translate-x-2 transition-transform">
-                Explore <ArrowRightIcon className="h-4 w-4 ml-2" />
+              <div className="flex items-center text-green font-semibold group-hover:translate-x-2 transition-transform text-sm sm:text-base">
+                Explore <ArrowRightIcon className="h-3 w-3 sm:h-4 sm:w-4 ml-2" />
               </div>
             </Link>
           ))}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
           {resources.slice(3).map((resource) => (
             <Link
               key={resource.title}
               href={resource.href}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow group"
+              className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-shadow group"
             >
               <div className="flex items-start">
-                <div className="w-16 h-16 bg-green rounded-full flex items-center justify-center mr-6 group-hover:scale-110 transition-transform flex-shrink-0">
-                  <resource.icon className="h-8 w-8 text-white" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-green rounded-full flex items-center justify-center mr-3 sm:mr-4 lg:mr-6 group-hover:scale-110 transition-transform flex-shrink-0">
+                  <resource.icon className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-white" />
                 </div>
                 
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-navy mb-4 group-hover:text-green transition-colors">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg sm:text-xl font-bold text-navy mb-3 sm:mb-4 group-hover:text-green transition-colors">
                     {resource.title}
                   </h3>
                   
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
                     {resource.description}
                   </p>
                   
-                  <div className="flex items-center text-green font-semibold group-hover:translate-x-2 transition-transform">
-                    Explore <ArrowRightIcon className="h-4 w-4 ml-2" />
+                  <div className="flex items-center text-green font-semibold group-hover:translate-x-2 transition-transform text-sm sm:text-base">
+                    Explore <ArrowRightIcon className="h-3 w-3 sm:h-4 sm:w-4 ml-2" />
                   </div>
                 </div>
               </div>
@@ -114,9 +114,10 @@ export default function KnowledgeHubPreview() {
         <div className="text-center">
           <Link
             href="/knowledge-hub"
-            className="btn-secondary text-lg px-8 py-4"
+            className="btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
           >
-            Visit Complete Knowledge Hub
+            View All Resources
+            <ArrowRightIcon className="h-4 w-4" />
           </Link>
         </div>
       </div>

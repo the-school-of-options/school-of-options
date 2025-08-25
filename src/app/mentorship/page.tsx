@@ -104,39 +104,40 @@ export default function MentorshipPage() {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-20">
+      {/* Hero Section - Enhanced Responsiveness */}
+      <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Master Options Trading with
-            <br />
-            <span className="text-accent">Discipline & Edge</span>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6">
+            <span className="block sm:inline">Master Options Trading with</span>
+            <br className="hidden sm:block" />
+            <span className="block sm:inline text-accent mt-2 sm:mt-0">Discipline & Edge</span>
           </h1>
           
-          <p className="text-xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed px-2 sm:px-0">
             Learn high-probability setups, market neutrality, premium decay edge, and automation — 
             not jackpot trades or guesswork.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="btn-primary text-lg px-8 py-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-2xl mx-auto">
+            <button className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto">
               Apply Now
             </button>
-            <Link href="/knowledge-hub" className="border border-accent text-accent hover:bg-accent hover:text-navy px-8 py-4 rounded-lg font-semibold transition-colors">
-              Explore Free Resources First
+            <Link href="/knowledge-hub" className="border border-accent text-accent hover:bg-accent hover:text-navy px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-colors text-base sm:text-lg w-full sm:w-auto text-center">
+              <span className="sm:hidden">Free Resources</span>
+              <span className="hidden sm:inline">Explore Free Resources First</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 6-Month Learning Roadmap */}
-      <section className="py-16 bg-white">
+      {/* 6-Month Learning Roadmap - Enhanced Responsiveness */}
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
               6-Month Learning Roadmap
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0">
               A systematic journey from complete beginner to disciplined options trader
             </p>
           </div>
