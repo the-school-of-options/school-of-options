@@ -1,8 +1,6 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  output: "export",  // Static HTML generation for deployment
-  
+const nextConfig: NextConfig = {  
   // Image optimization configuration
   images: {
     unoptimized: true, // Required for static export
