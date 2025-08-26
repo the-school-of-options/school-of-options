@@ -11,7 +11,7 @@ export default function NewsletterCTA() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Here you would typically send the data to your backend
-    console.log('Newsletter signup:', { name, email });
+    // In production, integrate with email service
     setIsSubmitted(true);
     
     // Reset form after 3 seconds

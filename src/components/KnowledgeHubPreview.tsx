@@ -133,20 +133,7 @@ export default function KnowledgeHubPreview() {
         </div>
         
         {/* Latest Blog Posts */}
-        <div className="mb-8 sm:mb-12">
-          <div className="text-center mb-6 sm:mb-8">
-            <h3 className="text-xl sm:text-2xl font-bold text-navy mb-2">
-              Latest Articles
-            </h3>
-            <p className="text-sm sm:text-base text-gray-600">
-              Fresh insights from our trading experts
-            </p>
-          </div>
-          
-          <Suspense fallback={<BlogGridSkeleton count={3} />}>
-            <RecentBlogs />
-          </Suspense>
-        </div>
+
         
         <div className="text-center">
           <Link

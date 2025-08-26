@@ -143,97 +143,162 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Founder Story */}
-      <section className="py-16 bg-gray-50">
+      {/* Founder Story - Redesigned */}
+      <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 via-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-navy mb-6">
               Meet Our Founder
             </h2>
-            <p className="text-xl text-gray-600">
-              The story behind The School of Options
+            <div className="w-24 h-1 bg-accent rounded-full mx-auto mb-6"></div>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              The visionary behind The School of Options and his journey from Wall Street to empowering retail traders
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
-            <div className="text-center lg:text-left">
-              {/* Founder Photo */}
-              <div className="relative mb-6 sm:mb-8">
-                <div className="w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 mx-auto lg:mx-0 rounded-2xl overflow-hidden shadow-2xl ring-4 ring-white">
-                  <Image
-                    src="/images/founder-kundan-kishore.jpg"
-                    alt="Kundan Kishore - Founder & Chief Mentor"
-                    width={320}
-                    height={320}
-                    className="w-full h-full object-cover"
-                    priority
-                  />
+
+          {/* Main Content - Symmetrical Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            
+            {/* Left Column - Founder Profile & Credentials */}
+            <div className="space-y-8">
+              {/* Hero Image Card */}
+              <div className="bg-white rounded-3xl p-8 shadow-2xl border border-gray-100">
+                <div className="relative mb-6">
+                  {/* Decorative elements */}
+                  <div className="absolute -top-4 -left-4 w-24 h-24 bg-accent/10 rounded-full blur-xl"></div>
+                  <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-navy/10 rounded-full blur-lg"></div>
+                  
+                  {/* Main photo */}
+                  <div className="relative w-56 h-56 mx-auto">
+                    <div className="w-full h-full rounded-2xl overflow-hidden shadow-xl ring-4 ring-white">
+                      <Image
+                        src="/images/founder-kundan-kishore.jpg"
+                        alt="Kundan Kishore - Founder & Chief Mentor"
+                        width={224}
+                        height={224}
+                        className="w-full h-full object-cover object-top"
+                        priority
+                      />
+                    </div>
+                    
+                    {/* Experience badge */}
+                    <div className="absolute -bottom-3 -right-3 bg-accent rounded-xl px-3 py-2 shadow-lg">
+                      <div className="text-navy font-bold text-xs">20+ Years</div>
+                    </div>
+                  </div>
                 </div>
                 
-                {/* Floating badge */}
-                <div className="absolute -bottom-4 -right-4 bg-green rounded-xl px-4 py-2 shadow-xl">
-                  <div className="text-navy font-bold text-sm">Founder</div>
-                  <div className="text-navy text-xs">& Mentor</div>
+                {/* Name and title */}
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-navy mb-2">Kundan Kishore</h3>
+                  <p className="text-accent font-semibold text-lg">Founder & Chief Mentor</p>
+                  <div className="w-16 h-1 bg-accent rounded-full mx-auto mt-3"></div>
+                </div>
+                
+                {/* Stats */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-4 bg-gradient-to-br from-accent/10 to-accent/5 rounded-xl">
+                    <div className="text-2xl font-bold text-navy">20+</div>
+                    <div className="text-xs text-gray-600">Years Experience</div>
+                  </div>
+                  <div className="text-center p-4 bg-gradient-to-br from-navy/10 to-navy/5 rounded-xl">
+                    <div className="text-2xl font-bold text-navy">2L+</div>
+                    <div className="text-xs text-gray-600">Students Trained</div>
+                  </div>
                 </div>
               </div>
-              
-              {/* Founder Info Card */}
-              <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-100">
-                <h3 className="text-xl sm:text-2xl font-bold text-navy mb-3 sm:mb-4">Kundan Kishore</h3>
-                <div className="space-y-2 sm:space-y-3 text-gray-600">
-                  <div className="flex items-center text-sm sm:text-base">
-                    <AcademicCapIcon className="h-4 w-4 sm:h-5 sm:w-5 text-green mr-2 flex-shrink-0" />
-                    <span>BITS Pilani Alumnus</span>
+
+              {/* Credentials Card */}
+              <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+                <h4 className="text-2xl font-bold text-navy mb-6 text-center">Credentials</h4>
+                <div className="space-y-4">
+                  <div className="flex items-center p-4 bg-gray-50 rounded-xl">
+                    <AcademicCapIcon className="h-6 w-6 text-accent mr-4 flex-shrink-0" />
+                    <div>
+                      <div className="font-semibold text-navy text-base">BITS Pilani Alumnus</div>
+                      <div className="text-gray-600 text-sm">Engineering Excellence</div>
+                    </div>
                   </div>
-                  <div className="flex items-center text-sm sm:text-base">
-                    <BuildingOffice2Icon className="h-4 w-4 sm:h-5 sm:w-5 text-green mr-2 flex-shrink-0" />
-                    <span>Ex-Morgan Stanley, Barclays, RBS</span>
+                  <div className="flex items-center p-4 bg-gray-50 rounded-xl">
+                    <BuildingOffice2Icon className="h-6 w-6 text-accent mr-4 flex-shrink-0" />
+                    <div>
+                      <div className="font-semibold text-navy text-base">Investment Banking</div>
+                      <div className="text-gray-600 text-sm">Morgan Stanley, Barclays, RBS</div>
+                    </div>
                   </div>
-                  <div className="flex items-center text-sm sm:text-base">
-                    <ChartBarIcon className="h-4 w-4 sm:h-5 sm:w-5 text-green mr-2 flex-shrink-0" />
-                    <span>20+ Years Trading Experience</span>
-                  </div>
-                  <div className="flex items-center text-sm sm:text-base">
-                    <UsersIcon className="h-4 w-4 sm:h-5 sm:w-5 text-green mr-2 flex-shrink-0" />
-                    <span>2,00,000+ Students Trained</span>
+                  <div className="flex items-center p-4 bg-gray-50 rounded-xl">
+                    <ChartBarIcon className="h-6 w-6 text-accent mr-4 flex-shrink-0" />
+                    <div>
+                      <div className="font-semibold text-navy text-base">Trading Expertise</div>
+                      <div className="text-gray-600 text-sm">Derivatives & Options</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            
-            <div className="space-y-4 sm:space-y-6">
-              <div>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-navy mb-3 sm:mb-4">The Journey</h3>
-                <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+
+            {/* Right Column - Story Content */}
+            <div className="space-y-8">
+              
+              {/* Journey Card */}
+              <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent-dark rounded-full flex items-center justify-center mr-4">
+                    <span className="text-navy font-bold text-lg">1</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-navy">The Journey</h3>
+                </div>
+                <p className="text-gray-700 leading-relaxed text-lg">
                   After graduating from BITS Pilani, Kundan began his career in institutional trading at Morgan Stanley. 
                   Over the next 20 years, he worked with leading financial institutions including Barclays and RBS, 
                   mastering the art and science of derivatives trading.
                 </p>
               </div>
-              
-              <div>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-navy mb-3 sm:mb-4">The Realization</h3>
-                <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+
+              {/* Realization Card */}
+              <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-navy to-navy-dark rounded-full flex items-center justify-center mr-4">
+                    <span className="text-accent font-bold text-lg">2</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-navy">The Realization</h3>
+                </div>
+                <p className="text-gray-700 leading-relaxed text-lg">
                   Despite the complexity of options being decoded by Nobel Prize winners, 90% of retail traders were still losing money. 
-                  Kundan realized the gap wasn&apos;t in the knowledge itself, but in how it was being taught and applied.
+                  Kundan realized the gap wasn't in the knowledge itself, but in how it was being taught and applied.
                 </p>
               </div>
-              
-              <div>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-navy mb-3 sm:mb-4">The Mission</h3>
-                <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+
+              {/* Mission Card */}
+              <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent-dark rounded-full flex items-center justify-center mr-4">
+                    <span className="text-navy font-bold text-lg">3</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-navy">The Mission</h3>
+                </div>
+                <p className="text-gray-700 leading-relaxed text-lg">
                   In 2020, Kundan founded The School of Options with a simple mission: to bridge the gap between 
                   institutional-quality education and retail trader success. Today, over 2,00,000 students have 
                   benefited from his systematic approach to options trading.
                 </p>
               </div>
-              
-              <div className="bg-green rounded-lg p-4 sm:p-6 mt-6">
-                <blockquote className="text-navy font-medium italic text-sm sm:text-base">
-                  &quot;My goal is not just to teach options trading, but to create a generation of disciplined, 
-                  profitable traders who understand the science behind every trade.&quot;
-                </blockquote>
-                <cite className="text-navy font-semibold mt-2 block text-sm sm:text-base">- Kundan Kishore</cite>
+
+              {/* Quote Card */}
+              <div className="bg-gradient-to-r from-navy to-navy-dark rounded-3xl p-8 shadow-2xl">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <span className="text-navy font-bold text-2xl">"</span>
+                  </div>
+                  <div>
+                    <blockquote className="text-white font-medium text-xl leading-relaxed italic mb-4">
+                      My goal is not just to teach options trading, but to create a generation of disciplined, 
+                      profitable traders who understand the science behind every trade.
+                    </blockquote>
+                    <cite className="text-accent font-bold text-lg">— Kundan Kishore</cite>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

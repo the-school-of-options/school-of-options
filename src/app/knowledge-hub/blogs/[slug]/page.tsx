@@ -94,21 +94,31 @@ export default async function BlogPage({ params }: BlogPageProps) {
           if (imageUrl) {
             return (
               <div key={index} className="my-6 sm:my-8">
-                <div className="relative w-full rounded-lg overflow-hidden shadow-lg">
-                  <Image
-                    src={imageUrl}
-                    alt={altText}
-                    width={800}
-                    height={400}
-                    className="w-full h-auto object-contain"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
-                  />
-                </div>
-                {altText && altText !== 'Blog image' && (
-                  <p className="text-center text-sm text-gray-500 mt-2 italic">
-                    {altText}
-                  </p>
-                )}
+                <figure className="relative w-full max-w-4xl mx-auto">
+                  {/* Image container with proper centering and no visible background */}
+                  <div className="relative inline-block w-full text-center">
+                    <Image
+                      src={imageUrl}
+                      alt={altText}
+                      width={0}
+                      height={0}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+                      className="inline-block w-auto h-auto max-w-full max-h-[600px] object-contain rounded-lg shadow-lg"
+                      style={{ 
+                        width: 'auto', 
+                        height: 'auto',
+                        maxWidth: '100%',
+                        maxHeight: '600px'
+                      }}
+                    />
+                  </div>
+                  {/* Caption */}
+                  {altText && altText !== 'Blog image' && (
+                    <figcaption className="text-center text-sm text-gray-500 mt-3 italic">
+                      {altText}
+                    </figcaption>
+                  )}
+                </figure>
               </div>
             );
           }

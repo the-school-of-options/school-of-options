@@ -6,13 +6,16 @@ import {
   CpuChipIcon,
   ArrowRightIcon
 } from '@heroicons/react/24/outline';
-import { strapiService } from '@/lib/strapi-service';
+import { Suspense } from 'react';
+import { BlogGridSkeleton } from '@/components/BlogCardSkeleton';
+import { getRecentBlogs } from '@/lib/strapi-service';
+import BlogCard from '@/components/BlogCard';
 
 // Enable ISR - revalidate every hour
 export const revalidate = 3600;
 
 export default async function KnowledgeHubPage() {
-  const latestBlogs = await strapiService.getRecentBlogs(3); // Get the 3 most recent blogs
+  const latestBlogs = await getRecentBlogs(3); // Get the 3 most recent blogs
   
   const resourceCategories = [
     {
@@ -116,6 +119,32 @@ export default async function KnowledgeHubPage() {
         </div>
       </section>
 
+      {/* Latest Articles Section */}
+      <section className="py-12 sm:py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4">
+              Latest Articles
+            </h3>
+            <p className="text-base sm:text-lg text-gray-600">
+              Fresh insights from our trading experts
+            </p>
+          </div>
+          
+          <Suspense fallback={<BlogGridSkeleton count={3} />}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+              {latestBlogs.map((blog) => (
+                <BlogCard
+                  key={blog.id}
+                  blog={blog}
+                  variant="default"
+                />
+              ))}
+            </div>
+          </Suspense>
+        </div>
+      </section>
+
       {/* Resource Categories - Enhanced Responsiveness */}
       <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -169,53 +198,7 @@ export default async function KnowledgeHubPage() {
       </section>
 
       {/* Latest Content - Enhanced Responsiveness */}
-      <section className="py-12 sm:py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
-              Latest Content
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 px-4 sm:px-0">
-              Fresh insights and analysis updated regularly.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {latestBlogs.map((blog) => (
-              <div key={blog.id} className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg flex flex-col h-full">
-                {/* Header with type and date */}
-                <div className="flex items-center justify-between mb-3 sm:mb-4">
-                  <span className="bg-green text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
-                    {blog.category}
-                  </span>
-                  <span className="text-gray-500 text-xs sm:text-sm">{blog.date}</span>
-                </div>
-                
-                {/* Title */}
-                <h3 className="text-lg sm:text-xl font-bold text-navy mb-2 sm:mb-3 line-clamp-2">
-                  {blog.title}
-                </h3>
-                
-                {/* Excerpt - grows to fill space */}
-                <p className="text-gray-600 mb-4 sm:mb-6 flex-grow line-clamp-3 text-sm sm:text-base">
-                  {blog.excerpt}
-                </p>
-                
-                {/* Footer with read time and button - always at bottom */}
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="text-xs sm:text-sm text-gray-500">{blog.readTime}</span>
-                  <Link 
-                    href={`/knowledge-hub/blogs/${blog.slug}`}
-                    className="text-green font-semibold hover:text-green-dark flex items-center gap-1 text-xs sm:text-sm transition-colors"
-                  >
-                    Read More →
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Newsletter CTA - Enhanced Responsiveness */}
       <section className="py-12 sm:py-16 bg-navy text-white">

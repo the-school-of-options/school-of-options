@@ -49,8 +49,6 @@ class StrapiService {
   private async fetchAPI(endpoint: string): Promise<StrapiResponse<StrapiAny[]> | StrapiResponse<StrapiAny>> {
     const url = `${this.baseUrl}${endpoint}`;
     
-    console.log(`🔄 Fetching from Strapi: ${url}`);
-    
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -58,24 +56,17 @@ class StrapiService {
           'Authorization': `Bearer ${this.token}`,
           'Content-Type': 'application/json',
         },
-        next: { revalidate: 60 }, // Revalidate every minute for fresh data
+        next: { revalidate: 3600 }, // Revalidate every hour for production
       });
 
       if (!response.ok) {
-        console.error(`❌ Strapi API Error: ${response.status} ${response.statusText}`);
         throw new Error(`Strapi API Error: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
-      console.log(`✅ Successfully fetched from Strapi:`, { 
-        endpoint, 
-        dataCount: Array.isArray(data.data) ? data.data.length : 'single item',
-        hasData: !!data.data 
-      });
-      
       return data;
     } catch (error) {
-      console.error(`❌ Failed to fetch from Strapi API:`, error);
+      // In production, we might want to log to an error service like Sentry
       throw error;
     }
   }
@@ -83,7 +74,6 @@ class StrapiService {
   // Transform Strapi blog data to our BlogPost interface
   private transformBlogPost(strapiBlog: StrapiBlog): BlogPost | null {
     if (!strapiBlog) {
-      console.warn('⚠️ Invalid blog data received:', strapiBlog);
       return null;
     }
 
@@ -98,12 +88,6 @@ class StrapiService {
     
     // Validate required fields
     if (!slug || !title) {
-      console.warn('⚠️ Blog missing required fields:', { 
-        slug, 
-        title, 
-        availableFields: Object.keys(strapiBlog),
-        dataFields: Object.keys(data)
-      });
       return null;
     }
 
@@ -202,14 +186,6 @@ class StrapiService {
       viewCount: Number(dataObj.viewCount || dataObj.ViewCount) || 0,
     };
 
-    console.log(`✅ Transformed blog:`, { 
-      id: transformedBlog.id, 
-      title: transformedBlog.title, 
-      slug: transformedBlog.slug,
-      category: transformedBlog.category,
-      hasImage: !!transformedBlog.featuredImage
-    });
-
     return transformedBlog;
   }
 
@@ -273,11 +249,9 @@ class StrapiService {
   // Get all blogs: https://exciting-action-06824a0289.strapiapp.com/api/blogs?populate=*
   async getAllBlogs(): Promise<BlogPost[]> {
     try {
-      console.log('🔄 Fetching all blogs from Strapi...');
       const response = await this.fetchAPI('/blogs?populate=*') as StrapiResponse<StrapiAny[]>;
       
       if (!response.data || !Array.isArray(response.data)) {
-        console.warn('⚠️ No blog data received from Strapi');
         return [];
       }
 
@@ -286,10 +260,9 @@ class StrapiService {
         .filter((blog): blog is BlogPost => blog !== null)
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Sort by latest first
 
-      console.log(`✅ Successfully fetched ${blogs.length} blogs from Strapi`);
       return blogs;
     } catch (error) {
-      console.error('❌ Error fetching all blogs:', error);
+      // In production, log to error monitoring service
       return [];
     }
   }
@@ -297,13 +270,10 @@ class StrapiService {
   // Get single blog: https://exciting-action-06824a0289.strapiapp.com/api/blogs?slug=${slugName}&populate=*
   async getBlogBySlug(slug: string): Promise<BlogPost | null> {
     try {
-      console.log(`🔄 Fetching blog by slug: ${slug}`);
-      
       // First try the direct slug query
       const response = await this.fetchAPI(`/blogs?slug=${slug}&populate=*`) as StrapiResponse<StrapiAny[]>;
       
       if (!response.data || !Array.isArray(response.data)) {
-        console.warn(`⚠️ No blog data received for slug: ${slug}`);
         return null;
       }
 
@@ -316,14 +286,12 @@ class StrapiService {
       const matchingBlog = allBlogs.find(blog => blog.slug === slug);
       
       if (!matchingBlog) {
-        console.warn(`⚠️ No blog found with slug: ${slug}`);
         return null;
       }
       
-      console.log(`✅ Successfully fetched blog: ${matchingBlog.title}`);
       return matchingBlog;
     } catch (error) {
-      console.error(`❌ Error fetching blog by slug (${slug}):`, error);
+      // In production, log to error monitoring service
       return null;
     }
   }
@@ -331,19 +299,16 @@ class StrapiService {
   // Get all categories: https://exciting-action-06824a0289.strapiapp.com/api/categories
   async getAllCategories(): Promise<Category[]> {
     try {
-      console.log('🔄 Fetching all categories from Strapi...');
       const response = await this.fetchAPI('/categories') as StrapiResponse<StrapiAny[]>;
       
       if (!response.data || !Array.isArray(response.data)) {
-        console.warn('⚠️ No category data received from Strapi');
         return [];
       }
 
       const categories = response.data.map(category => this.transformCategory(category as StrapiCategory));
-      console.log(`✅ Successfully fetched ${categories.length} categories from Strapi`);
       return categories;
     } catch (error) {
-      console.error('❌ Error fetching categories:', error);
+      // In production, log to error monitoring service
       return [];
     }
   }
