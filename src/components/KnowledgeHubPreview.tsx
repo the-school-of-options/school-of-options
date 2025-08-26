@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Suspense } from 'react';
 import { 
   BookOpenIcon, 
   ChartBarIcon, 
@@ -8,26 +7,8 @@ import {
   CpuChipIcon,
   ArrowRightIcon 
 } from '@heroicons/react/24/outline';
-import { getRecentBlogs } from '@/lib/strapi-service';
-import BlogCard from './BlogCard';
-import { BlogGridSkeleton } from './BlogCardSkeleton';
 
-// Component to render recent blogs
-async function RecentBlogs() {
-  const recentBlogs = await getRecentBlogs(3);
-  
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-      {recentBlogs.map((blog) => (
-        <BlogCard
-          key={blog.id}
-          blog={blog}
-          variant="default"
-        />
-      ))}
-    </div>
-  );
-}
+
 
 export default function KnowledgeHubPreview() {
   const resources = [

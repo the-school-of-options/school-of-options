@@ -261,7 +261,7 @@ class StrapiService {
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Sort by latest first
 
       return blogs;
-    } catch (error) {
+    } catch {
       // In production, log to error monitoring service
       return [];
     }
@@ -290,7 +290,7 @@ class StrapiService {
       }
       
       return matchingBlog;
-    } catch (error) {
+    } catch {
       // In production, log to error monitoring service
       return null;
     }
@@ -307,7 +307,7 @@ class StrapiService {
 
       const categories = response.data.map(category => this.transformCategory(category as StrapiCategory));
       return categories;
-    } catch (error) {
+    } catch {
       // In production, log to error monitoring service
       return [];
     }

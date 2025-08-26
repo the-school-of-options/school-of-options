@@ -157,10 +157,10 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* Main Content - Symmetrical Layout */}
+          {/* Main Content - Perfectly Symmetrical Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             
-            {/* Left Column - Founder Profile & Credentials */}
+            {/* Left Column - Profile & Journey */}
             <div className="space-y-8">
               {/* Hero Image Card */}
               <div className="bg-white rounded-3xl p-8 shadow-2xl border border-gray-100">
@@ -209,6 +209,41 @@ export default function AboutPage() {
                 </div>
               </div>
 
+              {/* Journey Card */}
+              <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent-dark rounded-full flex items-center justify-center mr-4">
+                    <span className="text-navy font-bold text-lg">1</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-navy">The Journey</h3>
+                </div>
+                <p className="text-gray-700 leading-relaxed text-lg">
+                  After graduating from BITS Pilani, Kundan began his career in institutional trading at Morgan Stanley. 
+                  Over the next 20 years, he worked with leading financial institutions including Barclays and RBS, 
+                  mastering the art and science of derivatives trading.
+                </p>
+              </div>
+
+              {/* Quote Card */}
+              <div className="bg-gradient-to-r from-navy to-navy-dark rounded-3xl p-8 shadow-2xl">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <span className="text-navy font-bold text-2xl">&quot;</span>
+                  </div>
+                  <div>
+                    <blockquote className="text-white font-medium text-xl leading-relaxed italic mb-4">
+                      My goal is not just to teach options trading, but to create a generation of disciplined, 
+                      profitable traders who understand the science behind every trade.
+                    </blockquote>
+                    <cite className="text-accent font-bold text-lg">— Kundan Kishore</cite>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Credentials & Story */}
+            <div className="space-y-8">
+              
               {/* Credentials Card */}
               <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
                 <h4 className="text-2xl font-bold text-navy mb-6 text-center">Credentials</h4>
@@ -236,25 +271,6 @@ export default function AboutPage() {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Right Column - Story Content */}
-            <div className="space-y-8">
-              
-              {/* Journey Card */}
-              <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent-dark rounded-full flex items-center justify-center mr-4">
-                    <span className="text-navy font-bold text-lg">1</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-navy">The Journey</h3>
-                </div>
-                <p className="text-gray-700 leading-relaxed text-lg">
-                  After graduating from BITS Pilani, Kundan began his career in institutional trading at Morgan Stanley. 
-                  Over the next 20 years, he worked with leading financial institutions including Barclays and RBS, 
-                  mastering the art and science of derivatives trading.
-                </p>
-              </div>
 
               {/* Realization Card */}
               <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
@@ -266,7 +282,7 @@ export default function AboutPage() {
                 </div>
                 <p className="text-gray-700 leading-relaxed text-lg">
                   Despite the complexity of options being decoded by Nobel Prize winners, 90% of retail traders were still losing money. 
-                  Kundan realized the gap wasn't in the knowledge itself, but in how it was being taught and applied.
+                  Kundan realized the gap wasn&apos;t in the knowledge itself, but in how it was being taught and applied.
                 </p>
               </div>
 
@@ -283,22 +299,6 @@ export default function AboutPage() {
                   institutional-quality education and retail trader success. Today, over 2,00,000 students have 
                   benefited from his systematic approach to options trading.
                 </p>
-              </div>
-
-              {/* Quote Card */}
-              <div className="bg-gradient-to-r from-navy to-navy-dark rounded-3xl p-8 shadow-2xl">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-navy font-bold text-2xl">"</span>
-                  </div>
-                  <div>
-                    <blockquote className="text-white font-medium text-xl leading-relaxed italic mb-4">
-                      My goal is not just to teach options trading, but to create a generation of disciplined, 
-                      profitable traders who understand the science behind every trade.
-                    </blockquote>
-                    <cite className="text-accent font-bold text-lg">— Kundan Kishore</cite>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
