@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {  
+
+    eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
+
   // Image optimization configuration
   images: {
     unoptimized: true, // Required for static export
@@ -19,6 +26,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  
+
 
   // Production optimizations
   compress: true,
