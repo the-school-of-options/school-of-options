@@ -7,13 +7,12 @@ import {
   CalendarIcon, 
   ClockIcon, 
   UserIcon,
-  TagIcon,
-  ShareIcon
+  TagIcon
 } from '@heroicons/react/24/outline';
 import { getBlogBySlug, getAllBlogs } from '@/lib/strapi-service';
 
-// Enable ISR - revalidate every hour
-export const revalidate = 3600;
+// Use very short revalidation for fresh data
+export const revalidate = 0;
 
 interface BlogPageProps {
   params: Promise<{
@@ -23,10 +22,15 @@ interface BlogPageProps {
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-  const blogs = await getAllBlogs();
-  return blogs.map((blog) => ({
-    slug: blog.slug,
-  }));
+  try {
+    const blogs = await getAllBlogs();
+    return blogs.map((blog) => ({
+      slug: blog.slug,
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
+  }
 }
 
 // Generate metadata for SEO
@@ -219,15 +223,10 @@ export default async function BlogPage({ params }: BlogPageProps) {
             </span>
           </div>
 
-          {/* Title */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-4 sm:mb-6 leading-tight">
-            {blog.title}
-          </h1>
-
-          {/* Excerpt */}
-          <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-            {blog.excerpt}
-          </p>
+                      {/* Title */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-6 sm:mb-8 leading-tight">
+              {blog.title}
+            </h1>
 
           {/* Meta Information */}
           <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm sm:text-base text-gray-500 mb-6 sm:mb-8">
@@ -259,12 +258,12 @@ export default async function BlogPage({ params }: BlogPageProps) {
           </div>
 
           {/* Share Button */}
-          <div className="border-b border-gray-200 pb-6 sm:pb-8">
+          {/* <div className="border-b border-gray-200 pb-6 sm:pb-8">
             <button className="inline-flex items-center text-accent hover:text-accent-dark transition-colors text-sm sm:text-base font-semibold">
               <ShareIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               Share Article
             </button>
-          </div>
+          </div> */}
         </header>
 
         {/* Article Content */}

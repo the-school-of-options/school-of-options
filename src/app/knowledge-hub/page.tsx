@@ -11,8 +11,8 @@ import { BlogGridSkeleton } from '@/components/BlogCardSkeleton';
 import { getRecentBlogs } from '@/lib/strapi-service';
 import BlogCard from '@/components/BlogCard';
 
-// Enable ISR - revalidate every hour
-export const revalidate = 3600;
+// Use very short revalidation for fresh data
+export const revalidate = 0;
 
 export default async function KnowledgeHubPage() {
   const latestBlogs = await getRecentBlogs(3); // Get the 3 most recent blogs

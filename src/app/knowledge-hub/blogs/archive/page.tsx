@@ -113,7 +113,7 @@ export default async function BlogArchivePage() {
                 All Articles
               </h2>
               <p className="text-gray-600 mt-2">
-                Browse through all {allBlogs.length} articles, sorted by latest first
+                Browse through all articles, sorted by latest first
               </p>
             </div>
 

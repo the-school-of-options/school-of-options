@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   keywords: 'options trading blog, trading articles, options strategies, trading education, financial education',
 };
 
-// Enable ISR - revalidate every hour
-export const revalidate = 3600;
+// Use very short revalidation for fresh data
+export const revalidate = 0;
 
 export default async function BlogsPage() {
   const allBlogs = await getAllBlogs();

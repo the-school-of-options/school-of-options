@@ -56,7 +56,7 @@ class StrapiService {
           'Authorization': `Bearer ${this.token}`,
           'Content-Type': 'application/json',
         },
-        next: { revalidate: 3600 }, // Revalidate every hour for production
+        cache: 'no-store', // Always fetch fresh data
       });
 
       if (!response.ok) {
@@ -155,6 +155,7 @@ class StrapiService {
 
     // Extract dates
     const publishedDate = String(dataObj.publishedDate || dataObj.publishedAt || strapiBlog.publishedAt || dataObj.createdAt || strapiBlog.createdAt || new Date().toISOString());
+    const updatedDate = String(dataObj.updatedAt || strapiBlog.updatedAt || publishedDate);
 
     // Extract author
     const authorData = dataObj.author as Record<string, unknown> | undefined;
@@ -169,7 +170,7 @@ class StrapiService {
       authorName = authorData.name;
     }
 
-    const transformedBlog: BlogPost = {
+    const transformedBlog: BlogPost & { updatedAt: string } = {
       id: strapiBlog.id.toString(),
       slug: String(slug),
       title: String(title),
@@ -177,6 +178,7 @@ class StrapiService {
       content: content,
       author: authorName,
       date: this.formatDate(publishedDate),
+      updatedAt: updatedDate,
       readTime: String(dataObj.readTime || dataObj.ReadTime || this.calculateReadTime(content)),
       category: categoryName,
       tags: tags,
@@ -258,7 +260,18 @@ class StrapiService {
       const blogs = response.data
         .map(blog => this.transformBlogPost(blog as StrapiBlog))
         .filter((blog): blog is BlogPost => blog !== null)
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Sort by latest first
+        .sort((a, b) => {
+          // Sort by latest updated or created date
+          const aDate = new Date(Math.max(
+            new Date(a.date).getTime(),
+            new Date((a as BlogPost & { updatedAt?: string }).updatedAt || a.date).getTime()
+          ));
+          const bDate = new Date(Math.max(
+            new Date(b.date).getTime(),
+            new Date((b as BlogPost & { updatedAt?: string }).updatedAt || b.date).getTime()
+          ));
+          return bDate.getTime() - aDate.getTime();
+        });
 
       return blogs;
     } catch {
@@ -316,9 +329,7 @@ class StrapiService {
   // Helper methods for specific use cases
   async getRecentBlogs(limit: number = 3): Promise<BlogPost[]> {
     const allBlogs = await this.getAllBlogs();
-    return allBlogs
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, limit);
+    return allBlogs.slice(0, limit); // Already sorted in getAllBlogs()
   }
 
   async getFeaturedBlogs(): Promise<BlogPost[]> {
