@@ -164,7 +164,7 @@ export default function BlogCard({
             <span>{blog.readTime}</span>
           </div>
           <div className="text-accent font-semibold flex items-center gap-1 text-xs sm:text-sm transition-all group-hover:translate-x-1">
-            Read More 
+            Read More Now
             <ArrowRightIcon className="w-3 h-3 sm:w-4 sm:h-4" />
           </div>
         </div>
