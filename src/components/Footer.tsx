@@ -81,7 +81,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-300 text-sm font-semibold">
-            © 2024 The School of Options. All rights reserved.
+            © 2025 The School of Options. All rights reserved.
           </div>
           <div className="text-gray-300 text-sm font-semibold mt-4 md:mt-0">
             <span>Founded by Kundan Kishore</span>
