@@ -25,7 +25,7 @@ jobs:
           git pull origin main
           
           echo "📦 Installing dependencies..."
-          npm install --production=false
+          npm install --force
           
           echo "🏗️ Building application..."
           npm run build
