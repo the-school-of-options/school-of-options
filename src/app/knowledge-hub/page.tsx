@@ -97,7 +97,7 @@ export default async function KnowledgeHubPage() {
             <span className="text-green">Free for Everyone</span>
           </h1>
           
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-4xl mx-auto px-4 sm:px-0">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-4xl mx-auto px-4 sm:px-0 font-semibold">
             Access our comprehensive library of free resources. Even if you never join our mentorship, 
             we&apos;ll make you smarter about Options than 90% of traders.
           </p>
@@ -105,15 +105,15 @@ export default async function KnowledgeHubPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-8 sm:mt-12">
             <div className="text-center">
               <div className="text-2xl sm:text-3xl font-bold text-green mb-1 sm:mb-2">500+</div>
-              <div className="text-gray-300 text-sm sm:text-base">Free Articles & Videos</div>
+              <div className="text-gray-300 text-sm sm:text-base font-semibold">Free Articles & Videos</div>
             </div>
             <div className="text-center">
               <div className="text-2xl sm:text-3xl font-bold text-green mb-1 sm:mb-2">50+</div>
-              <div className="text-gray-300 text-sm sm:text-base">Trading Tools</div>
+              <div className="text-gray-300 text-sm sm:text-base font-semibold">Trading Tools</div>
             </div>
             <div className="text-center">
               <div className="text-2xl sm:text-3xl font-bold text-green mb-1 sm:mb-2">Weekly</div>
-              <div className="text-gray-300 text-sm sm:text-base">Fresh Content</div>
+              <div className="text-gray-300 text-sm sm:text-base font-semibold">Fresh Content</div>
             </div>
           </div>
         </div>
@@ -126,7 +126,7 @@ export default async function KnowledgeHubPage() {
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4">
               Latest Articles
             </h3>
-            <p className="text-base sm:text-lg text-gray-600">
+            <p className="text-base sm:text-lg text-gray-600 font-semibold">
               Fresh insights from our trading experts
             </p>
           </div>
@@ -152,7 +152,7 @@ export default async function KnowledgeHubPage() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
               Explore Our Free Resources
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 px-4 sm:px-0">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 px-4 sm:px-0 font-semibold">
               Everything you need to understand options trading, completely free.
             </p>
           </div>
@@ -172,7 +172,7 @@ export default async function KnowledgeHubPage() {
                     <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-navy mb-2 sm:mb-3 group-hover:text-green transition-colors">
                       {category.title}
                     </h3>
-                    <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">
+                    <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base font-semibold">
                       {category.description}
                     </p>
                   </div>
@@ -181,7 +181,7 @@ export default async function KnowledgeHubPage() {
                 <div className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
                   <div className="font-semibold text-navy mb-2 text-sm sm:text-base">Featured Content:</div>
                   {category.featured.map((item) => (
-                    <div key={item} className="flex items-start text-gray-600 text-xs sm:text-sm">
+                    <div key={item} className="flex items-start text-gray-600 text-xs sm:text-sm font-semibold">
                       <ArrowRightIcon className="h-3 w-3 sm:h-4 sm:w-4 text-green mr-2 mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
                     </div>
@@ -207,7 +207,7 @@ export default async function KnowledgeHubPage() {
             Never Miss an Update
           </h2>
           
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 px-4 sm:px-0">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 px-4 sm:px-0 font-semibold">
             Get daily market levels, insights, and new content delivered to your inbox at 8:30 AM.
           </p>
           

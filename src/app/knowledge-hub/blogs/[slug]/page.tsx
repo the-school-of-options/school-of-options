@@ -118,7 +118,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
                   </div>
                   {/* Caption */}
                   {altText && altText !== 'Blog image' && (
-                    <figcaption className="text-center text-sm text-gray-500 mt-3 italic">
+                    <figcaption className="text-center text-sm text-gray-500 mt-3 italic font-semibold">
                       {altText}
                     </figcaption>
                   )}
@@ -163,7 +163,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
         // Handle list items
         if (line.startsWith('- ')) {
           return (
-            <li key={index} className="text-gray-700 mb-1 sm:mb-2 ml-4 sm:ml-6 text-sm sm:text-base">
+            <li key={index} className="text-gray-700 mb-1 sm:mb-2 ml-4 sm:ml-6 text-sm sm:text-base font-semibold">
               {line.substring(2)}
             </li>
           );
@@ -172,7 +172,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
         // Handle numbered lists
         if (line.match(/^\d+\./)) {
           return (
-            <li key={index} className="text-gray-700 mb-1 sm:mb-2 ml-4 sm:ml-6 text-sm sm:text-base list-decimal">
+            <li key={index} className="text-gray-700 mb-1 sm:mb-2 ml-4 sm:ml-6 text-sm sm:text-base list-decimal font-semibold">
               {line.substring(line.indexOf('.') + 2)}
             </li>
           );
@@ -190,7 +190,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
         
         // Regular paragraphs
         return (
-          <p key={index} className="text-gray-700 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">
+          <p key={index} className="text-gray-700 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base font-semibold">
             {line}
           </p>
         );
@@ -201,7 +201,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
   return (
     <div className="min-h-screen bg-white">
       {/* Header Navigation */}
-      <div className="bg-gray-50 border-b">
+      {/* <div className="bg-gray-50 border-b">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <Link
             href="/knowledge-hub"
@@ -211,7 +211,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
             Back to Knowledge Hub
           </Link>
         </div>
-      </div>
+      </div> */}
 
       {/* Article Header */}
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
@@ -229,7 +229,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
             </h1>
 
           {/* Meta Information */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm sm:text-base text-gray-500 mb-6 sm:mb-8">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 font-semibold">
             <div className="flex items-center">
               <UserIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               <span>{blog.author}</span>
@@ -280,7 +280,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
               <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
                 Want to Learn More About Options Trading?
               </h3>
-              <p className="text-gray-300 mb-6 sm:mb-8 text-sm sm:text-base">
+              <p className="text-gray-300 mb-6 sm:mb-8 text-sm sm:text-base font-semibold">
                 Join our 6-month mentorship program and learn from 20+ years of trading experience.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">

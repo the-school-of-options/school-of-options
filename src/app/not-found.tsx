@@ -25,13 +25,13 @@ export default function NotFound() {
             Go Home
           </Link>
           
-          <Link
+          {/* <Link
             href="/knowledge-hub"
             className="btn-secondary flex items-center justify-center gap-2"
           >
             <BookOpenIcon className="h-5 w-5" />
             Browse Resources
-          </Link>
+          </Link> */}
         </div>
         
         <div className="mt-8 p-4 bg-white rounded-lg border">

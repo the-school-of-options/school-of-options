@@ -36,11 +36,11 @@ export default function NewsletterCTA() {
             Get Daily Market Levels & Insights
           </h2>
           
-          <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 px-4 sm:px-0">
+          <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 px-4 sm:px-0 font-semibold">
             Join thousands of traders who start their day with our free newsletter at 8:30 AM
           </p>
           
-          <div className="flex items-center justify-center mb-8 text-gray-500">
+          <div className="flex items-center justify-center mb-8 text-gray-500 font-semibold">
             <ClockIcon className="h-5 w-5 mr-2" />
             <span>Delivered daily at 8:30 AM IST</span>
           </div>
@@ -74,7 +74,7 @@ export default function NewsletterCTA() {
                 Get Free Daily Newsletter
               </button>
               
-              <p className="text-sm text-gray-500 mt-4">
+              <p className="text-sm text-gray-500 mt-4 font-semibold">
                 No spam. Unsubscribe anytime. 50,000+ traders already subscribed.
               </p>
             </form>
@@ -86,7 +86,7 @@ export default function NewsletterCTA() {
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-navy mb-2">Welcome Aboard!</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 font-semibold">
                 You&apos;ll receive your first newsletter tomorrow at 8:30 AM.
               </p>
             </div>

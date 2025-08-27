@@ -6,7 +6,7 @@ export default function Loading() {
         <div className="text-2xl font-bold text-navy mb-2">
           The School of <span className="text-green">Options</span>
         </div>
-        <p className="text-gray-600">Loading...</p>
+        <p className="text-gray-600 font-semibold">Loading...</p>
       </div>
     </div>
   );
