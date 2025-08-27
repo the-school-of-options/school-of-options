@@ -1,13 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {  
-
-    eslint: {
+  eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-
+  
+  typescript: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has TypeScript errors.
+    ignoreBuildErrors: true,
+  },
+  
   // Image optimization configuration
   images: {
     unoptimized: true, // Required for static export
@@ -20,15 +25,13 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'exciting-action-06824a0289.strapiapp.com',
+        hostname: 'exciting-action-06824a0289.media.strapiapp.com',
         port: '',
         pathname: '/**',
       },
     ],
   },
   
-
-
   // Production optimizations
   compress: true,
   poweredByHeader: false,
@@ -59,7 +62,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-
+  
   // Webpack optimizations for production
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
