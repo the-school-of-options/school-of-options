@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { ClockIcon, TagIcon, UserIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { BlogPost } from '@/data/blogs';
 
-// Function to generate meaningful preview text from actual blog content
 function generatePreviewText(blog: BlogPost): string {
   // First, try to use the excerpt if it exists
   let content = blog.excerpt || '';
