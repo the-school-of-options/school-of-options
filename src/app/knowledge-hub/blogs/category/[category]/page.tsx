@@ -71,7 +71,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               Blogs
             </Link>
             <span className="text-gray-400">→</span>
-            <span className="text-gray-600">{category.name}</span>
+            <span className="text-gray-600 font-semibold">{category.name}</span>
           </div>
         </div>
       </div>
@@ -87,12 +87,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
               {category.name}
             </h1>
-            <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto font-semibold">
               {category.description}
             </p>
             <div className="flex items-center justify-center space-x-6 text-sm sm:text-base">
               <div className="flex items-center">
-                <span className="text-gray-400">Total Articles:</span>
+                <span className="text-gray-400 font-semibold">Total Articles:</span>
                 <span className="ml-2 font-semibold text-accent">{category.postCount}</span>
               </div>
             </div>
@@ -140,7 +140,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">
             Ready to Master {category.name}?
           </h2>
-          <p className="text-lg text-gray-300 mb-6 sm:mb-8">
+          <p className="text-lg text-gray-300 mb-6 sm:mb-8 font-semibold">
             Join our comprehensive mentorship program for hands-on learning and expert guidance.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">

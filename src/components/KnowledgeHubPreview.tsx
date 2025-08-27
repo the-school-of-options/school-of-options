@@ -51,7 +51,7 @@ export default function KnowledgeHubPreview() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
             Knowledge Hub - Free for Everyone
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4 sm:px-0">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4 sm:px-0 font-semibold">
             Even if you never join our mentorship, we&apos;ll still make you smarter about Options than 90% of traders. 
             Access our comprehensive library of free resources.
           </p>
@@ -72,7 +72,7 @@ export default function KnowledgeHubPreview() {
                 {resource.title}
               </h3>
               
-              <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
+              <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 font-semibold">
                 {resource.description}
               </p>
               
@@ -100,7 +100,7 @@ export default function KnowledgeHubPreview() {
                     {resource.title}
                   </h3>
                   
-                  <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
+                  <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 font-semibold">
                     {resource.description}
                   </p>
                   

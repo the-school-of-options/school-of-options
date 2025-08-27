@@ -105,24 +105,23 @@ export default function MentorshipPage() {
   return (
     <div>
       {/* Hero Section - Enhanced Responsiveness */}
-      <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-12 sm:py-16 lg:py-20">
+      <section className="bg-gradient-to-br from-navy to-navy-dark text-white min-h-[70vh] flex items-center justify-center py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6">
-            <span className="block sm:inline">Master Options Trading with</span>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 sm:mb-8">
+            <span className="block sm:inline">6-Month Mentorship Program</span>
             <br className="hidden sm:block" />
-            <span className="block sm:inline text-accent mt-2 sm:mt-0">Discipline & Edge</span>
+            <span className="block sm:inline text-accent mt-2 sm:mt-0">on Options Trading</span>
           </h1>
           
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed px-2 sm:px-0">
-            Learn high-probability setups, market neutrality, premium decay edge, and automation — 
-            not jackpot trades or guesswork.
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 sm:mb-10 max-w-4xl mx-auto leading-relaxed px-2 sm:px-0 font-semibold">
+          Master Options Trading with Discipline & Edge. Learn high-probability setups, market neutrality, premium decay edge, and automation - not jackpot trades or guesswork
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-2xl mx-auto">
-            <button className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-2xl mx-auto">
+            <button className="btn-primary text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 w-full sm:w-auto">
               Apply Now
             </button>
-            <Link href="/knowledge-hub" className="border border-accent text-accent hover:bg-accent hover:text-navy px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-colors text-base sm:text-lg w-full sm:w-auto text-center">
+            <Link href="/knowledge-hub" className="border border-accent text-accent hover:bg-accent hover:text-navy px-8 sm:px-10 py-4 sm:py-5 rounded-lg font-semibold transition-colors text-base sm:text-lg w-full sm:w-auto text-center">
               <span className="sm:hidden">Free Resources</span>
               <span className="hidden sm:inline">Explore Free Resources First</span>
             </Link>
@@ -137,7 +136,7 @@ export default function MentorshipPage() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
               6-Month Learning Roadmap
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
               A systematic journey from complete beginner to disciplined options trader
             </p>
           </div>
@@ -154,23 +153,30 @@ export default function MentorshipPage() {
                   
                   <div className={`w-full lg:w-5/12 ${index % 2 === 0 ? 'lg:text-right lg:pr-8' : 'lg:text-left lg:pl-8'}`}>
                     <div className="bg-gray-50 rounded-2xl p-6 shadow-lg">
+                      {/* Mobile Layout - Icon on left */}
                       <div className="flex items-center mb-4 lg:hidden">
-                        <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mr-4">
+                        <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mr-4 flex-shrink-0">
                           <item.icon className="h-6 w-6 text-navy" />
                         </div>
-                        <div className="text-2xl font-bold text-accent">Step {item.step}</div>
-                      </div>
-                      
-                      <div className="hidden lg:flex items-center justify-center mb-4">
-                        <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center">
-                          <item.icon className="h-8 w-8 text-navy" />
+                        <div className="flex-1">
+                          <div className="text-xl font-bold text-accent mb-1">Step {item.step}</div>
+                          <h3 className="text-lg font-bold text-navy">{item.title}</h3>
                         </div>
                       </div>
                       
-                      <div className="hidden lg:block text-2xl font-bold text-accent mb-2">Step {item.step}</div>
-                      <h3 className="text-xl font-bold text-navy mb-3">{item.title}</h3>
-                      <p className="text-gray-600 mb-4">{item.description}</p>
-                      <div className="text-sm font-semibold text-accent">{item.duration}</div>
+                      {/* Desktop Layout - Icon position based on side */}
+                      <div className={`hidden lg:flex items-center mb-4 ${index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
+                        <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mx-4">
+                          <item.icon className="h-8 w-8 text-navy" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-2xl font-bold text-accent mb-1">Step {item.step}</div>
+                          <h3 className="text-xl font-bold text-navy">{item.title}</h3>
+                        </div>
+                      </div>
+                      
+                      <p className="text-gray-600 mb-4 font-semibold">{item.description}</p>
+                      <div className="text-sm font-bold text-accent bg-accent/10 px-3 py-1 rounded-full inline-block">{item.duration}</div>
                     </div>
                   </div>
                 </div>
@@ -187,7 +193,7 @@ export default function MentorshipPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
               Step 1: Build Your Foundation
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 font-semibold">
               Master 40+ essential concepts across 6 critical areas of options trading
             </p>
           </div>
@@ -201,7 +207,7 @@ export default function MentorshipPage() {
                 </div>
                 <ul className="space-y-2">
                   {category.concepts.map((concept) => (
-                    <li key={concept} className="text-gray-600 text-sm flex items-start">
+                    <li key={concept} className="text-gray-600 text-sm font-semibold flex items-start">
                       <CheckIcon className="h-4 w-4 text-accent mr-2 mt-0.5 flex-shrink-0" />
                       {concept}
                     </li>
@@ -220,7 +226,7 @@ export default function MentorshipPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
               Step 2: Training Before Market Entry
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 font-semibold">
               Practice and perfect your skills with professional-grade tools
             </p>
           </div>
@@ -233,11 +239,11 @@ export default function MentorshipPage() {
                 </div>
                 
                 <h3 className="text-2xl font-bold text-navy mb-4">{tool.title}</h3>
-                <p className="text-gray-600 mb-6">{tool.description}</p>
+                <p className="text-gray-600 mb-6 font-semibold">{tool.description}</p>
                 
                 <ul className="space-y-2 text-left">
                   {tool.features.map((feature) => (
-                    <li key={feature} className="text-gray-600 text-sm flex items-start">
+                    <li key={feature} className="text-gray-600 text-sm font-semibold flex items-start">
                       <CheckIcon className="h-4 w-4 text-accent mr-2 mt-0.5 flex-shrink-0" />
                       {feature}
                     </li>
@@ -256,8 +262,8 @@ export default function MentorshipPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
               Step 3: Real Mentorship
             </h2>
-            <p className="text-xl text-gray-600">
-              No tips, no calls — only structured guidance for disciplined trading
+            <p className="text-xl text-gray-600 font-semibold">
+              No tips, no calls - only structured guidance for disciplined trading
             </p>
           </div>
 
@@ -268,21 +274,21 @@ export default function MentorshipPage() {
               <div className="space-y-6">
                 <div className="bg-white rounded-lg p-6 border-l-4 border-accent">
                   <h4 className="font-bold text-navy mb-2">Discipline Over Profits</h4>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 font-semibold">
                     We focus on building consistent, disciplined trading habits rather than chasing quick profits.
                   </p>
                 </div>
                 
                 <div className="bg-white rounded-lg p-6 border-l-4 border-accent">
                   <h4 className="font-bold text-navy mb-2">Edge-Based Trading</h4>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 font-semibold">
                     Learn to identify and exploit statistical edges in the market through systematic approaches.
                   </p>
                 </div>
                 
                 <div className="bg-white rounded-lg p-6 border-l-4 border-accent">
                   <h4 className="font-bold text-navy mb-2">Risk-First Mindset</h4>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 font-semibold">
                     Every strategy begins with risk management, not profit potential.
                   </p>
                 </div>
@@ -297,7 +303,7 @@ export default function MentorshipPage() {
                   <CalendarIcon className="h-6 w-6 text-accent mr-3 mt-1" />
                   <div>
                     <div className="font-semibold text-navy">Weekly Sunday Calls</div>
-                    <div className="text-gray-600 text-sm">Every Sunday 10 AM for 6 months</div>
+                    <div className="text-gray-600 text-sm font-semibold">Every Sunday 10 AM for 6 months</div>
                   </div>
                 </div>
                 
@@ -305,7 +311,7 @@ export default function MentorshipPage() {
                   <DocumentTextIcon className="h-6 w-6 text-accent mr-3 mt-1" />
                   <div>
                     <div className="font-semibold text-navy">Personal Trading Plan</div>
-                    <div className="text-gray-600 text-sm">Customized strategy based on your risk profile</div>
+                    <div className="text-gray-600 text-sm font-semibold">Customized strategy based on your risk profile</div>
                   </div>
                 </div>
                 
@@ -313,7 +319,7 @@ export default function MentorshipPage() {
                   <LightBulbIcon className="h-6 w-6 text-accent mr-3 mt-1" />
                   <div>
                     <div className="font-semibold text-navy">Psychology & Discipline</div>
-                    <div className="text-gray-600 text-sm">Mental frameworks for consistent execution</div>
+                    <div className="text-gray-600 text-sm font-semibold">Mental frameworks for consistent execution</div>
                   </div>
                 </div>
                 
@@ -321,14 +327,14 @@ export default function MentorshipPage() {
                   <ShieldCheckIcon className="h-6 w-6 text-accent mr-3 mt-1" />
                   <div>
                     <div className="font-semibold text-navy">Performance Review</div>
-                    <div className="text-gray-600 text-sm">Regular analysis of your trading decisions</div>
+                    <div className="text-gray-600 text-sm font-semibold">Regular analysis of your trading decisions</div>
                   </div>
                 </div>
               </div>
               
               <div className="mt-8 p-4 bg-accent/10 rounded-lg">
                 <p className="text-navy font-semibold text-center">
-                  &quot;No tips, no calls — only structured guidance to make you an independent, disciplined trader.&quot;
+                  &quot;No tips, no calls - only structured guidance to make you an independent, disciplined trader.&quot;
                 </p>
               </div>
             </div>
@@ -343,8 +349,8 @@ export default function MentorshipPage() {
             Start Your Journey as a Disciplined Trader
           </h2>
           
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Join the next cohort of serious traders who choose discipline over gambling, 
+          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto font-semibold">
+            Join a community of serious traders who choose discipline over gambling, 
             edge over emotion, and systematic approach over guesswork.
           </p>
           
@@ -354,7 +360,7 @@ export default function MentorshipPage() {
                 <CurrencyRupeeIcon className="h-12 w-12 text-accent mr-4" />
                 <div>
                   <div className="text-4xl font-bold">₹35,000</div>
-                  <div className="text-gray-300">Complete Program</div>
+                  <div className="text-gray-300 font-semibold">Complete Program</div>
                 </div>
               </div>
               
@@ -362,7 +368,7 @@ export default function MentorshipPage() {
                 <ClockIcon className="h-12 w-12 text-accent mr-4" />
                 <div>
                   <div className="text-4xl font-bold">6 Months</div>
-                  <div className="text-gray-300">Full Mentorship</div>
+                  <div className="text-gray-300 font-semibold">Full Mentorship</div>
                 </div>
               </div>
               
@@ -370,7 +376,7 @@ export default function MentorshipPage() {
                 <UsersIcon className="h-12 w-12 text-accent mr-4" />
                 <div>
                   <div className="text-4xl font-bold">Limited</div>
-                  <div className="text-gray-300">Seats Available</div>
+                  <div className="text-gray-300 font-semibold">Personalised<br/>Mentorship</div>
                 </div>
               </div>
             </div>
@@ -382,9 +388,7 @@ export default function MentorshipPage() {
             </button>
           </div>
           
-          <p className="text-gray-300 text-sm">
-            Next cohort starts January 15, 2025 • Limited to 50 students for personalized attention
-          </p>
+
         </div>
       </section>
 

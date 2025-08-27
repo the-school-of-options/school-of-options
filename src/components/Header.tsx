@@ -13,8 +13,10 @@ export default function Header() {
     { name: 'Home', href: '/' },
     { name: 'Mentorship Program', href: '/mentorship' },
     { name: 'Knowledge Hub', href: '/knowledge-hub' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Newsletter', href: '/newsletter' },
+    
+    // { name: 'About', href: '/about' },
+    // { name: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -41,11 +43,11 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                                            className={`px-2 lg:px-3 py-2 text-xs sm:text-sm font-medium transition-colors ${
-                          isActive 
-                            ? 'text-accent font-semibold' // Just color + bold (no outline)
-                            : 'text-navy hover:text-accent'
-                        }`}
+                                                                className={`px-2 lg:px-3 py-2 text-xs sm:text-sm font-semibold transition-colors ${
+                      isActive 
+                        ? 'text-accent font-bold' // Active state with bold weight
+                        : 'text-navy hover:text-accent'
+                    }`}
                   >
                     {item.name}
                   </Link>
@@ -60,8 +62,8 @@ export default function Header() {
               href="/mentorship"
               className="btn-primary text-sm lg:text-base px-4 lg:px-6 py-2 lg:py-3"
             >
-              <span className="hidden lg:inline">Join Next Cohort</span>
-              <span className="lg:hidden">Join Cohort</span>
+              <span className="hidden lg:inline">Enroll Now</span>
+              <span className="lg:hidden">Enroll Now</span>
             </Link>
           </div>
 
@@ -90,9 +92,9 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`block px-3 sm:px-4 py-3 text-base sm:text-lg font-medium border-b border-gray-100 last:border-b-0 ${
+                    className={`block px-3 sm:px-4 py-3 text-base sm:text-lg font-semibold border-b border-gray-100 last:border-b-0 ${
                       isActive 
-                        ? 'text-accent font-semibold bg-accent/5' // Mobile active style
+                        ? 'text-accent font-bold bg-accent/5' // Mobile active style with bold weight
                         : 'text-navy hover:text-accent'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
@@ -107,7 +109,7 @@ export default function Header() {
                   className="btn-primary w-full text-center py-4"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Join Next Cohort
+                  Enroll Now
                 </Link>
               </div>
             </div>

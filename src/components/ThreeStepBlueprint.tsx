@@ -29,7 +29,7 @@ export default function ThreeStepBlueprint() {
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-navy mb-3 sm:mb-4 lg:mb-6">
             Our Proven Success Formula
           </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
             A systematic 3-step approach that transforms beginners into confident options traders
           </p>
         </div>
@@ -49,11 +49,11 @@ export default function ThreeStepBlueprint() {
                 </div>
                 
                 <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-navy mb-2 sm:mb-3 lg:mb-4 group-hover:text-accent transition-colors">{step.title}</h3>
-                <p className="text-gray-600 mb-3 sm:mb-4 lg:mb-6 flex-grow text-xs sm:text-sm lg:text-base">{step.description}</p>
+                <p className="text-gray-600 mb-3 sm:mb-4 lg:mb-6 flex-grow text-xs sm:text-sm lg:text-base font-semibold">{step.description}</p>
                 
                 <ul className="space-y-1.5 sm:space-y-2 lg:space-y-3 text-left">
                   {step.features.map((feature) => (
-                    <li key={feature} className="text-xs sm:text-sm text-gray-600 flex items-start">
+                    <li key={feature} className="text-xs sm:text-sm text-gray-600 flex items-start font-semibold">
                       <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-accent rounded-full mr-2 sm:mr-3 mt-1 sm:mt-1.5 lg:mt-2 flex-shrink-0" />
                       <span>{feature}</span>
                     </li>
@@ -68,7 +68,7 @@ export default function ThreeStepBlueprint() {
           <p className="text-lg sm:text-xl lg:text-2xl font-bold text-navy mb-3 sm:mb-4 px-4 sm:px-0">
             This is not just a course. It&apos;s a blueprint for a successful trading career.
           </p>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-600 px-4 sm:px-0">
+          <p className="text-sm sm:text-base lg:text-lg text-gray-600 px-4 sm:px-0 font-semibold">
             Join thousands who have transformed their trading journey with our proven methodology.
           </p>
         </div>

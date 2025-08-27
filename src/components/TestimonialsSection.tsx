@@ -35,7 +35,7 @@ export default function TestimonialsSection() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
             Real Stories, Real Results
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
             See how our students transformed their trading journey from consistent losses to profitable strategies
           </p>
         </div>
@@ -52,7 +52,7 @@ export default function TestimonialsSection() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="font-bold text-navy text-sm sm:text-base">{testimonial.name}</div>
-                  <div className="text-xs sm:text-sm text-gray-600">
+                  <div className="text-xs sm:text-sm text-gray-600 font-semibold">
                     {testimonial.role}, {testimonial.location}
                   </div>
                 </div>
@@ -66,13 +66,13 @@ export default function TestimonialsSection() {
               </div>
               
               {/* Content */}
-              <p className="text-gray-700 mb-4 sm:mb-6 italic leading-relaxed flex-grow text-sm sm:text-base">
+              <p className="text-gray-700 mb-4 sm:mb-6 italic leading-relaxed flex-grow text-sm sm:text-base font-semibold">
                 &quot;{testimonial.content}&quot;
               </p>
               
               {/* Result Highlight */}
-              <div className="bg-accent/10 rounded-lg p-3 sm:p-4 mt-auto">
-                <div className="text-accent font-semibold text-sm sm:text-base">
+              <div className="bg-accent/15 rounded-lg p-3 sm:p-4 mt-auto border border-accent/20">
+                <div className="text-navy font-bold text-sm sm:text-base">
                   {testimonial.result}
                 </div>
               </div>
@@ -81,10 +81,10 @@ export default function TestimonialsSection() {
         </div>
         
         <div className="text-center mt-8 sm:mt-12">
-          <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-4 sm:mb-6 px-4 sm:px-0">
+          <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-4 sm:mb-6 px-4 sm:px-0 font-semibold">
             Join over 2,00,000+ learners who have transformed their trading with our guidance
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 text-xs sm:text-sm text-gray-500">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 text-xs sm:text-sm text-gray-500 font-semibold">
             <div className="flex items-center">⭐ 4.9/5 Rating</div>
             <div className="flex items-center">📈 85% Success Rate</div>
             <div className="flex items-center">🏆 Industry Leading</div>

@@ -13,17 +13,17 @@ export default function HeroSection() {
             <span className="block sm:inline text-accent mt-2 sm:mt-0">We Simplify It.</span>
           </h1>
           
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 sm:mb-10 lg:mb-12 max-w-4xl mx-auto leading-relaxed px-2 sm:px-4 md:px-8 lg:px-0">
-            The only dedicated school for Options Trading — learn, train, and succeed with our 6-Month Mentorship.
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 sm:mb-10 lg:mb-12 max-w-4xl mx-auto leading-relaxed px-2 sm:px-4 md:px-8 lg:px-0 font-semibold">
+            The only dedicated school for Options Trading - learn, train, and succeed with our <span className="whitespace-nowrap">6-Month Mentorship Program</span>.
           </p>
           
           <div className="flex justify-center px-4 sm:px-0">
             <Link
               href="/mentorship"
-              className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 flex items-center gap-2 group w-full sm:w-auto max-w-sm sm:max-w-none"
+              className="btn-primary text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-6 flex items-center gap-2 group w-full sm:w-auto max-w-sm sm:max-w-none"
             >
-              <span className="sm:hidden">Join Next Cohort</span>
-              <span className="hidden sm:inline">Join the Next Cohort</span>
+              <span className="sm:hidden">Enroll Now</span>
+              <span className="hidden sm:inline">Enroll Now</span>
               <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>

@@ -10,7 +10,6 @@ export default function FlagshipProgram() {
     'Personal mentorship and goal setting',
     '6 months of continuous support',
     'Access to exclusive trading community',
-    'Monthly cohorts with limited seats'
   ];
 
   return (
@@ -20,7 +19,7 @@ export default function FlagshipProgram() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
             One Program. One Proven Path.
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4 sm:px-0">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
             Our flagship 6-Month Mentorship Program is the only path you need to become a successful options trader.
           </p>
         </div>
@@ -36,7 +35,7 @@ export default function FlagshipProgram() {
               {features.map((feature) => (
                 <div key={feature} className="flex items-start">
                   <CheckIcon className="h-5 w-5 sm:h-6 sm:w-6 text-accent mr-2 sm:mr-3 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm sm:text-base">{feature}</span>
+                  <span className="text-gray-300 text-sm sm:text-base font-semibold">{feature}</span>
                 </div>
               ))}
             </div>
@@ -47,7 +46,7 @@ export default function FlagshipProgram() {
                 className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 text-center w-full sm:w-auto"
               >
                 <span className="sm:hidden">Apply Now</span>
-                <span className="hidden sm:inline">Apply Now for Next Cohort</span>
+                <span className="hidden sm:inline">Talk to Counsellor</span>
               </Link>
               
               <Link
@@ -67,15 +66,16 @@ export default function FlagshipProgram() {
                 <CurrencyRupeeIcon className="h-6 w-6 sm:h-8 sm:w-8 text-green mr-3 sm:mr-4 flex-shrink-0" />
                 <div>
                   <div className="text-xl sm:text-2xl font-bold">₹35,000</div>
-                  <div className="text-gray-300 text-sm sm:text-base">Complete 6-Month Program</div>
+                  <div className="text-gray-300 text-sm sm:text-base font-semibold">Complete Program</div>
                 </div>
               </div>
               
               <div className="flex items-center">
                 <CalendarIcon className="h-6 w-6 sm:h-8 sm:w-8 text-green mr-3 sm:mr-4 flex-shrink-0" />
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold">Monthly Cohorts</div>
-                  <div className="text-gray-300 text-sm sm:text-base">New batch every month</div>
+                  <div className="text-xl sm:text-2xl font-bold">6 Months
+                  </div>
+                  <div className="text-gray-300 text-sm sm:text-base font-semibold">Full Mentorship</div>
                 </div>
               </div>
               
@@ -83,15 +83,15 @@ export default function FlagshipProgram() {
                 <UsersIcon className="h-6 w-6 sm:h-8 sm:w-8 text-green mr-3 sm:mr-4 flex-shrink-0" />
                 <div>
                   <div className="text-xl sm:text-2xl font-bold">Limited Seats</div>
-                  <div className="text-gray-300 text-sm sm:text-base">Exclusive small batch learning</div>
+                  <div className="text-gray-300 text-sm sm:text-base font-semibold">Personalised Mentorship</div>
                 </div>
               </div>
             </div>
             
             <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-green rounded-lg">
               <div className="text-center">
-                <div className="font-bold text-navy text-sm sm:text-base">Next Cohort Starts</div>
-                <div className="text-xl sm:text-2xl font-bold text-navy">January 15, 2025</div>
+                <div className="font-bold text-navy text-sm sm:text-base">Enroll Now</div>
+                <div className="text-xl sm:text-2xl font-bold text-navy"></div>
               </div>
             </div>
           </div>

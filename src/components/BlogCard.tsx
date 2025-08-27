@@ -118,7 +118,7 @@ export default function BlogCard({
 
         {/* 3. Source and team */}
         <div className="mb-2">
-          <div className="flex items-center gap-1 text-sm text-gray-600">
+          <div className="flex items-center gap-1 text-sm text-gray-600 font-semibold">
             <UserIcon className="w-4 h-4" />
             <span>{blog.author}</span>
           </div>
@@ -127,13 +127,13 @@ export default function BlogCard({
         {/* 4. Date */}
         {showDate && (
           <div className="mb-4">
-            <span className="text-sm text-gray-500">{blog.date}</span>
+            <span className="text-sm text-gray-500 font-semibold">{blog.date}</span>
           </div>
         )}
 
         {/* Excerpt - Always show meaningful preview text */}
         <div className="flex-grow mb-4 min-h-[80px]">
-          <p className="text-gray-600 text-sm sm:text-base line-clamp-4 leading-relaxed">
+          <p className="text-gray-600 text-sm sm:text-base line-clamp-4 leading-relaxed font-semibold">
             {generatePreviewText(blog)}
           </p>
         </div>
