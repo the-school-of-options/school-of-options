@@ -12,8 +12,8 @@ export default function Header() {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Mentorship Program', href: '/mentorship' },
-    { name: 'Knowledge Hub', href: '/knowledge-hub' },
     { name: 'Newsletter', href: '/newsletter' },
+    // { name: 'Knowledge Hub', href: '/knowledge-hub' },
     
     // { name: 'About', href: '/about' },
     // { name: 'Contact', href: '/contact' },
