@@ -45,7 +45,7 @@ export default function FlagshipProgram() {
                 href="/mentorship"
                 className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 text-center w-full sm:w-auto"
               >
-                <span className="sm:hidden">Apply Now</span>
+                <span className="sm:hidden">Enroll Now</span>
                 <span className="hidden sm:inline">Talk to Counsellor</span>
               </Link>
               

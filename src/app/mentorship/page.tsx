@@ -119,7 +119,7 @@ export default function MentorshipPage() {
           
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-2xl mx-auto">
             <button className="btn-primary text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 w-full sm:w-auto">
-              Apply Now
+              Enrol Now
             </button>
             <Link href="/knowledge-hub" className="border border-accent text-accent hover:bg-accent hover:text-navy px-8 sm:px-10 py-4 sm:py-5 rounded-lg font-semibold transition-colors text-base sm:text-lg w-full sm:w-auto text-center">
               <span className="sm:hidden">Free Resources</span>
@@ -384,7 +384,7 @@ export default function MentorshipPage() {
           
           <div className="flex justify-center mb-6">
             <button className="btn-primary text-lg px-12 py-4">
-              Apply Now
+              Enroll Now
             </button>
           </div>
           
