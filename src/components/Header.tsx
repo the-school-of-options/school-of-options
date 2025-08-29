@@ -58,13 +58,15 @@ export default function Header() {
 
           {/* CTA Button - responsive sizing */}
           <div className="hidden md:block">
-            <Link
-              href="/mentorship"
-              className="btn-primary text-sm lg:text-base px-4 lg:px-6 py-2 lg:py-3"
+            <a
+              href="https://rzp.io/rzp/theschoolofoptions"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
             >
               <span className="hidden lg:inline">Enroll Now</span>
               <span className="lg:hidden">Enroll Now</span>
-            </Link>
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -104,13 +106,15 @@ export default function Header() {
                 );
               })}
               <div className="pt-4">
-                <Link
-                  href="/mentorship"
+                <a
+                  href="https://rzp.io/rzp/theschoolofoptions"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn-primary w-full text-center py-4"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Enroll Now
-                </Link>
+                </a>
               </div>
             </div>
           </div>

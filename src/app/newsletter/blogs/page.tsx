@@ -8,37 +8,46 @@ import { getAllBlogs, getFeaturedBlogs } from '@/lib/strapi-service';
 import BlogCard from '@/components/BlogCard';
 import { Suspense } from 'react';
 import { BlogGridSkeleton } from '@/components/BlogCardSkeleton';
-import NewsletterForm from '@/components/NewsletterForm';
 
 export const metadata: Metadata = {
-  title: 'Newsletter - The School of Options',
-  description: 'Get a weekly newsletter that covers the most important aspects of Options Trading for traders in India.',
-  keywords: 'options trading newsletter, trading insights, weekly newsletter, options education, financial newsletter',
+  title: 'Blogs & Articles - The School of Options Newsletter',
+  description: 'In-depth articles on options concepts, trading strategies, and myth-busting insights from experienced traders.',
+  keywords: 'options trading blog, trading articles, options strategies, trading education, financial education',
 };
 
 // Use very short revalidation for fresh data
 export const revalidate = 0;
 
-export default async function NewsletterPage() {
+export default async function BlogsPage() {
   const allBlogs = await getAllBlogs();
   const featuredBlogs = await getFeaturedBlogs();
 
   return (
     <div className="min-h-screen bg-white">
-
+      {/* Header Navigation */}
+      {/* <div className="bg-gray-50 border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <Link
+            href="/knowledge-hub"
+            className="inline-flex items-center text-navy hover:text-accent transition-colors text-sm sm:text-base"
+          >
+            <ArrowLeftIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+            Back to Knowledge Hub
+          </Link>
+        </div>
+      </div> */}
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
-              Newsletter
+              Blogs & Articles
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto font-semibold"> Get a weekly newsletter that covers the most important aspects of Options Trading for traders in India.
-              
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto font-semibold"> 
+              In-depth articles on options concepts, trading strategies, and myth-busting insights from experienced traders.
             </p>
-            {/* Newsletter Signup Form */}
-            <NewsletterForm />
+
           </div>
         </div>
       </section>
@@ -75,7 +84,7 @@ export default async function NewsletterPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4">
-              Read our previous Letters
+              Read our Previous Articles
             </h2>
             <p className="text-base sm:text-lg text-gray-600 font-semibold">
               Comprehensive collection of trading insights and educational content
@@ -97,7 +106,7 @@ export default async function NewsletterPage() {
           {/* View Archive Button */}
           <div className="text-center mt-8 sm:mt-12">
             <Link
-              href="/knowledge-hub/blogs/archive"
+              href="/newsletter/blogs/archive"
               className="inline-flex items-center bg-navy text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-navy-light transition-colors text-sm sm:text-base"
             >
               View Complete Archive

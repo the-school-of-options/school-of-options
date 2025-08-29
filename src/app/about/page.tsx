@@ -79,11 +79,16 @@ export default function AboutPage() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Link href="/mentorship" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 text-center w-full sm:w-auto">
-                  Join Our Program
-                </Link>
-                <Link href="/knowledge-hub" className="border border-green text-green hover:bg-green hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-colors text-center text-base sm:text-lg w-full sm:w-auto">
-                  <span className="sm:hidden">Free Resources</span>
+                <a
+                  href="https://rzp.io/rzp/theschoolofoptions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 text-center w-full sm:w-auto"
+                >
+                  Enroll Now
+                </a>
+                <Link href="/newsletter" className="border border-green text-green hover:bg-green hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-colors text-center text-base sm:text-lg w-full sm:w-auto">
+                  <span className="sm:hidden">Explore Free Resources</span>
                   <span className="hidden sm:inline">Explore Free Resources</span>
                 </Link>
               </div>
@@ -403,11 +408,16 @@ export default function AboutPage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/mentorship" className="btn-primary text-lg px-8 py-4">
-              Join Mentorship Program
-            </Link>
-            <Link href="/knowledge-hub" className="btn-secondary text-lg px-8 py-4">
-              Explore Free Resources
+            <a
+              href="https://rzp.io/rzp/theschoolofoptions"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary text-lg px-8 py-4"
+            >
+              Enroll Now
+            </a>
+            <Link href="/newsletter" className="btn-secondary text-lg px-8 py-4">
+              Get Free Newsletter
             </Link>
           </div>
         </div>

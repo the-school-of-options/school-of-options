@@ -18,14 +18,15 @@ export default function HeroSection() {
           </p>
           
           <div className="flex justify-center px-4 sm:px-0">
-            <Link
+          <Link
               href="/mentorship"
-              className="btn-primary text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-6 flex items-center gap-2 group w-full sm:w-auto max-w-sm sm:max-w-none"
+              className="btn-primary-lg flex items-center gap-2 group w-full sm:w-auto max-w-sm sm:max-w-none px-8 sm:px-12 py-4 sm:py-6"
             >
-              <span className="sm:hidden">Enroll Now</span>
-              <span className="hidden sm:inline">Enroll Now</span>
+
+              <span className="sm:hidden">Explore the 6-Month Mentorship</span>
+              <span className="hidden sm:inline">Explore the 6-Month Mentorship</span>
               <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
+              </Link>
           </div>
           
 

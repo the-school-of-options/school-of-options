@@ -16,31 +16,31 @@ export default function KnowledgeHubPreview() {
       icon: BookOpenIcon,
       title: 'Blogs',
       description: 'In-depth articles on options concepts and myth-busting insights',
-      href: '/knowledge-hub/blogs'
+      href: '/newsletter/blogs'
     },
     {
       icon: ChartBarIcon,
       title: 'Research',
       description: 'Market outlook, volatility analysis, and trading strategies',
-      href: '/knowledge-hub/research'
+      href: '/newsletter'
     },
     {
       icon: PlayIcon,
       title: 'Videos',
       description: 'Comprehensive video library with practical trading examples',
-      href: '/knowledge-hub/videos'
+      href: '/newsletter'
     },
     {
       icon: CalculatorIcon,
       title: 'Tools',
       description: 'Options calculators, chain decoders, and risk analyzers',
-      href: '/knowledge-hub/tools'
+      href: '/newsletter'
     },
     {
       icon: CpuChipIcon,
       title: 'AI Resources',
       description: 'AI-powered trading assistants and automated analysis tools',
-      href: '/knowledge-hub/ai'
+      href: '/newsletter'
     }
   ];
 
@@ -49,11 +49,11 @@ export default function KnowledgeHubPreview() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
-            Knowledge Hub - Free for Everyone
+            Free Resources - Start Learning Today
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4 sm:px-0 font-semibold">
             Even if you never join our mentorship, we&apos;ll still make you smarter about Options than 90% of traders. 
-            Access our comprehensive library of free resources.
+            Access our comprehensive library of free resources and newsletter.
           </p>
         </div>
         
@@ -118,10 +118,10 @@ export default function KnowledgeHubPreview() {
         
         <div className="text-center">
           <Link
-            href="/knowledge-hub"
+            href="/newsletter"
             className="btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
           >
-            View All Resources
+            Get Free Newsletter
             <ArrowRightIcon className="h-4 w-4" />
           </Link>
         </div>
