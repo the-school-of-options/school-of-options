@@ -1,48 +1,18 @@
 import Link from 'next/link';
 import { 
-  BookOpenIcon, 
-  ChartBarIcon, 
-  PlayIcon, 
-  CalculatorIcon,
-  CpuChipIcon,
+  BookOpenIcon,
   ArrowRightIcon 
 } from '@heroicons/react/24/outline';
 
 
 
 export default function KnowledgeHubPreview() {
-  const resources = [
-    {
-      icon: BookOpenIcon,
-      title: 'Blogs',
-      description: 'In-depth articles on options concepts and myth-busting insights',
-      href: '/newsletter/blogs'
-    },
-    {
-      icon: ChartBarIcon,
-      title: 'Research',
-      description: 'Market outlook, volatility analysis, and trading strategies',
-      href: '/newsletter'
-    },
-    {
-      icon: PlayIcon,
-      title: 'Videos',
-      description: 'Comprehensive video library with practical trading examples',
-      href: '/newsletter'
-    },
-    {
-      icon: CalculatorIcon,
-      title: 'Tools',
-      description: 'Options calculators, chain decoders, and risk analyzers',
-      href: '/newsletter'
-    },
-    {
-      icon: CpuChipIcon,
-      title: 'AI Resources',
-      description: 'AI-powered trading assistants and automated analysis tools',
-      href: '/newsletter'
-    }
-  ];
+  const resource = {
+    icon: BookOpenIcon,
+    title: 'Blogs',
+    description: 'In-depth articles on options concepts and myth-busting insights',
+    href: '/newsletter/blogs'
+  };
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-gray-50">
@@ -57,60 +27,29 @@ export default function KnowledgeHubPreview() {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
-          {resources.slice(0, 3).map((resource) => (
-            <Link
-              key={resource.title}
-              href={resource.href}
-              className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-accent/20 group"
-            >
-              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-accent rounded-full flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
-                <resource.icon className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-white" />
+        <div className="flex justify-center mb-8 sm:mb-12">
+          <Link
+            href={resource.href}
+            className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-accent/20 group max-w-md w-full"
+          >
+            <div className="text-center">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-accent rounded-full flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 transition-transform mx-auto">
+                <resource.icon className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-white" />
               </div>
               
-              <h3 className="text-lg sm:text-xl font-bold text-navy mb-3 sm:mb-4 group-hover:text-accent transition-colors">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-navy mb-4 sm:mb-6 group-hover:text-accent transition-colors">
                 {resource.title}
               </h3>
               
-              <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 font-semibold">
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 font-semibold leading-relaxed">
                 {resource.description}
               </p>
               
-              <div className="flex items-center text-accent font-semibold group-hover:translate-x-2 transition-transform text-sm sm:text-base">
-                Explore <ArrowRightIcon className="h-3 w-3 sm:h-4 sm:w-4 ml-2" />
+              <div className="flex items-center justify-center text-accent font-semibold group-hover:translate-x-2 transition-transform text-base sm:text-lg">
+                Explore <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5 ml-2" />
               </div>
-            </Link>
-          ))}
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
-          {resources.slice(3).map((resource) => (
-            <Link
-              key={resource.title}
-              href={resource.href}
-              className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-accent/20 group"
-            >
-              <div className="flex items-start">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-accent rounded-full flex items-center justify-center mr-3 sm:mr-4 lg:mr-6 group-hover:scale-110 transition-transform flex-shrink-0">
-                  <resource.icon className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-white" />
-                </div>
-                
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-lg sm:text-xl font-bold text-navy mb-3 sm:mb-4 group-hover:text-accent transition-colors">
-                    {resource.title}
-                  </h3>
-                  
-                  <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 font-semibold">
-                    {resource.description}
-                  </p>
-                  
-                  <div className="flex items-center text-accent font-semibold group-hover:translate-x-2 transition-transform text-sm sm:text-base">
-                    Explore <ArrowRightIcon className="h-3 w-3 sm:h-4 sm:w-4 ml-2" />
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
+            </div>
+          </Link>
         </div>
         
         {/* Latest Blog Posts */}
@@ -119,10 +58,10 @@ export default function KnowledgeHubPreview() {
         <div className="text-center">
           <Link
             href="/newsletter"
-            className="btn-secondary text-base px-6 py-3 inline-flex items-center gap-2"
+            className="bg-navy text-white px-8 py-4 rounded-lg font-semibold hover:bg-navy-light transition-colors text-lg inline-flex items-center gap-2"
           >
             Get Free Newsletter
-            <ArrowRightIcon className="h-4 w-4" />
+            <ArrowRightIcon className="h-5 w-5" />
           </Link>
         </div>
       </div>
