@@ -40,11 +40,8 @@ export default function NotFound() {
             <Link href="/mentorship" className="block text-green hover:text-green-dark text-sm">
               Mentorship Program
             </Link>
-            <Link href="/knowledge-hub" className="block text-green hover:text-green-dark text-sm">
-              Knowledge Hub
-            </Link>
-            <Link href="/about" className="block text-green hover:text-green-dark text-sm">
-              About Us
+            <Link href="/newsletter" className="block text-green hover:text-green-dark text-sm">
+              Newsletter
             </Link>
           </div>
         </div>

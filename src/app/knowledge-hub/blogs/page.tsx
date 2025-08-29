@@ -156,7 +156,7 @@ export default async function BlogsPage() {
               href="/newsletter"
               className="border border-white text-white hover:bg-white hover:text-navy px-8 py-4 rounded-lg font-semibold transition-colors text-center"
             >
-              Get Free Newsletter
+              Explore Free Resources
             </Link>
           </div>
         </div>

@@ -14,12 +14,12 @@ export default function Footer() {
               The first institution dedicated 100% to Options Trading. Learn, train, and succeed with our proven methodology.
             </p>
             <div className="flex space-x-4">
-              <Link href="/newsletter" className="text-accent hover:text-accent-light">
+              <Link href="/newsletter" className="text-accent hover:text-accent/80">
                 Daily Newsletter
               </Link>
               <span className="text-gray-400">|</span>
-              <Link href="/contact" className="text-accent hover:text-accent-light">
-                WhatsApp Support
+              <Link href="/newsletter" className="text-accent hover:text-accent/80">
+                Daily Newsletter
               </Link>
             </div>
           </div>
@@ -34,18 +34,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/knowledge-hub" className="text-gray-300 hover:text-white">
-                  Knowledge Hub
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-gray-300 hover:text-white">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-300 hover:text-white">
-                  Contact
+                <Link href="/newsletter" className="text-gray-300 hover:text-white">
+                  Newsletter
                 </Link>
               </li>
             </ul>
@@ -56,23 +46,23 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">Free Resources</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/knowledge-hub/blogs" className="text-gray-300 hover:text-white">
-                  Blogs
+                <Link href="/newsletter" className="text-gray-300 hover:text-white">
+                  Daily Newsletter
                 </Link>
               </li>
               <li>
-                <Link href="/knowledge-hub/research" className="text-gray-300 hover:text-white">
-                  Research
+                <Link href="/newsletter" className="text-gray-300 hover:text-white">
+                  Market Insights
                 </Link>
               </li>
               <li>
-                <Link href="/knowledge-hub/videos" className="text-gray-300 hover:text-white">
-                  Video Library
+                <Link href="/newsletter" className="text-gray-300 hover:text-white">
+                  Trading Tips
                 </Link>
               </li>
               <li>
-                <Link href="/knowledge-hub/tools" className="text-gray-300 hover:text-white">
-                  Trading Tools
+                <Link href="/newsletter" className="text-gray-300 hover:text-white">
+                  Weekly Analysis
                 </Link>
               </li>
             </ul>

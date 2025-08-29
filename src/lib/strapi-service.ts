@@ -1,7 +1,7 @@
 import { BlogPost, Category } from '@/data/blogs';
 
 // Strapi API Configuration
-const STRAPI_BASE_URL = 'https://exciting-action-06824a0289.strapiapp.com/api';
+const STRAPI_BASE_URL = 'https://supportive-positivity-31a9645e18.strapiapp.com/api';
 const STRAPI_TOKEN = 'b78e9d3ae1dbd23c6b3e85223dabd416318c2b9a26d8c6f2c694a39e1621f75057a8ac3791c6a6854bb0bd4fbb3365744ff4bfbac67f048479ba60c9a332852483ab00039f2d48584225ad6b46d025fd016d19e936e4fcfb4c3a01c740f7c616bbf322e38e9bf2ab2cbb83e8a7d5b85f2f5cedaedd83fbf2790a536c29294c44';
 
 // Type definitions for Strapi responses
@@ -248,7 +248,7 @@ class StrapiService {
 
   // API Methods using your exact endpoints
 
-  // Get all blogs: https://exciting-action-06824a0289.strapiapp.com/api/blogs?populate=*
+  // Get all blogs: https://supportive-positivity-31a9645e18.strapiapp.com/api/blogs?populate=*
   async getAllBlogs(): Promise<BlogPost[]> {
     try {
       const response = await this.fetchAPI('/blogs?populate=*') as StrapiResponse<StrapiAny[]>;
@@ -280,7 +280,7 @@ class StrapiService {
     }
   }
 
-  // Get single blog: https://exciting-action-06824a0289.strapiapp.com/api/blogs?slug=${slugName}&populate=*
+  // Get single blog: https://supportive-positivity-31a9645e18.strapiapp.com/api/blogs?slug=${slugName}&populate=*
   async getBlogBySlug(slug: string): Promise<BlogPost | null> {
     try {
       // First try the direct slug query
@@ -309,7 +309,7 @@ class StrapiService {
     }
   }
 
-  // Get all categories: https://exciting-action-06824a0289.strapiapp.com/api/categories
+  // Get all categories: https://supportive-positivity-31a9645e18.strapiapp.com/api/categories
   async getAllCategories(): Promise<Category[]> {
     try {
       const response = await this.fetchAPI('/categories') as StrapiResponse<StrapiAny[]>;

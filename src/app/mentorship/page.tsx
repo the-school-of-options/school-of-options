@@ -118,11 +118,16 @@ export default function MentorshipPage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-2xl mx-auto">
-            <button className="btn-primary text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 w-full sm:w-auto">
+            <a
+              href="https://rzp.io/rzp/theschoolofoptions"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary-lg w-full sm:w-auto text-center"
+            >
               Enroll Now
-            </button>
-            <Link href="/knowledge-hub" className="border border-accent text-accent hover:bg-accent hover:text-navy px-8 sm:px-10 py-4 sm:py-5 rounded-lg font-semibold transition-colors text-base sm:text-lg w-full sm:w-auto text-center">
-              <span className="sm:hidden">Free Resources</span>
+            </a>
+            <Link href="/newsletter" className="border border-accent text-accent hover:bg-accent hover:text-navy px-8 py-4 rounded-lg font-semibold transition-colors text-lg w-full sm:w-auto text-center">
+              <span className="sm:hidden">Free Newsletter</span>
               <span className="hidden sm:inline">Explore Free Resources First</span>
             </Link>
           </div>
@@ -383,9 +388,14 @@ export default function MentorshipPage() {
           </div>
           
           <div className="flex justify-center mb-6">
-            <button className="btn-primary text-lg px-12 py-4">
+            <a
+              href="https://rzp.io/rzp/theschoolofoptions"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary-lg px-12"
+            >
               Enroll Now
-            </button>
+            </a>
           </div>
           
 

@@ -1,25 +1,53 @@
 'use client';
 
 import { useState } from 'react';
+import { newsletterAPI } from '@/lib/api-service';
 import { EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 export default function NewsletterCTA() {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState('');
+  const [retryCount, setRetryCount] = useState(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    // In production, integrate with email service
-    setIsSubmitted(true);
     
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setName('');
+    if (!email) {
+      setMessage('Please enter your email address');
+      return;
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setMessage('Please enter a valid email address');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setMessage('');
+    setRetryCount(0);
+
+    try {
+      const result = await newsletterAPI.subscribe({ email });
+      setIsSubmitted(true);
       setEmail('');
-    }, 3000);
+      setMessage('');
+      setRetryCount(0);
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 5000);
+    } catch (error) {
+      console.error('Subscription error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unexpected error. Please try again.';
+      setMessage(errorMessage);
+      setRetryCount(prev => prev + 1);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -48,14 +76,6 @@ export default function NewsletterCTA() {
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} className="max-w-md mx-auto">
               <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent text-base"
-                />
                 
                 <input
                   type="email"
@@ -63,16 +83,28 @@ export default function NewsletterCTA() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent text-base"
+                  className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent text-base text-gray-900 bg-white placeholder-gray-500"
                 />
               </div>
               
               <button
                 type="submit"
-                className="btn-primary w-full text-base sm:text-lg py-3 sm:py-4"
+                disabled={isSubmitting}
+                className={`btn-primary w-full text-base sm:text-lg py-3 sm:py-4 ${
+                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
               >
-                Get Free Daily Newsletter
+                {isSubmitting 
+                  ? (retryCount > 0 ? `Retrying... (${retryCount + 1}/3)` : 'Subscribing...') 
+                  : 'Get Free Daily Newsletter'
+                }
               </button>
+              
+              {message && (
+                <div className="mt-3 p-3 rounded-lg text-sm bg-red-100 text-red-800 border border-red-200">
+                  {message}
+                </div>
+              )}
               
               <p className="text-sm text-gray-500 mt-4 font-semibold">
                 No spam. Unsubscribe anytime. 50,000+ traders already subscribed.

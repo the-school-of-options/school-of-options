@@ -24,6 +24,48 @@ const nextConfig: NextConfig = {
   },
   compress: true,
   poweredByHeader: false,
+  
+  // Redirects for old routes
+  async redirects() {
+    return [
+      {
+        source: '/knowledge-hub',
+        destination: '/newsletter',
+        permanent: true,
+      },
+      {
+        source: '/knowledge-hub/blogs',
+        destination: '/newsletter/blogs',
+        permanent: true,
+      },
+      {
+        source: '/knowledge-hub/blogs/:slug*',
+        destination: '/newsletter/blogs/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/knowledge-hub/blogs/archive',
+        destination: '/newsletter/blogs/archive',
+        permanent: true,
+      },
+      {
+        source: '/knowledge-hub/blogs/category/:category*',
+        destination: '/newsletter/blogs/category/:category*',
+        permanent: true,
+      },
+      {
+        source: '/about',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/contact',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
+  
   async headers() {
     return [
       {

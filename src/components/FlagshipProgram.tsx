@@ -1,7 +1,89 @@
+'use client';
+
 import Link from 'next/link';
-import { CheckIcon, CalendarIcon, UsersIcon, CurrencyRupeeIcon } from '@heroicons/react/24/outline';
+import { useState, useEffect, useRef } from 'react';
+import { CheckIcon, CalendarIcon, UsersIcon, CurrencyRupeeIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function FlagshipProgram() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Handle ESC key press
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        closeModal();
+      }
+    };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [isModalOpen]);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
+
+  // Focus management
+  useEffect(() => {
+    if (isModalOpen && modalRef.current) {
+      const focusableElements = modalRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstElement = focusableElements[0] as HTMLElement;
+      firstElement?.focus();
+    }
+  }, [isModalOpen]);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setFormData({ name: '', email: '', phone: '', message: '' });
+    // Return focus to the button that opened the modal
+    setTimeout(() => buttonRef.current?.focus(), 100);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      alert('Thank you! Our counsellor will contact you within 24 hours.');
+      closeModal();
+    } catch (error) {
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    // Close modal if clicking on the backdrop (not on the modal content)
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+
   const features = [
     'Live Zoom classes with expert instructors',
     'Complete recorded video library',
@@ -41,17 +123,18 @@ export default function FlagshipProgram() {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Link
-                href="/mentorship"
-                className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 text-center w-full sm:w-auto"
+              <button
+                ref={buttonRef}
+                onClick={openModal}
+                className="btn-primary-lg text-center w-full sm:w-auto"
               >
-                <span className="sm:hidden">Enroll Now</span>
+                <span className="sm:hidden">Talk to Counsellor</span>
                 <span className="hidden sm:inline">Talk to Counsellor</span>
-              </Link>
+              </button>
               
               <Link
-                href="/knowledge-hub"
-                className="border border-green text-green hover:bg-green hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-colors text-center text-base sm:text-lg w-full sm:w-auto"
+                href="/newsletter"
+                className="border border-green text-green hover:bg-green hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors text-center text-lg w-full sm:w-auto"
               >
                 <span className="sm:hidden">Free Resources</span>
                 <span className="hidden sm:inline">Explore Free Resources</span>
@@ -89,14 +172,152 @@ export default function FlagshipProgram() {
             </div>
             
             <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-green rounded-lg">
-              <div className="text-center">
-                <div className="font-bold text-navy text-sm sm:text-base">Enroll Now</div>
-                <div className="text-xl sm:text-2xl font-bold text-navy"></div>
-              </div>
+              <a
+                href="https://rzp.io/rzp/theschoolofoptions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full h-full cursor-pointer hover:bg-accent/90 transition-colors rounded-lg"
+              >
+                <div className="text-center">
+                  <div className="font-bold text-navy text-sm sm:text-base">Enroll Now</div>
+                  <div className="text-xl sm:text-2xl font-bold text-navy"></div>
+                </div>
+              </a>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          onClick={handleBackdropClick}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+        >
+          {/* Backdrop with blur */}
+          <div 
+            className="absolute inset-0 backdrop-blur-fallback animate-backdrop-in"
+            onClick={closeModal}
+          />
+          
+          {/* Modal Content */}
+          <div
+            ref={modalRef}
+            className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full mx-auto animate-modal-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 pb-4">
+              <h2 id="modal-title" className="text-2xl font-bold text-navy">
+                Talk to Counsellor
+              </h2>
+              <button
+                onClick={closeModal}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                aria-label="Close modal"
+              >
+                <XMarkIcon className="h-5 w-5 text-gray-500" />
+              </button>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="px-6 pb-6">
+              <p className="text-gray-600 mb-6 text-sm">
+                Get personalized guidance for your options trading journey. Our counsellor will help you understand the program and answer all your questions.
+              </p>
+
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500"
+                    placeholder="Enter your email address"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500"
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                    Message (Optional)
+                  </label>
+                  <textarea
+                    id="message"
+                    rows={3}
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 resize-none text-gray-900 bg-white placeholder-gray-500"
+                    placeholder="Tell us about your trading experience or any specific questions..."
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 mt-6">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`flex-1 bg-accent text-navy font-semibold py-3 px-6 rounded-lg transition-all duration-200 ${
+                    isSubmitting 
+                      ? 'opacity-50 cursor-not-allowed' 
+                      : 'hover:bg-accent/90 hover:shadow-lg transform hover:scale-[1.02]'
+                  }`}
+                >
+                  {isSubmitting ? 'Submitting...' : 'Submit Request'}
+                </button>
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="flex-1 sm:flex-none bg-gray-100 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors duration-200"
+                >
+                  Cancel
+                </button>
+              </div>
+
+              <p className="text-xs text-gray-500 mt-4 text-center">
+                We'll contact you within 24 hours to discuss the mentorship program.
+              </p>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

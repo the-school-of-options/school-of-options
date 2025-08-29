@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
   }
 
   return {
-    title: `${blog.title} - The School of Options`,
+    title: `${blog.title} - The School of Options Newsletter`,
     description: blog.excerpt,
     keywords: blog.tags.join(', '),
     authors: [{ name: blog.author }],
@@ -284,17 +284,19 @@ export default async function BlogPage({ params }: BlogPageProps) {
                 Join our 6-month mentorship program and learn from 20+ years of trading experience.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <Link
-                  href="/mentorship"
-                  className="bg-accent text-navy px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-accent-light transition-colors text-center text-sm sm:text-base"
+                <a
+                  href="https://rzp.io/rzp/theschoolofoptions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary-lg text-center"
                 >
-                  Join Mentorship Program
-                </Link>
+                  Enroll Now
+                </a>
                 <Link
                   href="/newsletter"
-                  className="border border-white text-white hover:bg-white hover:text-navy px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-colors text-center text-sm sm:text-base"
+                  className="border border-white text-white hover:bg-white hover:text-navy px-8 py-4 rounded-lg font-semibold transition-colors text-center text-lg"
                 >
-                  Explore More Resources
+                  Get Free Newsletter
                 </Link>
               </div>
             </div>

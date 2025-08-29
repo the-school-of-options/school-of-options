@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Allow: /newsletter
+Allow: /newsletter/blogs
+Allow: /mentorship
+
+# Disallow old routes (they will redirect anyway)
+Disallow: /knowledge-hub
+Disallow: /about
+Disallow: /contact
+
+# Sitemap
+Sitemap: https://theschoolofoptions.com/sitemap.xml
