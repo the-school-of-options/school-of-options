@@ -43,7 +43,7 @@ export default function IronySection() {
               <div className="w-full border-t border-gray-200"></div>
             </div>
                          <div className="relative flex justify-center">
-                               <span className="bg-white px-8 py-3 text-accent text-xl md:text-2xl lg:text-3xl font-bold shadow-lg rounded-full">The Gap</span>
+                               <span className="bg-navy px-8 py-3 text-white text-xl md:text-2xl lg:text-3xl font-bold shadow-lg rounded-full">The Gap</span>
              </div>
           </div>
           

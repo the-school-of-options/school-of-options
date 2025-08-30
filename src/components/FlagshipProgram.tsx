@@ -171,17 +171,14 @@ export default function FlagshipProgram() {
               </div>
             </div>
             
-            <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-green rounded-lg">
+            <div className="mt-6 sm:mt-8">
               <a
                 href="https://rzp.io/rzp/theschoolofoptions"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full h-full cursor-pointer hover:bg-accent/90 transition-colors rounded-lg"
+                className="block w-full bg-accent text-navy px-8 py-4 rounded-lg font-semibold hover:bg-accent/90 transition-colors text-center text-lg"
               >
-                <div className="text-center">
-                  <div className="font-bold text-navy text-sm sm:text-base">Enroll Now</div>
-                  <div className="text-xl sm:text-2xl font-bold text-navy"></div>
-                </div>
+                Enroll Now
               </a>
             </div>
           </div>
@@ -275,39 +272,20 @@ export default function FlagshipProgram() {
                   />
                 </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Message (Optional)
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={3}
-                    value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 resize-none text-gray-900 bg-white placeholder-gray-500"
-                    placeholder="Tell us about your trading experience or any specific questions..."
-                  />
-                </div>
+
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 mt-6">
+              <div className="mt-6">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`flex-1 bg-accent text-navy font-semibold py-3 px-6 rounded-lg transition-all duration-200 ${
+                  className={`w-full bg-accent text-navy font-semibold py-3 px-6 rounded-lg transition-all duration-200 ${
                     isSubmitting 
                       ? 'opacity-50 cursor-not-allowed' 
                       : 'hover:bg-accent/90 hover:shadow-lg transform hover:scale-[1.02]'
                   }`}
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Request'}
-                </button>
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="flex-1 sm:flex-none bg-gray-100 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors duration-200"
-                >
-                  Cancel
                 </button>
               </div>
 
