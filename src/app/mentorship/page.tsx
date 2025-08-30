@@ -122,11 +122,11 @@ export default function MentorshipPage() {
               href="https://rzp.io/rzp/theschoolofoptions"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary-lg w-full sm:w-auto text-center"
+              className="bg-accent text-navy px-6 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors text-base w-full sm:w-auto text-center"
             >
               Enroll Now
             </a>
-            <Link href="/newsletter" className="border border-accent text-accent hover:bg-accent hover:text-navy px-8 py-4 rounded-lg font-semibold transition-colors text-lg w-full sm:w-auto text-center">
+            <Link href="/newsletter" className="border border-accent text-accent hover:bg-accent hover:text-navy px-6 py-3 rounded-lg font-semibold transition-colors text-base w-full sm:w-auto text-center">
               <span className="sm:hidden">Free Newsletter</span>
               <span className="hidden sm:inline">Explore Free Resources First</span>
             </Link>
@@ -146,48 +146,102 @@ export default function MentorshipPage() {
             </p>
           </div>
 
-          <div className="relative">
-            {/* Timeline Line */}
-            <div className="hidden lg:block absolute left-1/2 transform -translate-x-px h-full w-0.5 bg-accent/30"></div>
-            
-            <div className="space-y-12">
+                      {/* Mobile Layout - Keep existing clean design */}
+            <div className="lg:hidden space-y-8">
               {learningRoadmap.map((item, index) => (
-                <div key={item.step} className={`relative flex items-center ${index % 2 === 0 ? 'lg:justify-start' : 'lg:justify-end'}`}>
-                  {/* Timeline Dot */}
-                  <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-accent rounded-full border-4 border-white shadow-lg z-10"></div>
-                  
-                  <div className={`w-full lg:w-5/12 ${index % 2 === 0 ? 'lg:text-right lg:pr-8' : 'lg:text-left lg:pl-8'}`}>
-                    <div className="bg-gray-50 rounded-2xl p-6 shadow-lg">
-                      {/* Mobile Layout - Icon on left */}
-                      <div className="flex items-center mb-4 lg:hidden">
-                        <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                          <item.icon className="h-6 w-6 text-navy" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="text-xl font-bold text-accent mb-1">Step {item.step}</div>
-                          <h3 className="text-lg font-bold text-navy">{item.title}</h3>
-                        </div>
+                <div key={item.step} className="relative">
+                  <div className="bg-gray-50 rounded-2xl p-6 shadow-lg">
+                    <div className="flex items-center mb-4">
+                      <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <item.icon className="h-6 w-6 text-navy" />
                       </div>
-                      
-                      {/* Desktop Layout - Icon position based on side */}
-                      <div className={`hidden lg:flex items-center mb-4 ${index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
-                        <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mx-4">
-                          <item.icon className="h-8 w-8 text-navy" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="text-2xl font-bold text-accent mb-1">Step {item.step}</div>
-                          <h3 className="text-xl font-bold text-navy">{item.title}</h3>
-                        </div>
+                      <div className="flex-1">
+                        <div className="text-xl font-bold text-accent mb-1">Step {item.step}</div>
+                        <h3 className="text-lg font-bold text-navy">{item.title}</h3>
                       </div>
-                      
-                      <p className="text-gray-600 mb-4 font-semibold">{item.description}</p>
-                      <div className="text-sm font-bold text-white bg-navy px-4 py-2 rounded-lg inline-block border border-navy/20">{item.duration}</div>
                     </div>
+                    <p className="text-gray-600 mb-4 font-semibold">{item.description}</p>
+                    <div className="text-sm font-bold text-white bg-navy px-4 py-2 rounded-lg inline-block">{item.duration}</div>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+
+            {/* Desktop Layout - Clean Modern Design */}
+            <div className="hidden lg:block">
+              <div className="relative max-w-6xl mx-auto">
+                {/* Progress Bar Background */}
+                <div className="absolute top-20 left-0 right-0 h-1 bg-gray-200 rounded-full"></div>
+                <div className="absolute top-20 left-0 w-full h-1 bg-gradient-to-r from-accent via-accent to-accent/60 rounded-full"></div>
+                
+                {/* Steps Container */}
+                <div className="grid grid-cols-5 gap-8">
+                  {learningRoadmap.map((item, index) => (
+                    <div key={item.step} className="relative group">
+                      {/* Step Number Circle */}
+                      <div className="flex justify-center mb-8">
+                        <div className="relative z-10 w-10 h-10 bg-white border-4 border-accent rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-300">
+                          <span className="text-sm font-bold text-accent">{item.step}</span>
+                        </div>
+                      </div>
+                      
+                      {/* Card */}
+                      <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group-hover:border-accent/30 h-[300px] flex flex-col">
+                        {/* Icon */}
+                        <div className="flex justify-center mb-4">
+                          <div className="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-300">
+                            <item.icon className="h-7 w-7 text-accent" />
+                          </div>
+                        </div>
+                        
+                        {/* Content */}
+                        <div className="text-center flex-grow flex flex-col">
+                          {/* Title - Fixed height */}
+                          <div className="h-14 flex items-center justify-center mb-3">
+                            <h3 className="text-lg font-bold text-navy group-hover:text-accent transition-colors duration-300 leading-tight">
+                              {item.title}
+                            </h3>
+                          </div>
+                          
+                          {/* Description - Flexible height */}
+                          <div className="flex-grow flex items-start justify-center mb-4">
+                            <p className="text-gray-600 text-sm leading-relaxed text-center">
+                              {item.description}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        {/* Duration Badge - Fixed at bottom */}
+                        <div className="mt-auto">
+                          <div className="inline-flex items-center justify-center w-full px-3 py-2 bg-navy/5 text-navy text-xs font-semibold rounded-lg border border-navy/10 group-hover:bg-accent/10 group-hover:border-accent/20 transition-all duration-300">
+                            <CalendarIcon className="h-3 w-3 mr-1.5" />
+                            {item.duration}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Connecting Arrow */}
+                      {index < learningRoadmap.length - 1 && (
+                        <div className="absolute top-20 -right-4 z-20 w-8 h-8 flex items-center justify-center">
+                          <div className="w-6 h-6 bg-white border-2 border-accent rounded-full flex items-center justify-center shadow-sm">
+                            <div className="w-0 h-0 border-l-2 border-r-2 border-t-2 border-accent border-l-transparent border-r-transparent transform rotate-90"></div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Bottom CTA */}
+                <div className="mt-16 text-center">
+                  <div className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-accent/5 to-navy/5 rounded-xl border border-accent/20">
+                    <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+                    <span className="text-lg font-semibold text-navy">Complete Your Options Trading Journey</span>
+                    <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
       </section>
 
