@@ -17,10 +17,6 @@ export default function Footer() {
               <Link href="/newsletter" className="text-accent hover:text-accent/80">
                 Daily Newsletter
               </Link>
-              <span className="text-gray-400">|</span>
-              <Link href="/newsletter" className="text-accent hover:text-accent/80">
-                Daily Newsletter
-              </Link>
             </div>
           </div>
 
@@ -50,33 +46,47 @@ export default function Footer() {
                   Daily Newsletter
                 </Link>
               </li>
+              {/* TODO: Enable when actual routes exist
               <li>
-                <Link href="/newsletter" className="text-gray-300 hover:text-white">
+                <Link href="/newsletter/insights" className="text-gray-300 hover:text-white">
                   Market Insights
                 </Link>
               </li>
               <li>
-                <Link href="/newsletter" className="text-gray-300 hover:text-white">
+                <Link href="/newsletter/tips" className="text-gray-300 hover:text-white">
                   Trading Tips
                 </Link>
               </li>
               <li>
-                <Link href="/newsletter" className="text-gray-300 hover:text-white">
+                <Link href="/newsletter/weekly-analysis" className="text-gray-300 hover:text-white">
                   Weekly Analysis
                 </Link>
               </li>
+              */}
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-gray-300 text-sm font-semibold">
-            © 2025 The School of Options. All rights reserved.
+        <div className="border-t border-gray-700 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+            <div className="text-gray-300 text-sm font-semibold">
+              © 2025 The School of Options. All rights reserved.
+            </div>
+            <div className="text-gray-300 text-sm font-semibold mt-4 md:mt-0">
+              <span>Founded by Kundan Kishore</span>
+              <span className="mx-2">•</span>
+              <span>Gurgaon & Gaya</span>
+            </div>
           </div>
-          <div className="text-gray-300 text-sm font-semibold mt-4 md:mt-0">
-            <span>Founded by Kundan Kishore</span>
-            <span className="mx-2">•</span>
-            <span>Gurgaon & Gaya</span>
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-6 text-xs text-gray-400">
+            <Link href="/terms" className="hover:text-white transition-colors">
+              Terms of Service
+            </Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="hidden sm:inline">•</span>
+            <span>Educational content only - not financial advice</span>
           </div>
         </div>
       </div>

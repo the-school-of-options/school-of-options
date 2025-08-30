@@ -9,11 +9,44 @@ import BlogCard from '@/components/BlogCard';
 import { Suspense } from 'react';
 import { BlogGridSkeleton } from '@/components/BlogCardSkeleton';
 import NewsletterForm from '@/components/NewsletterForm';
+import EnrollCTA from '@/components/EnrollCTA';
+
+const CANONICAL_ORIGIN = process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || 'https://theschoolofoptions.com';
 
 export const metadata: Metadata = {
-  title: 'Newsletter - The School of Options',
-  description: 'Get a weekly newsletter that covers the most important aspects of Options Trading for traders in India.',
-  keywords: 'options trading newsletter, trading insights, weekly newsletter, options education, financial newsletter',
+  title: 'Free Options Trading Newsletter - The School of Options',
+  description: 'Get a weekly newsletter covering the most important aspects of Options Trading for traders in India. Join 10,000+ traders receiving market insights, strategies, and analysis every Tuesday.',
+  keywords: 'options trading newsletter, trading insights, weekly newsletter, options education, financial newsletter, market analysis, trading strategies',
+  metadataBase: new URL(CANONICAL_ORIGIN),
+  alternates: {
+    canonical: '/newsletter',
+  },
+  openGraph: {
+    title: 'Free Options Trading Newsletter - The School of Options',
+    description: 'Join 10,000+ traders receiving weekly market insights, strategies, and analysis. Get expert options trading content delivered to your inbox every Tuesday.',
+    url: `${CANONICAL_ORIGIN}/newsletter`,
+    siteName: 'The School of Options',
+    locale: 'en_US',
+    type: 'website',
+    images: [
+      {
+        url: '/images/founder-kundan-kishore.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Free Options Trading Newsletter - The School of Options',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Options Trading Newsletter',
+    description: 'Join 10,000+ traders receiving weekly market insights, strategies, and analysis every Tuesday.',
+    images: ['/images/founder-kundan-kishore.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 // Use very short revalidation for fresh data
@@ -132,17 +165,14 @@ export default async function NewsletterPage() {
             Get personalized guidance, live trading sessions, one-on-one mentorship, and access to our exclusive trading community. Transform your trading journey with proven strategies and expert support.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <a
-              href="https://rzp.io/rzp/theschoolofoptions"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary-lg text-center"
-            >
-              Enroll Now
-            </a>
+            <EnrollCTA 
+              variant="primary" 
+              size="md"
+              className="text-center"
+            />
             <Link
               href="/newsletter"
-              className="border border-white text-white hover:bg-white hover:text-navy px-8 py-4 rounded-lg font-semibold transition-colors text-center text-lg"
+              className="border border-white text-white hover:bg-white hover:text-navy px-6 py-3 rounded-lg font-semibold transition-colors text-center text-base"
             >
               Get Free Newsletter
             </Link>

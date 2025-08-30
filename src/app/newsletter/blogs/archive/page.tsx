@@ -9,11 +9,20 @@ import { getAllBlogs } from '@/lib/strapi-service';
 import { getBlogCategories } from '@/data/blog-archive';
 import PaginatedBlogGrid from '@/components/PaginatedBlogGrid';
 
-export const metadata: Metadata = {
-  title: 'Blog Archive - The School of Options Newsletter',
-  description: 'Browse our complete collection of options trading articles organized by date and category.',
-  keywords: 'blog archive, options trading articles, trading education history',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const allBlogs = await getAllBlogs();
+  const hasContent = allBlogs.length > 0;
+  
+  return {
+    title: 'Blog Archive - The School of Options Newsletter',
+    description: 'Browse our complete collection of options trading articles organized by date and category.',
+    keywords: 'blog archive, options trading articles, trading education history',
+    robots: hasContent ? undefined : {
+      index: false,
+      follow: true,
+    },
+  };
+}
 
 export default async function BlogArchivePage() {
   const allBlogs = await getAllBlogs();

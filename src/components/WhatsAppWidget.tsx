@@ -4,18 +4,30 @@ import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid';
 
 export default function WhatsAppWidget() {
   const handleWhatsAppClick = () => {
-    const phoneNumber = '919999007948'; // Replace with actual WhatsApp number
+    const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '91XXXXXXXXXX';
     const message = 'Hi! I\'m interested in learning more about The School of Options.';
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    
+    // Analytics tracking
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'whatsapp_click', {
+        event_category: 'engagement',
+        event_label: 'whatsapp_widget',
+        value: 1
+      });
+    } else {
+      console.log('Analytics: whatsapp_click event fired');
+    }
+    
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
       <button
         onClick={handleWhatsAppClick}
-        className="bg-accent hover:bg-accent/90 text-navy p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 group"
-        aria-label="Contact us on WhatsApp"
+        className="bg-accent hover:bg-accent/90 focus:bg-accent/90 focus:outline-none focus:ring-4 focus:ring-accent/20 text-navy p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:scale-110 group"
+        aria-label="Contact us on WhatsApp - opens in new window"
       >
         <ChatBubbleLeftRightIcon className="h-6 w-6" />
         

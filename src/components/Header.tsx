@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import EnrollCTA from './EnrollCTA';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,15 +59,7 @@ export default function Header() {
 
           {/* CTA Button - responsive sizing */}
           <div className="hidden md:block">
-            <a
-              href="https://rzp.io/rzp/theschoolofoptions"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-            >
-              <span className="hidden lg:inline">Enroll Now</span>
-              <span className="lg:hidden">Enroll Now</span>
-            </a>
+            <EnrollCTA className="btn-primary" />
           </div>
 
           {/* Mobile menu button */}
@@ -106,15 +99,9 @@ export default function Header() {
                 );
               })}
               <div className="pt-4">
-                <a
-                  href="https://rzp.io/rzp/theschoolofoptions"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary w-full text-center py-4"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Enroll Now
-                </a>
+                <div onClick={() => setIsMenuOpen(false)}>
+                  <EnrollCTA className="btn-primary w-full text-center py-4" />
+                </div>
               </div>
             </div>
           </div>
