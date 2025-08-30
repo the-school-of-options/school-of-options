@@ -74,41 +74,58 @@ export default function NewsletterCTA() {
           </div>
           
           {!isSubmitted ? (
-            <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-              <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-                
+            <form onSubmit={handleSubmit} className="max-w-sm mx-auto px-2 xs:px-4 sm:px-0">
+              <div className="flex items-center bg-white rounded-lg border-2 border-gray-200 focus-within:border-accent transition-colors shadow-sm mb-4 sm:mb-6">
                 <input
                   type="email"
-                  placeholder="Your Email Address"
+                  placeholder="Type your email..."
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent text-base text-gray-900 bg-white placeholder-gray-500"
+                  className="flex-1 px-3 py-2.5 sm:px-4 sm:py-3 text-gray-700 placeholder-gray-400 bg-transparent rounded-l-lg focus:outline-none text-sm sm:text-base min-h-[40px] sm:min-h-[44px]"
+                  disabled={isSubmitting}
                 />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`bg-accent text-navy px-4 sm:px-6 py-2.5 sm:py-3 rounded-r-lg font-bold transition-colors text-sm sm:text-base whitespace-nowrap min-h-[40px] sm:min-h-[44px] ${
+                    isSubmitting 
+                      ? 'opacity-50 cursor-not-allowed' 
+                      : 'hover:bg-accent-light active:bg-accent-dark'
+                  }`}
+                >
+                  {isSubmitting 
+                    ? (retryCount > 0 ? `Retrying...` : 'Subscribing...') 
+                    : 'Subscribe'
+                  }
+                </button>
               </div>
               
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`btn-primary w-full text-base sm:text-lg py-3 sm:py-4 ${
-                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-              >
-                {isSubmitting 
-                  ? (retryCount > 0 ? `Retrying... (${retryCount + 1}/3)` : 'Subscribing...') 
-                  : 'Get Free Daily Newsletter'
-                }
-              </button>
-              
               {message && (
-                <div className="mt-3 p-3 rounded-lg text-sm bg-red-100 text-red-800 border border-red-200">
+                <div className="mt-3 p-3 rounded-lg text-sm bg-gray-100 text-navy border border-gray-200">
                   {message}
                 </div>
               )}
               
               <p className="text-sm text-gray-500 mt-4 font-semibold">
-                No spam. Unsubscribe anytime. 50,000+ traders already subscribed.
+                By subscribing, I agree to{' '}
+                <a href="#" className="text-navy underline hover:text-navy-light">Terms of Use</a> and acknowledge its{' '}
+                <a href="#" className="text-navy underline hover:text-navy-light">Information Collection Notice</a> and{' '}
+                <a href="#" className="text-navy underline hover:text-navy-light">Privacy Policy</a>
               </p>
+              
+              {/* <div className="mt-2 text-center">
+                <button
+                  type="button"
+                  className="text-gray-500 text-sm hover:text-gray-700 transition-colors"
+                  onClick={() => {
+                    // Handle "No thanks" action if needed
+                    console.log('No thanks clicked');
+                  }}
+                >
+                  No thanks <span className="ml-1">›</span>
+                </button>
+              </div> */}
             </form>
           ) : (
             <div className="text-center">

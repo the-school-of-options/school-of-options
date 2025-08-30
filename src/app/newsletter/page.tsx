@@ -27,39 +27,40 @@ export default async function NewsletterPage() {
     <div className="min-h-screen bg-white">
 
 
-      {/* Hero Section - Mobile optimized */}
-      <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-16 sm:py-16 lg:py-20 min-h-[85vh] sm:min-h-0 flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-6 leading-tight">
-              Newsletter
-            </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-6 max-w-3xl mx-auto font-semibold leading-relaxed px-2"> 
-              Get a weekly newsletter that covers the most important aspects of Options Trading for traders in India.
-            </p>
-            <p className="text-base sm:text-lg text-gray-400 mb-12 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-2">
-              Join over 10,000+ traders who receive market insights, trading strategies, risk management tips, and weekly market analysis delivered straight to their inbox every Tuesday at 8:30 AM IST.
-            </p>
-            {/* Newsletter Signup Form - Positioned in thumb-friendly zone */}
-            <div className="mt-8 sm:mt-0">
-              <NewsletterForm />
-            </div>
+      {/* Hero Section - Enhanced Responsiveness */}
+      <section className="bg-gradient-to-br from-navy to-navy-dark text-white min-h-[70vh] flex items-center justify-center py-16 sm:py-20 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 sm:mb-8">
+            Newsletter
+          </h1>
+          
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 sm:mb-10 max-w-4xl mx-auto leading-relaxed px-2 sm:px-0 font-semibold">
+            Get a weekly newsletter that covers the most important aspects of Options Trading for traders in India.
+          </p>
+          
+          <p className="text-sm sm:text-base md:text-lg text-gray-400 mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed px-2 sm:px-0">
+            Join over 10,000+ traders who receive market insights, trading strategies, risk management tips, and weekly market analysis delivered straight to their inbox every Tuesday at 8:30 AM IST.
+          </p>
+          
+          {/* Newsletter Signup Form - Eye level positioning */}
+          <div className="max-w-sm mx-auto">
+            <NewsletterForm />
           </div>
         </div>
       </section>
 
       {/* Featured Articles */}
       {featuredBlogs.length > 0 && (
-        <section className="py-16 sm:py-16 bg-gray-50">
+        <section className="py-12 sm:py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12 sm:mb-12">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-6 leading-tight">
+            <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
                 Featured Articles
               </h2>
-              <p className="text-base sm:text-lg text-gray-600 font-semibold leading-relaxed mb-4">
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold leading-relaxed mb-4">
                 Our most popular and impactful content
               </p>
-              <p className="text-sm sm:text-base text-gray-500 leading-relaxed max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base text-gray-500 leading-relaxed max-w-2xl mx-auto px-4 sm:px-0">
                 Handpicked articles that have helped thousands of traders improve their options trading skills, understand market dynamics, and build profitable strategies.
               </p>
             </div>
@@ -79,16 +80,16 @@ export default async function NewsletterPage() {
       )}
 
       {/* All Articles */}
-      <section className="py-16 sm:py-16">
+      <section className="py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-6 leading-tight">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
               Read our previous Letters
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 font-semibold leading-relaxed mb-4">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold leading-relaxed mb-4">
               Comprehensive collection of trading insights and educational content
             </p>
-            <p className="text-sm sm:text-base text-gray-500 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-gray-500 leading-relaxed max-w-2xl mx-auto px-4 sm:px-0">
               Browse through our archive of weekly newsletters covering market analysis, trading techniques, risk management strategies, and real-world case studies from successful options trades.
             </p>
           </div>
@@ -119,15 +120,15 @@ export default async function NewsletterPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 sm:py-16 bg-gradient-to-r from-navy to-navy-dark">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 sm:mb-6 leading-tight">
+      <section className="py-12 sm:py-16 bg-gradient-to-r from-navy to-navy-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Ready to Take Your Trading to the Next Level?
           </h2>
-          <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-6 font-semibold leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 sm:mb-10 max-w-4xl mx-auto leading-relaxed px-2 sm:px-0 font-semibold">
             Join our comprehensive mentorship program and learn from experienced traders.
           </p>
-          <p className="text-base sm:text-lg text-gray-400 mb-8 sm:mb-8 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-gray-400 mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed px-2 sm:px-0">
             Get personalized guidance, live trading sessions, one-on-one mentorship, and access to our exclusive trading community. Transform your trading journey with proven strategies and expert support.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
