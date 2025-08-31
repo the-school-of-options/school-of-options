@@ -11,7 +11,7 @@ import { useSearchParams } from "next/navigation";
 const ZOOM_VER = "4.0.0"; // keep all 3 CDN URLs on the same version
 // Your backend that returns a Meeting SDK signature (use Meeting SDK Key/Secret)
 const SIGNATURE_ENDPOINT =
-  "http://localhost:8000/api/v1/zoom/webinar-signature";
+  "https://api.theschoolofoptions.com/api/v1/zoom/webinar-signature";
 
 //
 // ── Types ──────────────────────────────────────────────────────────────────────

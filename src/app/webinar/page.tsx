@@ -39,13 +39,14 @@ function loadScriptOnce(src: string): Promise<void> {
   });
 }
 
+
 async function loadZoomEmbeddedUMD() {
   if (typeof window === "undefined") {
     throw new Error("Zoom SDK can only be loaded on the client side");
   }
   if (ZoomMtgEmbeddedSingleton) return ZoomMtgEmbeddedSingleton;
 
-  const ZOOM_VER = "4.0.0";
+  const ZOOM_VER = "4.0.0"; 
   const vendorReact = `https://source.zoom.us/${ZOOM_VER}/lib/vendor/react.min.js`;
   const vendorReactDOM = `https://source.zoom.us/${ZOOM_VER}/lib/vendor/react-dom.min.js`;
   const embeddedSDK = `https://source.zoom.us/${ZOOM_VER}/zoom-meeting-embedded-${ZOOM_VER}.min.js`;
@@ -61,6 +62,7 @@ async function loadZoomEmbeddedUMD() {
   ZoomMtgEmbeddedSingleton = window.ZoomMtgEmbedded;
   return ZoomMtgEmbeddedSingleton;
 }
+
 
 type Webinar = {
   id: string;
@@ -81,7 +83,6 @@ export default function Webinars() {
   const [error, setError] = useState<string | null>(null);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [loadingWebinars, setLoadingWebinars] = useState(true);
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const zoomClientRef = useRef<any | null>(null);
   const zoomRootRef = useRef<HTMLDivElement | null>(null);
   const joiningOnceRef = useRef(false);
@@ -103,43 +104,22 @@ export default function Webinars() {
     };
   }, []);
 
-  // Handle fullscreen changes
-  useEffect(() => {
-    const handleFullScreenChange = () => {
-      setIsFullScreen(!!document.fullscreenElement);
-    };
-
-    document.addEventListener("fullscreenchange", handleFullScreenChange);
-    return () => {
-      document.removeEventListener("fullscreenchange", handleFullScreenChange);
-    };
-  }, []);
-
   useEffect(() => {
     if (!isClient) return;
 
     const loadWebinars = async () => {
       try {
         setLoadingWebinars(true);
-        // Mock data for demo purposes since localhost endpoint won't work
-        const mockWebinars: Webinar[] = [
-          {
-            id: "1",
-            topic: "Marketing Strategies for 2025",
-            start_time: "2025-09-01T14:00:00Z",
-            join_url: "https://zoom.us/j/123456789?pwd=abcd1234",
-          },
-          {
-            id: "2",
-            topic: "AI in Business: Future Trends",
-            start_time: "2025-09-02T16:00:00Z",
-            join_url: "https://zoom.us/j/987654321?pwd=efgh5678",
-          },
-        ];
+        const response = await fetch(
+          "https://api.theschoolofoptions.com/api/v1/zoom/webinar-list"
+        );
 
-        // Simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setItems(mockWebinars);
+        if (!response.ok) {
+          throw new Error(`Failed to load webinars: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setItems(data);
       } catch (e) {
         console.error("Error loading webinars:", e);
         setError("Failed to load webinars.");
@@ -166,34 +146,8 @@ export default function Webinars() {
     }
   }, []);
 
-  const enterFullScreen = useCallback(async () => {
-    try {
-      const zoomContainer = zoomRootRef.current?.closest(".zoom-overlay");
-      if (zoomContainer && zoomContainer.requestFullscreen) {
-        await zoomContainer.requestFullscreen();
-      }
-    } catch (e) {
-      console.warn("Could not enter fullscreen:", e);
-    }
-  }, []);
-
-  const exitFullScreen = useCallback(async () => {
-    try {
-      if (document.fullscreenElement) {
-        await document.exitFullscreen();
-      }
-    } catch (e) {
-      console.warn("Could not exit fullscreen:", e);
-    }
-  }, []);
-
   const leaveMeeting = useCallback(async () => {
     try {
-      // Exit fullscreen first if active
-      if (document.fullscreenElement) {
-        await document.exitFullscreen();
-      }
-
       if (zoomClientRef.current) {
         await zoomClientRef.current.leave();
         await zoomClientRef.current.destroy();
@@ -205,7 +159,6 @@ export default function Webinars() {
       joiningOnceRef.current = false;
       setOverlayOpen(false);
       setJoining(false);
-      setIsFullScreen(false);
     }
   }, []);
 
@@ -229,8 +182,32 @@ export default function Webinars() {
         const { meetingNumber, password } = parsed;
         console.log("[DEBUG] Parsed join URL →", { meetingNumber, password });
 
-        // Mock signature response for demo
-        const signature = "mock_signature_" + Date.now();
+        console.log("[DEBUG] Fetching signature for meeting:", meetingNumber);
+
+        const sigRes = await fetch(
+          "http://api.theschoolofoptions.com/api/v1/zoom/webinar-signature",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              meetingNumber,
+              role: 0, 
+            }),
+          }
+        );
+
+        console.log("[DEBUG] Signature fetch response status:", sigRes.status);
+
+        if (!sigRes.ok) {
+          const text = await sigRes.text();
+          console.error("[DEBUG] Signature fetch failed. Body:", text);
+          throw new Error(`Failed to fetch signature: ${sigRes.status}`);
+        }
+
+        const json = await sigRes.json();
+        console.log("[DEBUG] Signature response JSON:", json);
+
+        const { signature } = json as SignatureResponse;
         const sdkKey = "9BnsBTacTiSBf1vE4pX9A";
 
         console.log("[DEBUG] Using sdkKey:", sdkKey);
@@ -238,6 +215,9 @@ export default function Webinars() {
           "[DEBUG] Using signature (first 50 chars):",
           signature?.slice(0, 50)
         );
+
+        if (!signature) throw new Error("No signature received");
+        if (!sdkKey) throw new Error("SDK Key not configured");
 
         console.log("[DEBUG] Loading Zoom Embedded UMD…");
         const ZME = await loadZoomEmbeddedUMD();
@@ -257,16 +237,7 @@ export default function Webinars() {
           language: "en-US",
           zoomAppRoot: zoomRoot,
           customize: {
-            video: {
-              isResizable: true,
-              popper: { disableDraggable: false },
-              viewSizes: {
-                default: {
-                  width: "100%",
-                  height: "100%",
-                },
-              },
-            },
+            video: { isResizable: true, popper: { disableDraggable: false } },
             meetingInfo: [
               "topic",
               "host",
@@ -275,21 +246,7 @@ export default function Webinars() {
               "dc",
               "enctype",
             ],
-            toolbar: {
-              buttons: [
-                {
-                  text: "Fullscreen",
-                  className: "CustomButton",
-                  onClick: () => {
-                    if (isFullScreen) {
-                      exitFullScreen();
-                    } else {
-                      enterFullScreen();
-                    }
-                  },
-                },
-              ],
-            },
+            toolbar: { buttons: [] },
           },
         });
         console.log("[DEBUG] Zoom client initialized");
@@ -307,11 +264,6 @@ export default function Webinars() {
 
         console.log("[DEBUG] Successfully joined meeting");
         setJoining(false);
-
-        // Auto-enter fullscreen after joining
-        setTimeout(() => {
-          enterFullScreen();
-        }, 1000);
       } catch (e: any) {
         console.error("Join error:", e);
         setError(e?.message || "Failed to join the webinar.");
@@ -320,7 +272,7 @@ export default function Webinars() {
         joiningOnceRef.current = false;
       }
     },
-    [isClient, parseJoinUrl, isFullScreen, enterFullScreen, exitFullScreen]
+    [isClient, parseJoinUrl]
   );
 
   useEffect(() => {
@@ -331,18 +283,6 @@ export default function Webinars() {
       }
     };
   }, []);
-
-  // Handle ESC key to exit fullscreen
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isFullScreen) {
-        exitFullScreen();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isFullScreen, exitFullScreen]);
 
   if (!isClient) {
     return (
@@ -407,80 +347,36 @@ export default function Webinars() {
       )}
 
       {overlayOpen && (
-        <div className="zoom-overlay fixed inset-0 bg-black z-50 flex flex-col">
-          {/* Control Bar - Only visible when not in browser fullscreen */}
-          {!isFullScreen && (
-            <div className="absolute top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm">
-              <div className="flex justify-between items-center p-4">
-                <div className="text-white text-sm">
-                  Press F11 or click Fullscreen for best experience
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors"
-                    onClick={enterFullScreen}
-                    disabled={joining}
-                  >
-                    Fullscreen
-                  </button>
-                  <button
-                    className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition-colors"
-                    onClick={leaveMeeting}
-                    disabled={joining}
-                  >
-                    {joining ? "Connecting..." : "Leave Meeting"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Fullscreen Exit Button - Only visible in browser fullscreen */}
-          {isFullScreen && (
-            <div className="absolute top-4 right-4 z-50 flex gap-2">
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center">
+          <div className="relative w-[95vw] h-[90vh] bg-white rounded-xl overflow-hidden shadow-2xl">
+            <div className="absolute top-4 right-4 z-50">
               <button
-                className="px-4 py-2 rounded bg-gray-800/80 hover:bg-gray-700/80 text-white text-sm font-medium transition-colors backdrop-blur-sm"
-                onClick={exitFullScreen}
-              >
-                Exit Fullscreen
-              </button>
-              <button
-                className="px-4 py-2 rounded bg-red-600/80 hover:bg-red-700/80 text-white text-sm font-medium transition-colors backdrop-blur-sm"
+                className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition-colors"
                 onClick={leaveMeeting}
                 disabled={joining}
               >
-                Leave Meeting
+                {joining ? "Connecting..." : "Leave Meeting"}
               </button>
             </div>
-          )}
 
-          {/* Loading Overlay */}
-          {joining && (
-            <div className="absolute inset-0 bg-black/90 flex items-center justify-center z-40">
-              <div className="text-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-b-2 mx-auto mb-4 border-blue-500"></div>
-                <div className="text-xl font-medium text-white">
-                  Connecting to webinar...
-                </div>
-                <div className="text-sm text-gray-300 mt-2">
-                  Please wait a moment
+            {joining && (
+              <div className="absolute inset-0 bg-white/90 flex items-center justify-center z-40">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4 border-blue-600"></div>
+                  <div className="text-lg font-medium">
+                    Connecting to webinar...
+                  </div>
+                  <div className="text-sm text-gray-600 mt-2">
+                    Please wait a moment
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Zoom Container - Full Screen */}
-          <div
-            ref={zoomRootRef}
-            className={`w-full h-full ${isFullScreen ? "pt-0" : "pt-16"}`}
-            style={{
-              width: "100vw",
-              height: "100vh",
-              position: "relative",
-            }}
-          />
+            <div ref={zoomRootRef} className="w-full h-full" />
+          </div>
         </div>
       )}
     </main>
   );
-}
+} 
