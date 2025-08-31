@@ -1,4 +1,8 @@
 @import "tailwindcss";
+/* @import "@zoom/meetingsdk/dist/css/bootstrap.css"; */
+
+/* In your global CSS or component */
+
 
 /* System font stack for better performance and reliability */
 body {
