@@ -12,9 +12,15 @@ const api = axios.create({
   withCredentials: false,
 });
 
-// Add request interceptor for logging (optional)
+// Add request interceptor for authentication and logging
 api.interceptors.request.use(
   (config) => {
+    // Add Authorization header if access token exists
+    const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+    if (accessToken && !config.url?.includes('/auth/') && !config.url?.includes('/otp/')) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    
     console.log(`Making ${config.method?.toUpperCase()} request to: ${config.url}`);
     return config;
   },
@@ -23,12 +29,52 @@ api.interceptors.request.use(
   }
 );
 
-// Add response interceptor for error handling
+// Add response interceptor for error handling and token refresh
 api.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+    
+    // Handle 401 errors (unauthorized) by attempting token refresh
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      
+      try {
+        const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null;
+        if (refreshToken) {
+          const refreshResult = await api.post('/auth/refresh-token', { refreshToken });
+          
+          // Handle nested tokens structure from API (note: API uses PascalCase)
+          const newAccessToken = refreshResult.data?.accessToken || refreshResult.data?.tokens?.AccessToken;
+          const newRefreshToken = refreshResult.data?.refreshToken || refreshResult.data?.tokens?.RefreshToken;
+          
+          if (newAccessToken) {
+            // Update stored token
+            localStorage.setItem('accessToken', newAccessToken);
+            if (newRefreshToken) {
+              localStorage.setItem('refreshToken', newRefreshToken);
+            }
+            
+            // Update the original request with new token
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            
+            // Retry the original request
+            return api(originalRequest);
+          }
+        }
+      } catch (refreshError) {
+        // Refresh failed, clear auth data
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          localStorage.removeItem('user');
+        }
+        console.error('Token refresh failed:', refreshError);
+      }
+    }
+    
     if (error.code === 'ECONNABORTED') {
       console.error('Request timeout');
     } else if (error.response) {
@@ -142,7 +188,9 @@ const retryRequest = async <T>(
 export const authAPI = {
   login: async (data: LoginRequest): Promise<AuthResponse> => {
     try {
+      console.log('🌐 API: Sending login request for:', data.email);
       const response = await retryRequest(() => api.post('/auth/login', data));
+      console.log('🌐 API: Login response received:', response.data);
       
       return {
         success: true,
@@ -150,6 +198,7 @@ export const authAPI = {
         data: response.data,
       };
     } catch (error) {
+      console.error('🌐 API: Login request failed:', error);
       return handleAuthError(error, 'Login failed');
     }
   },

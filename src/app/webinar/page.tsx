@@ -10,7 +10,8 @@ import {
   VideoCameraIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
-  UserIcon
+  UserIcon,
+  CalendarDaysIcon
 } from '@heroicons/react/24/outline';
 import { useAuth } from '@/contexts/AuthContext';
 import AuthModal from '@/components/AuthModal';
@@ -350,6 +351,54 @@ export default function WebinarsPage() {
     setRegistrationModalOpen(true);
   };
 
+  // Function to generate calendar event data
+  const generateCalendarEvent = (webinar: Webinar) => {
+    if (!webinar.start_time) return;
+
+    const startDate = new Date(webinar.start_time);
+    const endDate = new Date(startDate.getTime() + (webinar.duration || 60) * 60 * 1000);
+    
+    // Format dates for ICS format (YYYYMMDDTHHMMSSZ)
+    const formatDate = (date: Date) => {
+      return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    };
+
+    const startFormatted = formatDate(startDate);
+    const endFormatted = formatDate(endDate);
+    
+    // Create ICS content
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//The School of Options//Webinar//EN',
+      'BEGIN:VEVENT',
+      `UID:${webinar.id}@theschoolofoptions.com`,
+      `DTSTART:${startFormatted}`,
+      `DTEND:${endFormatted}`,
+      `SUMMARY:${webinar.topic}`,
+      'DESCRIPTION:Options Trading Webinar by The School of Options\\n\\nJoin us for an interactive session on advanced options trading strategies and market analysis.\\n\\nRegister at: https://theschoolofoptions.com/webinar',
+      'LOCATION:Online Webinar',
+      'STATUS:CONFIRMED',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT15M',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:Webinar starts in 15 minutes',
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    // Create and download the ICS file
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `webinar-${webinar.id}.ics`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+  };
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -377,15 +426,15 @@ export default function WebinarsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-16 sm:py-20 lg:py-24">
+      <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
             <span className="block sm:inline">Live Webinars</span>
             <br className="hidden sm:block" />
             <span className="block sm:inline text-accent mt-2 sm:mt-0">& Training Sessions</span>
           </h1>
           
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed px-2 sm:px-0 font-semibold">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-4 sm:mb-6 max-w-4xl mx-auto leading-relaxed px-2 sm:px-0 font-semibold">
             Join our interactive webinars to learn advanced options trading strategies, market analysis, and risk management techniques from experienced traders.
           </p>
           
@@ -397,7 +446,7 @@ export default function WebinarsPage() {
                 Loading...
               </div>
             ) : isAuthenticated ? (
-              <div className="bg-green-500/10 border border-green-500/20 text-green-300 px-6 py-3 rounded-lg font-semibold text-base w-full sm:w-auto text-center">
+              <div className="bg-accent/10 border border-accent/20 text-accent px-6 py-3 rounded-lg font-semibold text-base w-full sm:w-auto text-center">
                 <UserIcon className="h-5 w-5 inline mr-2" />
                 Welcome, {user?.fullName}
               </div>
@@ -414,7 +463,7 @@ export default function WebinarsPage() {
       {/* Error Display */}
       {error && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800">
+          <div className="rounded-lg border border-navy/30 bg-navy/5 p-4 text-sm text-navy">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <ExclamationTriangleIcon className="h-5 w-5 mr-2" />
@@ -422,7 +471,7 @@ export default function WebinarsPage() {
               </div>
               <button
                 onClick={() => setError(null)}
-                className="text-red-600 hover:text-red-800 font-bold text-lg"
+                className="text-navy hover:text-navy/80 font-bold text-lg"
               >
                 ×
               </button>
@@ -432,8 +481,8 @@ export default function WebinarsPage() {
       )}
 
       {loadingWebinars ? (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="flex items-center justify-center h-64">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex items-center justify-center h-32">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-navy mx-auto mb-4"></div>
               <div className="text-lg font-medium text-navy">Loading webinars...</div>
@@ -443,11 +492,11 @@ export default function WebinarsPage() {
       ) : (
         <>
           {/* Live/Ongoing Webinars Section */}
-          <section className="py-16 bg-gray-50">
+          <section className="py-12 bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-12">
+              <div className="text-center mb-8">
                 <div className="flex items-center justify-center mb-4">
-                  <div className="w-3 h-3 bg-red-500 rounded-full mr-3 animate-pulse"></div>
+                  <div className="w-3 h-3 bg-accent rounded-full mr-3 animate-pulse"></div>
                   <h2 className="text-3xl md:text-4xl font-bold text-navy">Live Webinars</h2>
                 </div>
                 <p className="text-xl text-gray-600 font-semibold">
@@ -458,11 +507,11 @@ export default function WebinarsPage() {
               </div>
 
               {liveWebinars.length === 0 ? (
-                <div className="text-center py-12">
-                  <div className="max-w-md mx-auto bg-white rounded-2xl p-8 shadow-lg">
-                    <VideoCameraIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-navy mb-2">No Live Sessions</h3>
-                    <p className="text-gray-600 font-semibold">
+                <div className="text-center py-8">
+                  <div className="max-w-md mx-auto bg-white rounded-2xl p-6 shadow-lg">
+                    <VideoCameraIcon className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+                    <h3 className="text-lg font-bold text-navy mb-2">No Live Sessions</h3>
+                    <p className="text-gray-600 font-semibold text-sm">
                       There are no webinars currently live. Check back during scheduled session times or browse upcoming webinars below.
                     </p>
                   </div>
@@ -470,10 +519,10 @@ export default function WebinarsPage() {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {liveWebinars.map((webinar) => (
-                    <div key={webinar.id} className="bg-white rounded-2xl p-6 shadow-lg border-2 border-red-200 hover:shadow-xl transition-all duration-300">
+                    <div key={webinar.id} className="bg-white rounded-2xl p-6 shadow-lg border-2 border-accent/20 hover:shadow-xl transition-all duration-300">
                       <div className="flex items-center mb-4">
-                        <div className="w-4 h-4 bg-red-500 rounded-full mr-3 animate-pulse"></div>
-                        <span className="text-red-600 font-bold text-sm uppercase tracking-wide">LIVE NOW</span>
+                        <div className="w-4 h-4 bg-accent rounded-full mr-3 animate-pulse"></div>
+                        <span className="text-accent font-bold text-sm uppercase tracking-wide">LIVE NOW</span>
                       </div>
                       
                       <h3 className="text-xl font-bold text-navy mb-3 line-clamp-2">
@@ -498,7 +547,7 @@ export default function WebinarsPage() {
                       <button
                         onClick={() => joinInsidePage(webinar)}
                         disabled={joining}
-                        className="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                        className="w-full bg-accent hover:bg-accent/90 text-navy px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                       >
                         <PlayIcon className="h-5 w-5 mr-2" />
                         {joining ? "Joining..." : isAuthenticated ? "Join Live" : "Sign In to Join"}
@@ -511,9 +560,9 @@ export default function WebinarsPage() {
           </section>
 
           {/* Upcoming Webinars Section */}
-          <section className="py-16 bg-white">
+          <section className="py-12 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-12">
+              <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
                   Upcoming Webinars
                 </h2>
@@ -523,11 +572,11 @@ export default function WebinarsPage() {
               </div>
 
               {upcomingWebinars.length === 0 ? (
-                <div className="text-center py-12">
-                  <div className="max-w-md mx-auto bg-gray-50 rounded-2xl p-8 shadow-lg">
-                    <CalendarIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-navy mb-2">No Upcoming Sessions</h3>
-                    <p className="text-gray-600 font-semibold mb-6">
+                <div className="text-center py-8">
+                  <div className="max-w-md mx-auto bg-gray-50 rounded-2xl p-6 shadow-lg">
+                    <CalendarIcon className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+                    <h3 className="text-lg font-bold text-navy mb-2">No Upcoming Sessions</h3>
+                    <p className="text-gray-600 font-semibold mb-4 text-sm">
                       We're planning new webinar sessions. Stay tuned for announcements about upcoming training sessions.
                     </p>
                     <a
@@ -569,13 +618,24 @@ export default function WebinarsPage() {
                         </div>
                       </div>
 
-                      <button
-                        onClick={() => handleRegisterForWebinar(webinar)}
-                        className="w-full bg-navy hover:bg-navy-light text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center"
-                      >
-                        <CheckCircleIcon className="h-5 w-5 mr-2" />
-                        Register & Join
-                      </button>
+                      <div className="flex flex-col sm:flex-row gap-3">
+                        <button
+                          onClick={() => handleRegisterForWebinar(webinar)}
+                          className="flex-1 bg-navy hover:bg-navy-light text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                        >
+                          <CheckCircleIcon className="h-5 w-5 mr-2" />
+                          Register
+                        </button>
+                        
+                        <button
+                          onClick={() => generateCalendarEvent(webinar)}
+                          disabled={!webinar.start_time}
+                          className="bg-accent hover:bg-accent/90 text-navy px-4 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                          title={!webinar.start_time ? "Date/time not available" : "Add to calendar"}
+                        >
+                          <CalendarDaysIcon className="h-5 w-5" />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -586,12 +646,12 @@ export default function WebinarsPage() {
       )}
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-navy to-navy-dark">
+      <section className="py-12 bg-gradient-to-r from-navy to-navy-dark">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Want More Structured Learning?
           </h2>
-          <p className="text-xl text-gray-300 mb-8 font-semibold">
+          <p className="text-xl text-gray-300 mb-6 font-semibold">
             Join our comprehensive 6-month mentorship program for personalized guidance and systematic options trading education.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -619,7 +679,7 @@ export default function WebinarsPage() {
           <div className="relative w-[95vw] h-[90vh] bg-white rounded-xl overflow-hidden shadow-2xl">
             <div className="absolute top-4 right-4 z-50">
               <button
-                className="px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors shadow-lg"
+                className="px-6 py-3 rounded-lg bg-navy hover:bg-navy/90 text-white font-semibold transition-colors shadow-lg"
                 onClick={leaveMeeting}
                 disabled={joining}
               >

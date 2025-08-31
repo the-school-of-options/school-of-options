@@ -1,19 +1,14 @@
 'use client';
 
-import { useState, Fragment, useEffect } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import { useState, useEffect } from 'react';
 import { 
-  XMarkIcon, 
   EyeIcon, 
   EyeSlashIcon,
-  UserIcon,
-  EnvelopeIcon,
-  LockClosedIcon,
   ExclamationTriangleIcon,
-  CheckCircleIcon,
-  KeyIcon
+  CheckCircleIcon
 } from '@heroicons/react/24/outline';
 import { useAuth } from '@/contexts/AuthContext';
+import ModalShell from './ModalShell';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -275,280 +270,250 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: Au
   };
 
   return (
-    <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={handleClose}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-50" />
-        </Transition.Child>
+    <ModalShell 
+      isOpen={isOpen} 
+      onClose={handleClose} 
+      title={getTitle()}
+      maxWidth="md"
+    >
 
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="px-6 pb-6">
+          {/* Error/Success Messages */}
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center">
+              <ExclamationTriangleIcon className="h-4 w-4 text-red-500 mr-2" />
+              <span className="text-red-700 text-sm">{error}</span>
+            </div>
+          )}
+
+          {success && (
+            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center">
+              <CheckCircleIcon className="h-4 w-4 text-green-500 mr-2" />
+              <span className="text-green-700 text-sm">{success}</span>
+            </div>
+          )}
+
+          <div className="space-y-4">
+            {/* Full Name field (signup only) */}
+            {mode === 'signup' && (
+              <div>
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500"
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
+            )}
+
+            {/* Email field */}
+            {(mode === 'login' || mode === 'signup' || mode === 'forgot') && (
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500"
+                  placeholder="Enter your email address"
+                  required
+                />
+              </div>
+            )}
+
+            {/* OTP field */}
+            {mode === 'otp' && (
+              <div>
+                <label htmlFor="otp" className="block text-sm font-medium text-gray-700 mb-2">
+                  Enter OTP *
+                </label>
+                <input
+                  type="text"
+                  id="otp"
+                  name="otp"
+                  value={formData.otp}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500 text-center tracking-widest"
+                  placeholder="000000"
+                  maxLength={6}
+                  required
+                />
+                {otpCountdown > 0 && (
+                  <p className="text-sm text-gray-600 mt-2 text-center">
+                    Resend OTP in {otpCountdown} seconds
+                  </p>
+                )}
+                {otpCountdown === 0 && otpSent && (
+                  <button
+                    type="button"
+                    onClick={handleSendOTP}
+                    className="text-sm text-accent hover:text-accent/80 font-semibold mt-2 block mx-auto"
+                  >
+                    Resend OTP
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Password field */}
+            {(mode === 'login' || mode === 'signup' || mode === 'reset') && (
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                  Password *
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500"
+                    placeholder={mode === 'reset' ? 'Enter new password' : 'Enter your password'}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-100 rounded transition-colors"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? (
+                      <EyeSlashIcon className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <EyeIcon className="h-4 w-4 text-gray-500" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Confirm Password field */}
+            {(mode === 'signup' || mode === 'reset') && (
+              <div>
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm Password *
+                </label>
+                <div className="relative">
+                  <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500"
+                    placeholder="Confirm your password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-100 rounded transition-colors"
+                    aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeSlashIcon className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <EyeIcon className="h-4 w-4 text-gray-500" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}
+
+          </div>
+
+          {/* Submit Button */}
+          <div className="mt-6">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`w-full bg-accent text-navy font-semibold py-3 px-6 rounded-lg transition-all duration-200 ${
+                isLoading 
+                  ? 'opacity-50 cursor-not-allowed' 
+                  : 'hover:bg-accent/90 hover:shadow-lg transform hover:scale-[1.02]'
+              }`}
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
-                {/* Header */}
-                <div className="flex justify-between items-center mb-6">
-                  <Dialog.Title className="text-2xl font-bold text-navy">
-                    {getTitle()}
-                  </Dialog.Title>
+              {getSubmitText()}
+            </button>
+          </div>
+        </form>
+
+        {/* Mode Switchers */}
+        <div className="px-6 pb-6">
+          <div className="text-center space-y-2">
+            {mode === 'login' && (
+              <>
+                <p className="text-xs text-gray-500">
+                  Don't have an account?{' '}
                   <button
-                    onClick={handleClose}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    onClick={() => handleModeChange('signup')}
+                    className="text-accent hover:text-accent/80 font-semibold underline"
                   >
-                    <XMarkIcon className="h-6 w-6" />
+                    Sign up here
                   </button>
-                </div>
-
-                {/* Error/Success Messages */}
-                {error && (
-                  <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center">
-                    <ExclamationTriangleIcon className="h-5 w-5 text-red-500 mr-2" />
-                    <span className="text-red-700 text-sm">{error}</span>
-                  </div>
-                )}
-
-                {success && (
-                  <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mr-2" />
-                    <span className="text-green-700 text-sm">{success}</span>
-                  </div>
-                )}
-
-                {/* Form */}
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Full Name field (signup only) */}
-                  {mode === 'signup' && (
-                    <div>
-                      <label className="block text-sm font-semibold text-navy mb-2">
-                        Full Name
-                      </label>
-                      <div className="relative">
-                        <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                        <input
-                          type="text"
-                          name="fullName"
-                          value={formData.fullName}
-                          onChange={handleInputChange}
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
-                          placeholder="Enter your full name"
-                          required
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Email field */}
-                  {(mode === 'login' || mode === 'signup' || mode === 'forgot') && (
-                    <div>
-                      <label className="block text-sm font-semibold text-navy mb-2">
-                        Email Address
-                      </label>
-                      <div className="relative">
-                        <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
-                          placeholder="Enter your email"
-                          required
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* OTP field */}
-                  {mode === 'otp' && (
-                    <div>
-                      <label className="block text-sm font-semibold text-navy mb-2">
-                        Enter OTP
-                      </label>
-                      <div className="relative">
-                        <KeyIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                        <input
-                          type="text"
-                          name="otp"
-                          value={formData.otp}
-                          onChange={handleInputChange}
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors text-center text-lg tracking-widest"
-                          placeholder="000000"
-                          maxLength={6}
-                          required
-                        />
-                      </div>
-                      {otpCountdown > 0 && (
-                        <p className="text-sm text-gray-600 mt-2 text-center">
-                          Resend OTP in {otpCountdown} seconds
-                        </p>
-                      )}
-                      {otpCountdown === 0 && otpSent && (
-                        <button
-                          type="button"
-                          onClick={handleSendOTP}
-                          className="text-sm text-accent hover:text-accent/80 font-semibold mt-2 block mx-auto"
-                        >
-                          Resend OTP
-                        </button>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Password field */}
-                  {(mode === 'login' || mode === 'signup' || mode === 'reset') && (
-                    <div>
-                      <label className="block text-sm font-semibold text-navy mb-2">
-                        Password
-                      </label>
-                      <div className="relative">
-                        <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                        <input
-                          type={showPassword ? 'text' : 'password'}
-                          name="password"
-                          value={formData.password}
-                          onChange={handleInputChange}
-                          className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
-                          placeholder={mode === 'reset' ? 'Enter new password' : 'Enter your password'}
-                          required
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                        >
-                          {showPassword ? (
-                            <EyeSlashIcon className="h-5 w-5" />
-                          ) : (
-                            <EyeIcon className="h-5 w-5" />
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Confirm Password field */}
-                  {(mode === 'signup' || mode === 'reset') && (
-                    <div>
-                      <label className="block text-sm font-semibold text-navy mb-2">
-                        Confirm Password
-                      </label>
-                      <div className="relative">
-                        <LockClosedIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                        <input
-                          type={showConfirmPassword ? 'text' : 'password'}
-                          name="confirmPassword"
-                          value={formData.confirmPassword}
-                          onChange={handleInputChange}
-                          className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
-                          placeholder="Confirm your password"
-                          required
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                        >
-                          {showConfirmPassword ? (
-                            <EyeSlashIcon className="h-5 w-5" />
-                          ) : (
-                            <EyeIcon className="h-5 w-5" />
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Submit Button */}
+                </p>
+                <p className="text-xs text-gray-500">
+                  Forgot your password?{' '}
                   <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-accent hover:bg-accent/90 text-navy px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    onClick={() => handleModeChange('forgot')}
+                    className="text-accent hover:text-accent/80 font-semibold underline"
                   >
-                    {getSubmitText()}
+                    Reset it here
                   </button>
-                </form>
+                </p>
+              </>
+            )}
 
-                {/* Mode Switchers */}
-                <div className="mt-6 text-center space-y-2">
-                  {mode === 'login' && (
-                    <>
-                      <p className="text-sm text-gray-600">
-                        Don't have an account?{' '}
-                        <button
-                          onClick={() => handleModeChange('signup')}
-                          className="text-accent hover:text-accent/80 font-semibold"
-                        >
-                          Sign up here
-                        </button>
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        Forgot your password?{' '}
-                        <button
-                          onClick={() => handleModeChange('forgot')}
-                          className="text-accent hover:text-accent/80 font-semibold"
-                        >
-                          Reset it here
-                        </button>
-                      </p>
-                    </>
-                  )}
+            {mode === 'signup' && (
+              <p className="text-xs text-gray-500">
+                Already have an account?{' '}
+                <button
+                  onClick={() => handleModeChange('login')}
+                  className="text-accent hover:text-accent/80 font-semibold underline"
+                >
+                  Sign in here
+                </button>
+              </p>
+            )}
 
-                  {mode === 'signup' && (
-                    <p className="text-sm text-gray-600">
-                      Already have an account?{' '}
-                      <button
-                        onClick={() => handleModeChange('login')}
-                        className="text-accent hover:text-accent/80 font-semibold"
-                      >
-                        Sign in here
-                      </button>
-                    </p>
-                  )}
+            {mode === 'forgot' && (
+              <p className="text-xs text-gray-500">
+                Remember your password?{' '}
+                <button
+                  onClick={() => handleModeChange('login')}
+                  className="text-accent hover:text-accent/80 font-semibold underline"
+                >
+                  Sign in here
+                </button>
+              </p>
+            )}
 
-                  {mode === 'forgot' && (
-                    <p className="text-sm text-gray-600">
-                      Remember your password?{' '}
-                      <button
-                        onClick={() => handleModeChange('login')}
-                        className="text-accent hover:text-accent/80 font-semibold"
-                      >
-                        Sign in here
-                      </button>
-                    </p>
-                  )}
-
-                  {(mode === 'reset' || mode === 'otp') && (
-                    <p className="text-sm text-gray-600">
-                      Back to{' '}
-                      <button
-                        onClick={() => handleModeChange('login')}
-                        className="text-accent hover:text-accent/80 font-semibold"
-                      >
-                        sign in
-                      </button>
-                    </p>
-                  )}
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
+            {(mode === 'reset' || mode === 'otp') && (
+              <p className="text-xs text-gray-500">
+                Back to{' '}
+                <button
+                  onClick={() => handleModeChange('login')}
+                  className="text-accent hover:text-accent/80 font-semibold underline"
+                >
+                  sign in
+                </button>
+              </p>
+            )}
           </div>
         </div>
-      </Dialog>
-    </Transition>
+    </ModalShell>
   );
 }

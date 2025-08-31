@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
-import { CheckIcon, CalendarIcon, UsersIcon, CurrencyRupeeIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useState } from 'react';
+import { CheckIcon, CalendarIcon, UsersIcon, CurrencyRupeeIcon } from '@heroicons/react/24/outline';
+import ModalShell from './ModalShell';
 
 export default function FlagshipProgram() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,42 +14,6 @@ export default function FlagshipProgram() {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  // Handle ESC key press
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isModalOpen) {
-        closeModal();
-      }
-    };
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
-  }, [isModalOpen]);
-
-  // Prevent body scroll when modal is open
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isModalOpen]);
-
-  // Focus management
-  useEffect(() => {
-    if (isModalOpen && modalRef.current) {
-      const focusableElements = modalRef.current.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      const firstElement = focusableElements[0] as HTMLElement;
-      firstElement?.focus();
-    }
-  }, [isModalOpen]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -57,8 +22,6 @@ export default function FlagshipProgram() {
   const closeModal = () => {
     setIsModalOpen(false);
     setFormData({ name: '', email: '', phone: '', message: '' });
-    // Return focus to the button that opened the modal
-    setTimeout(() => buttonRef.current?.focus(), 100);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -77,12 +40,7 @@ export default function FlagshipProgram() {
     }
   };
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    // Close modal if clicking on the backdrop (not on the modal content)
-    if (e.target === e.currentTarget) {
-      closeModal();
-    }
-  };
+
 
   const features = [
     'Live Zoom classes with expert instructors',
@@ -124,7 +82,6 @@ export default function FlagshipProgram() {
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button
-                ref={buttonRef}
                 onClick={openModal}
                 className="btn-primary-lg text-center w-full sm:w-auto"
               >
@@ -186,41 +143,13 @@ export default function FlagshipProgram() {
       </div>
 
       {/* Modal */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          onClick={handleBackdropClick}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-title"
-        >
-          {/* Backdrop with blur */}
-          <div 
-            className="absolute inset-0 backdrop-blur-fallback animate-backdrop-in"
-            onClick={closeModal}
-          />
-          
-          {/* Modal Content */}
-          <div
-            ref={modalRef}
-            className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full mx-auto animate-modal-in"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 pb-4">
-              <h2 id="modal-title" className="text-2xl font-bold text-navy">
-                Talk to Counsellor
-              </h2>
-              <button
-                onClick={closeModal}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                aria-label="Close modal"
-              >
-                <XMarkIcon className="h-5 w-5 text-gray-500" />
-              </button>
-            </div>
-
-            {/* Form */}
+      <ModalShell 
+        isOpen={isModalOpen} 
+        onClose={closeModal} 
+        title="Talk to Counsellor"
+        maxWidth="md"
+      >
+        {/* Form */}
             <form onSubmit={handleSubmit} className="px-6 pb-6">
               <p className="text-gray-600 mb-6 text-sm">
                 Get personalized guidance for your options trading journey. Our counsellor will help you understand the program and answer all your questions.
@@ -293,9 +222,7 @@ export default function FlagshipProgram() {
                 We'll contact you within 24 hours to discuss the mentorship program.
               </p>
             </form>
-          </div>
-        </div>
-      )}
+      </ModalShell>
     </section>
   );
 }
