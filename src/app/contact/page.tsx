@@ -62,7 +62,7 @@ export default function ContactPage() {
       <section className="bg-gradient-to-br from-navy to-navy-dark text-white py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6">
-            Get in <span className="text-green">Touch</span>
+            Get in <span className="text-accent">Touch</span>
           </h1>
           
           <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
@@ -71,11 +71,11 @@ export default function ContactPage() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mt-8 sm:mt-12 max-w-2xl mx-auto">
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-green mb-1 sm:mb-2">24/7</div>
+              <div className="text-2xl sm:text-3xl font-bold text-accent mb-1 sm:mb-2">24/7</div>
               <div className="text-gray-300 text-sm sm:text-base font-semibold">WhatsApp Support</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-green mb-1 sm:mb-2">&lt;2 hrs</div>
+              <div className="text-2xl sm:text-3xl font-bold text-accent mb-1 sm:mb-2">&lt;2 hrs</div>
               <div className="text-gray-300 text-sm sm:text-base font-semibold">Response Time</div>
             </div>
           </div>
@@ -132,7 +132,7 @@ export default function ContactPage() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-gray-50 rounded-2xl p-6">
                 <div className="flex items-start">
-                  <QuestionMarkCircleIcon className="h-6 w-6 text-green mr-3 mt-1 flex-shrink-0" />
+                  <QuestionMarkCircleIcon className="h-6 w-6 text-accent mr-3 mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="text-lg font-bold text-navy mb-3">{faq.question}</h3>
                     <p className="text-gray-600 font-semibold">{faq.answer}</p>

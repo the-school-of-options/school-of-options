@@ -9,9 +9,8 @@ import { useSearchParams } from "next/navigation";
 // ── Settings ───────────────────────────────────────────────────────────────────
 //
 const ZOOM_VER = "4.0.0"; // keep all 3 CDN URLs on the same version
-// Your backend that returns a Meeting SDK signature (use Meeting SDK Key/Secret)
-const SIGNATURE_ENDPOINT =
-  "http://localhost:8000/api/v1/zoom/webinar-signature";
+// Local API endpoint that returns a Meeting SDK signature
+const SIGNATURE_ENDPOINT = "/api/zoom/webinar-signature";
 
 //
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -206,7 +205,17 @@ export default function WebinarRoom() {
       } catch (e: any) {
         console.error("[ROOM] join error:", e);
         console.error("[ROOM] error stack:", e.stack);
-        setError(e?.message || "Failed to join");
+        
+        let errorMessage = "Failed to join webinar";
+        if (e?.message?.includes('signature')) {
+          errorMessage = "Authentication failed. Please try again.";
+        } else if (e?.message?.includes('SDK')) {
+          errorMessage = "Unable to load webinar interface. Please refresh the page.";
+        } else if (e?.message?.includes('network') || e?.message?.includes('fetch')) {
+          errorMessage = "Network error. Please check your connection and try again.";
+        }
+        
+        setError(errorMessage);
         setJoining(false);
       }
     })();
