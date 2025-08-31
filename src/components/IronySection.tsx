@@ -15,8 +15,8 @@ export default function IronySection() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-6 lg:gap-8 items-stretch mb-3 sm:mb-4 md:mb-5">
             <div className="text-center md:text-left flex flex-col justify-between">
               <div className="flex flex-col items-center md:items-start">
-                <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-red-50 rounded-full mb-3 md:mb-4">
-                  <div className="text-xl md:text-2xl lg:text-3xl font-bold text-red-500">90%</div>
+                <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-navy-light/10 rounded-full mb-3 md:mb-4">
+                  <div className="text-xl md:text-2xl lg:text-3xl font-bold text-navy">90%</div>
                 </div>
                 <h3 className="text-lg md:text-xl font-bold text-navy mb-2 md:mb-3">Traders Lose Money</h3>
               </div>

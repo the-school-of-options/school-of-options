@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { 
   CheckIcon, 
   CalendarIcon, 
@@ -14,6 +15,45 @@ import {
   ShieldCheckIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import EnrollCTA from '@/components/EnrollCTA';
+
+const CANONICAL_ORIGIN = process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || 'https://theschoolofoptions.com';
+
+export const metadata: Metadata = {
+  title: '6-Month Options Trading Mentorship Program - The School of Options',
+  description: 'Master options trading with our comprehensive 6-month mentorship program. Learn from 20+ years of experience with structured guidance, risk management, and disciplined trading strategies.',
+  keywords: 'options trading mentorship, trading course, options education, trading program, financial mentorship, options strategies course',
+  metadataBase: new URL(CANONICAL_ORIGIN),
+  alternates: {
+    canonical: '/mentorship',
+  },
+  openGraph: {
+    title: '6-Month Options Trading Mentorship Program - The School of Options',
+    description: 'Master options trading with our comprehensive 6-month mentorship program. Learn structured guidance, risk management, and disciplined trading strategies.',
+    url: `${CANONICAL_ORIGIN}/mentorship`,
+    siteName: 'The School of Options',
+    locale: 'en_US',
+    type: 'website',
+    images: [
+      {
+        url: '/images/founder-kundan-kishore.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Options Trading Mentorship Program - The School of Options',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '6-Month Options Trading Mentorship Program',
+    description: 'Master options trading with structured guidance, risk management, and disciplined trading strategies.',
+    images: ['/images/founder-kundan-kishore.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function MentorshipPage() {
   const learningRoadmap = [
@@ -118,14 +158,11 @@ export default function MentorshipPage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-2xl mx-auto">
-            <a
-              href="https://rzp.io/rzp/theschoolofoptions"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-accent text-navy px-6 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors text-base w-full sm:w-auto text-center"
-            >
-              Enroll Now
-            </a>
+            <EnrollCTA 
+              variant="primary" 
+              size="md"
+              className="w-full sm:w-auto text-center"
+            />
             <Link href="/newsletter" className="border border-accent text-accent hover:bg-accent hover:text-navy px-6 py-3 rounded-lg font-semibold transition-colors text-base w-full sm:w-auto text-center">
               <span className="sm:hidden">Free Newsletter</span>
               <span className="hidden sm:inline">Explore Free Resources First</span>
@@ -135,7 +172,7 @@ export default function MentorshipPage() {
       </section>
 
       {/* 6-Month Learning Roadmap - Enhanced Responsiveness */}
-      <section className="py-12 sm:py-16 bg-white">
+      <section className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-accent/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12 lg:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
@@ -150,7 +187,7 @@ export default function MentorshipPage() {
             <div className="lg:hidden space-y-8">
               {learningRoadmap.map((item, index) => (
                 <div key={item.step} className="relative">
-                  <div className="bg-gray-50 rounded-2xl p-6 shadow-lg">
+                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-accent/10">
                     <div className="flex items-center mb-4">
                       <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mr-4 flex-shrink-0">
                         <item.icon className="h-6 w-6 text-navy" />
@@ -246,7 +283,7 @@ export default function MentorshipPage() {
       </section>
 
       {/* Step 1: Build Your Foundation */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gradient-to-br from-navy/5 to-navy/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
@@ -259,7 +296,7 @@ export default function MentorshipPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {foundationConcepts.map((category) => (
-              <div key={category.category} className="bg-white rounded-2xl p-6 shadow-lg">
+              <div key={category.category} className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-navy/10 hover:border-accent/30 transition-all duration-300">
                 <div className="flex items-center mb-4">
                   <div className="w-3 h-3 bg-accent rounded-full mr-3"></div>
                   <h3 className="text-xl font-bold text-navy">{category.category}</h3>
@@ -279,7 +316,7 @@ export default function MentorshipPage() {
       </section>
 
       {/* Step 2: Training Before Market Entry */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gradient-to-br from-accent/5 to-accent/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
@@ -292,7 +329,7 @@ export default function MentorshipPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {trainingTools.map((tool) => (
-              <div key={tool.title} className="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
+              <div key={tool.title} className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 border border-accent/10 hover:border-accent/30 hover:-translate-y-1">
                 <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
                   <tool.icon className="h-8 w-8 text-navy" />
                 </div>
@@ -315,7 +352,7 @@ export default function MentorshipPage() {
       </section>
 
       {/* Step 3: Real Mentorship */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gradient-to-br from-navy-light/10 to-navy/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-navy mb-6">
@@ -331,21 +368,21 @@ export default function MentorshipPage() {
               <h3 className="text-2xl font-bold text-navy mb-6">Mentor Philosophy</h3>
               
               <div className="space-y-6">
-                <div className="bg-white rounded-lg p-6 border-l-4 border-accent">
+                <div className="bg-white/90 backdrop-blur-sm rounded-lg p-6 border-l-4 border-accent shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <h4 className="font-bold text-navy mb-2">Discipline Over Profits</h4>
                   <p className="text-gray-600 font-semibold">
                     We focus on building consistent, disciplined trading habits rather than chasing quick profits.
                   </p>
                 </div>
                 
-                <div className="bg-white rounded-lg p-6 border-l-4 border-accent">
+                <div className="bg-white/90 backdrop-blur-sm rounded-lg p-6 border-l-4 border-accent shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <h4 className="font-bold text-navy mb-2">Edge-Based Trading</h4>
                   <p className="text-gray-600 font-semibold">
                     Learn to identify and exploit statistical edges in the market through systematic approaches.
                   </p>
                 </div>
                 
-                <div className="bg-white rounded-lg p-6 border-l-4 border-accent">
+                <div className="bg-white/90 backdrop-blur-sm rounded-lg p-6 border-l-4 border-accent shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <h4 className="font-bold text-navy mb-2">Risk-First Mindset</h4>
                   <p className="text-gray-600 font-semibold">
                     Every strategy begins with risk management, not profit potential.
@@ -354,7 +391,7 @@ export default function MentorshipPage() {
               </div>
             </div>
             
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-navy/10">
               <h3 className="text-2xl font-bold text-navy mb-6">What You Get</h3>
               
               <div className="space-y-4">
@@ -402,7 +439,12 @@ export default function MentorshipPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 bg-navy text-white">
+      <section className="py-16 bg-gradient-to-br from-navy to-navy-dark text-white relative overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-accent/20 to-transparent"></div>
+        </div>
+        <div className="relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Start Your Journey as a Disciplined Trader
@@ -442,17 +484,13 @@ export default function MentorshipPage() {
           </div>
           
           <div className="flex justify-center mb-6">
-            <a
-              href="https://rzp.io/rzp/theschoolofoptions"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary-lg px-12"
-            >
-              Enroll Now
-            </a>
+            <EnrollCTA 
+              variant="primary" 
+              size="lg"
+              className="px-12"
+            />
           </div>
-          
-
+        </div>
         </div>
       </section>
 

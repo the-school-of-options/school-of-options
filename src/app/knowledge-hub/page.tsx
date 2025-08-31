@@ -23,7 +23,7 @@ export default async function KnowledgeHubPage() {
       title: 'Blogs & Articles',
       description: 'In-depth articles on options concepts, trading strategies, and myth-busting insights',
       href: '/knowledge-hub/blogs',
-      color: 'bg-blue-500',
+      color: 'bg-navy',
       featured: [
         'Understanding Options Greeks in Simple Terms',
         'Why 90% of Traders Lose Money in Options',
@@ -49,7 +49,7 @@ export default async function KnowledgeHubPage() {
       title: 'Video Library',
       description: 'Comprehensive video tutorials from basics to advanced trading strategies',
       href: '/knowledge-hub/videos',
-      color: 'bg-red-500',
+      color: 'bg-navy-light',
       featured: [
         'Options Trading for Beginners (10-part series)',
         'Live Trading Sessions & Analysis',
@@ -75,7 +75,7 @@ export default async function KnowledgeHubPage() {
       title: 'AI Resources',
       description: 'AI-powered trading assistants and automated analysis tools',
       href: '/knowledge-hub/ai',
-      color: 'bg-indigo-500',
+      color: 'bg-accent',
       featured: [
         'AI Options Strategy Recommender',
         'Market Sentiment Analyzer',
