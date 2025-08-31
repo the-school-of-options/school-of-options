@@ -34,6 +34,16 @@ export default function Footer() {
                   Newsletter
                 </Link>
               </li>
+              <li>
+                <Link href="/terms-and-conditions" className="text-gray-300 hover:text-white">
+                  Terms and Condition
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy-policy" className="text-gray-300 hover:text-white">
+                  Privacy Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -79,10 +89,10 @@ export default function Footer() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-6 text-xs text-gray-400">
-            <Link href="/terms" className="hover:text-white transition-colors">
+            <Link href="/terms-and-conditions" className="hover:text-white transition-colors">
               Terms of Service
             </Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>
             <span className="hidden sm:inline">•</span>
