@@ -39,14 +39,13 @@ function loadScriptOnce(src: string): Promise<void> {
   });
 }
 
-
 async function loadZoomEmbeddedUMD() {
   if (typeof window === "undefined") {
     throw new Error("Zoom SDK can only be loaded on the client side");
   }
   if (ZoomMtgEmbeddedSingleton) return ZoomMtgEmbeddedSingleton;
 
-  const ZOOM_VER = "4.0.0"; 
+  const ZOOM_VER = "4.0.0";
   const vendorReact = `https://source.zoom.us/${ZOOM_VER}/lib/vendor/react.min.js`;
   const vendorReactDOM = `https://source.zoom.us/${ZOOM_VER}/lib/vendor/react-dom.min.js`;
   const embeddedSDK = `https://source.zoom.us/${ZOOM_VER}/zoom-meeting-embedded-${ZOOM_VER}.min.js`;
@@ -62,7 +61,6 @@ async function loadZoomEmbeddedUMD() {
   ZoomMtgEmbeddedSingleton = window.ZoomMtgEmbedded;
   return ZoomMtgEmbeddedSingleton;
 }
-
 
 type Webinar = {
   id: string;
@@ -160,6 +158,7 @@ export default function Webinars() {
       setOverlayOpen(false);
       setJoining(false);
     }
+    window.location.reload();
   }, []);
 
   const joinInsidePage = useCallback(
@@ -185,13 +184,13 @@ export default function Webinars() {
         console.log("[DEBUG] Fetching signature for meeting:", meetingNumber);
 
         const sigRes = await fetch(
-          "http://api.theschoolofoptions.com/api/v1/zoom/webinar-signature",
+          "https://api.theschoolofoptions.com/api/v1/zoom/webinar-signature",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               meetingNumber,
-              role: 0, 
+              role: 0,
             }),
           }
         );
@@ -258,7 +257,7 @@ export default function Webinars() {
           sdkKey,
           meetingNumber,
           password,
-          userName: "Guest",
+          userName: "Nandeesh",
           userEmail: "nandeeshbasavarajaiah1@gmail.com",
         });
 
@@ -379,4 +378,4 @@ export default function Webinars() {
       )}
     </main>
   );
-} 
+}
