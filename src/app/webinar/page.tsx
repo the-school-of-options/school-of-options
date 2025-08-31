@@ -146,21 +146,21 @@ export default function Webinars() {
     }
   }, []);
 
-  const leaveMeeting = useCallback(async () => {
-    try {
-      if (zoomClientRef.current) {
-        await zoomClientRef.current.leave();
-        await zoomClientRef.current.destroy();
-      }
-    } catch (e) {
-      console.warn("Error leaving meeting", e);
-    } finally {
-      zoomClientRef.current = null;
-      joiningOnceRef.current = false;
-      setOverlayOpen(false);
-      setJoining(false);
-    }
-  }, []);
+  // const leaveMeeting = useCallback(async () => {
+  //   try {
+  //     if (zoomClientRef.current) {
+  //       await zoomClientRef.current.leave();
+  //       await zoomClientRef.current.destroy();
+  //     }
+  //   } catch (e) {
+  //     console.warn("Error leaving meeting", e);
+  //   } finally {
+  //     zoomClientRef.current = null;
+  //     joiningOnceRef.current = false;
+  //     setOverlayOpen(false);
+  //     setJoining(false);
+  //   }
+  // }, []);
 
   const joinInsidePage = useCallback(
     async (webinar: Webinar) => {
@@ -350,13 +350,13 @@ export default function Webinars() {
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center">
           <div className="relative w-[95vw] h-[90vh] bg-white rounded-xl overflow-hidden shadow-2xl">
             <div className="absolute top-4 right-4 z-50">
-              <button
+              {/* <button
                 className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition-colors"
-                onClick={leaveMeeting}
+                // onClick={leaveMeeting}
                 disabled={joining}
               >
-                {joining ? "Connecting..." : "Leave Meeting"}
-              </button>
+                {joining ? "Connecting..." : ""}
+              </button> */}
             </div>
 
             {joining && (
