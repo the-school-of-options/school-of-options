@@ -185,7 +185,7 @@ export default function Webinars() {
         console.log("[DEBUG] Fetching signature for meeting:", meetingNumber);
 
         const sigRes = await fetch(
-          "http://api.theschoolofoptions.com/api/v1/zoom/webinar-signature",
+          "https://api.theschoolofoptions.com/api/v1/zoom/webinar-signature",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
