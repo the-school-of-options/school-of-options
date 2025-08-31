@@ -108,6 +108,19 @@ export default function Webinars() {
   // Ensure client-side rendering
   useEffect(() => {
     setIsClient(true);
+    const href = `https://source.zoom.us/4.0.0/css/bootstrap.css`;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    link.crossOrigin = "anonymous";
+    link.dataset.zoomCss = "true";
+    document.head.appendChild(link);
+
+    return () => {
+      try {
+        document.head.removeChild(link);
+      } catch {}
+    };
   }, []);
 
   // Load webinars
@@ -267,7 +280,7 @@ export default function Webinars() {
         console.log("[DEBUG] Attempting to join meeting:", meetingNumber);
         await client.join({
           signature,
-          role : 1,
+          role: 1,
           sdkKey,
           meetingNumber,
           password,
