@@ -258,7 +258,7 @@ export default function Webinars() {
           sdkKey,
           meetingNumber,
           password,
-          userName: "Guest",
+          userName: "Nandeesh",
           userEmail: "nandeeshbasavarajaiah1@gmail.com",
         });
 
