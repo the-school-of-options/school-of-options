@@ -39,14 +39,13 @@ function loadScriptOnce(src: string): Promise<void> {
   });
 }
 
-
 async function loadZoomEmbeddedUMD() {
   if (typeof window === "undefined") {
     throw new Error("Zoom SDK can only be loaded on the client side");
   }
   if (ZoomMtgEmbeddedSingleton) return ZoomMtgEmbeddedSingleton;
 
-  const ZOOM_VER = "4.0.0"; 
+  const ZOOM_VER = "4.0.0";
   const vendorReact = `https://source.zoom.us/${ZOOM_VER}/lib/vendor/react.min.js`;
   const vendorReactDOM = `https://source.zoom.us/${ZOOM_VER}/lib/vendor/react-dom.min.js`;
   const embeddedSDK = `https://source.zoom.us/${ZOOM_VER}/zoom-meeting-embedded-${ZOOM_VER}.min.js`;
@@ -62,7 +61,6 @@ async function loadZoomEmbeddedUMD() {
   ZoomMtgEmbeddedSingleton = window.ZoomMtgEmbedded;
   return ZoomMtgEmbeddedSingleton;
 }
-
 
 type Webinar = {
   id: string;
@@ -146,21 +144,22 @@ export default function Webinars() {
     }
   }, []);
 
-  // const leaveMeeting = useCallback(async () => {
-  //   try {
-  //     if (zoomClientRef.current) {
-  //       await zoomClientRef.current.leave();
-  //       await zoomClientRef.current.destroy();
-  //     }
-  //   } catch (e) {
-  //     console.warn("Error leaving meeting", e);
-  //   } finally {
-  //     zoomClientRef.current = null;
-  //     joiningOnceRef.current = false;
-  //     setOverlayOpen(false);
-  //     setJoining(false);
-  //   }
-  // }, []);
+  const leaveMeeting = useCallback(async () => {
+    try {
+      if (zoomClientRef.current) {
+        await zoomClientRef.current.leave();
+        await zoomClientRef.current.destroy();
+      }
+    } catch (e) {
+      console.warn("Error leaving meeting", e);
+    } finally {
+      zoomClientRef.current = null;
+      joiningOnceRef.current = false;
+      setOverlayOpen(false);
+      setJoining(false);
+    }
+    window.location.reload();
+  }, []);
 
   const joinInsidePage = useCallback(
     async (webinar: Webinar) => {
@@ -191,7 +190,7 @@ export default function Webinars() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               meetingNumber,
-              role: 0, 
+              role: 0,
             }),
           }
         );
@@ -350,13 +349,13 @@ export default function Webinars() {
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center">
           <div className="relative w-[95vw] h-[90vh] bg-white rounded-xl overflow-hidden shadow-2xl">
             <div className="absolute top-4 right-4 z-50">
-              {/* <button
+              <button
                 className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition-colors"
-                // onClick={leaveMeeting}
+                onClick={leaveMeeting}
                 disabled={joining}
               >
-                {joining ? "Connecting..." : ""}
-              </button> */}
+                {joining ? "Connecting..." : "Leave Meeting"}
+              </button>
             </div>
 
             {joining && (
@@ -379,4 +378,4 @@ export default function Webinars() {
       )}
     </main>
   );
-} 
+}
