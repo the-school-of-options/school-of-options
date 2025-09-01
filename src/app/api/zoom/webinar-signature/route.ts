@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate JWT signature
+    // Generate JWT signature for webinar
     const iat = Math.round(new Date().getTime() / 1000) - 30;
     const exp = iat + 60 * 60 * 2; // 2 hours
 
@@ -36,8 +36,17 @@ export async function POST(request: NextRequest) {
       aud: 'zoom',
       appKey: sdkKey,
       tokenExp: exp,
-      alg: 'HS256'
+      alg: 'HS256',
+      // Include meeting number in payload for webinars
+      mn: meetingNumber,
+      role: role
     };
+
+    console.log('[DEBUG] Generating signature with payload:', {
+      ...oPayload,
+      mn: meetingNumber,
+      role: role
+    });
 
     const sHeader = JSON.stringify(oHeader);
     const sPayload = JSON.stringify(oPayload);

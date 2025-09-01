@@ -16,7 +16,8 @@
   "dependencies": {
     "@headlessui/react": "^2.2.7",
     "@heroicons/react": "^2.2.0",
-    "@zoom/meetingsdk": "^4.0.0",
+    "@zoom/meetingsdk": "^3.8.10",
+    "@zoom/videosdk": "^1.12.2",
     "axios": "^1.11.0",
     "clsx": "^2.1.1",
     "jsrsasign": "^11.1.0",

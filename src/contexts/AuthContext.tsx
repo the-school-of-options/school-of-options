@@ -107,8 +107,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const refreshResult = await authAPI.refreshToken({ refreshToken });
       if (refreshResult.success && refreshResult.data) {
         // Handle nested tokens structure from API (note: API uses PascalCase)
-        const newAccessToken = refreshResult.data.accessToken || refreshResult.data.tokens?.AccessToken;
-        const newRefreshToken = refreshResult.data.refreshToken || refreshResult.data.tokens?.RefreshToken;
+        const newAccessToken = refreshResult.data.accessToken || (refreshResult.data as any).tokens?.AccessToken;
+        const newRefreshToken = refreshResult.data.refreshToken || (refreshResult.data as any).tokens?.RefreshToken;
         const user = refreshResult.data.user;
         
         // Update tokens

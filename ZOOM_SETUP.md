@@ -1,12 +1,20 @@
-# Zoom Webinar Integration Setup
+# Enhanced Zoom Webinar Integration Setup
 
-This document explains how to set up the Zoom webinar functionality in The School of Options website.
+This document explains the comprehensive Zoom webinar functionality in The School of Options website, featuring iframe-like embedded streaming and enhanced user experience.
 
 ## Prerequisites
 
 1. A Zoom Pro, Business, or Enterprise account
 2. Zoom Meeting SDK App created in Zoom Marketplace
 3. Zoom API credentials (optional, for fetching real webinar data)
+
+## Key Features
+
+- **Embedded Webinar Streaming**: Full iframe-like experience without leaving your website
+- **Enhanced Player Controls**: Fullscreen toggle, connection quality indicator, participant count
+- **Mobile Optimized**: Responsive design that works seamlessly on all devices
+- **Advanced Error Handling**: Comprehensive error recovery and user feedback
+- **Real-time Status Updates**: Live connection monitoring and participant tracking
 
 ## Environment Variables Setup
 
@@ -26,6 +34,25 @@ ZOOM_CLIENT_ID=your_zoom_client_id_here
 ZOOM_CLIENT_SECRET=your_zoom_client_secret_here
 ZOOM_ACCOUNT_ID=your_zoom_account_id_here
 ```
+
+## Updated Architecture
+
+### Components
+
+1. **ZoomWebinarPlayer** (`/src/components/ZoomWebinarPlayer.tsx`)
+   - Main webinar streaming component with iframe-like experience
+   - Features fullscreen mode, error recovery, and real-time status updates
+   - Optimized for both desktop and mobile devices
+
+2. **Enhanced Webinar Page** (`/src/app/webinar/page.tsx`)
+   - Improved webinar listing with live/upcoming categorization
+   - Seamless integration with the new player component
+   - Better authentication flow and error handling
+
+3. **Direct Room Access** (`/src/app/webinar/room/page.tsx`)
+   - Direct webinar room access via URL parameters
+   - Support for meeting number and password parameters
+   - Fallback error handling for invalid links
 
 ## How to Get Zoom Credentials
 
@@ -52,12 +79,14 @@ ZOOM_ACCOUNT_ID=your_zoom_account_id_here
 
 ## Features
 
-### Current Implementation
+### Enhanced Implementation
 
-- **Webinar List**: Fetches real webinar data from Zoom API (shows "No webinars found" when none exist)
-- **Join Webinar**: Allows users to join webinars using Zoom Meeting SDK
-- **Full-Screen Experience**: Webinars open in a full-screen overlay
-- **Mobile Responsive**: Works on desktop and mobile devices
+- **Iframe-like Streaming**: Webinars stream directly within your website without redirects
+- **Advanced Player Controls**: Fullscreen toggle, connection quality monitoring, participant count
+- **Real-time Status Updates**: Live connection monitoring and error recovery
+- **Mobile Optimized**: Responsive design with touch-friendly controls
+- **Enhanced Error Handling**: Comprehensive error recovery with user-friendly messages
+- **Direct Room Access**: Support for direct webinar room URLs with parameters
 
 ### API Endpoints
 
@@ -68,9 +97,11 @@ ZOOM_ACCOUNT_ID=your_zoom_account_id_here
 
 ### Accessing Webinars
 
-1. Navigate to `/webinar` to see the list of available webinars
-2. Click "Join Webinar" to join a webinar in an overlay
-3. Use `/webinar/room?mn=MEETING_NUMBER&pwd=PASSWORD` for direct access
+1. **Main Webinar Page**: Navigate to `/webinar` to see live and upcoming webinars
+2. **Join Live Webinars**: Click "Join Live" to stream webinars directly in your browser
+3. **Direct Room Access**: Use `/webinar/room?mn=MEETING_NUMBER&pwd=PASSWORD&title=WEBINAR_TITLE` for direct access
+4. **Enhanced Controls**: Use fullscreen mode, monitor connection quality, and view participant count
+5. **Mobile Experience**: Optimized touch controls and responsive design for mobile devices
 
 ### Customizing Webinar Data
 
