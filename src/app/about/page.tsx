@@ -70,7 +70,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
             <div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6">
-                About The School of <span className="text-green">Options</span>
+                About The School of <span className="text-accent">Options</span>
               </h1>
               
               <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed px-4 sm:px-0 font-semibold">
@@ -87,7 +87,7 @@ export default function AboutPage() {
                 >
                   Enroll Now
                 </a>
-                <Link href="/newsletter" className="border border-green text-green hover:bg-green hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-colors text-center text-base sm:text-lg w-full sm:w-auto">
+                <Link href="/newsletter" className="border border-accent text-accent hover:bg-accent hover:text-navy px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-colors text-center text-base sm:text-lg w-full sm:w-auto">
                   <span className="sm:hidden">Explore Free Resources</span>
                   <span className="hidden sm:inline">Explore Free Resources</span>
                 </Link>
@@ -96,7 +96,7 @@ export default function AboutPage() {
             
             <div className="text-center">
               <div className="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 bg-navy-light rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 lg:mb-8">
-                <div className="text-4xl sm:text-6xl lg:text-8xl font-bold text-green">TSO</div>
+                <div className="text-4xl sm:text-6xl lg:text-8xl font-bold text-accent">TSO</div>
               </div>
               <p className="text-gray-300 text-sm sm:text-base px-4 sm:px-0 font-semibold">
                 Dedicated to making options trading accessible and profitable for everyone
@@ -116,7 +116,7 @@ export default function AboutPage() {
                 To become the global center of excellence for options trading education, 
                 where anyone serious about learning can transform from a losing trader to a consistently profitable one.
               </p>
-              <div className="mt-6 p-4 bg-green rounded-lg">
+              <div className="mt-6 p-4 bg-accent rounded-lg">
                 <p className="text-white font-semibold">
                   &quot;Making options trading as accessible as traditional investing&quot;
                 </p>
@@ -131,15 +131,15 @@ export default function AboutPage() {
               </p>
               <ul className="space-y-3">
                 <li className="flex items-start">
-                  <span className="w-2 h-2 bg-green rounded-full mr-3 mt-3" />
+                  <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-3" />
                   <span className="font-semibold">Provide world-class options trading education</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="w-2 h-2 bg-green rounded-full mr-3 mt-3" />
+                  <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-3" />
                   <span className="font-semibold">Build a community of disciplined traders</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="w-2 h-2 bg-green rounded-full mr-3 mt-3" />
+                  <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-3" />
                   <span className="font-semibold">Advance research in options trading strategies</span>
                 </li>
               </ul>
@@ -217,7 +217,7 @@ export default function AboutPage() {
               {/* Journey Card */}
               <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent-dark rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent rounded-full flex items-center justify-center mr-4">
                     <span className="text-navy font-bold text-lg">1</span>
                   </div>
                   <h3 className="text-2xl font-bold text-navy">The Journey</h3>
@@ -294,7 +294,7 @@ export default function AboutPage() {
               {/* Mission Card */}
               <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent-dark rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent rounded-full flex items-center justify-center mr-4">
                     <span className="text-navy font-bold text-lg">3</span>
                   </div>
                   <h3 className="text-2xl font-bold text-navy">The Mission</h3>
@@ -323,20 +323,20 @@ export default function AboutPage() {
           </div>
           
           <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-px h-full w-0.5 bg-green"></div>
+            <div className="absolute left-1/2 transform -translate-x-px h-full w-0.5 bg-accent"></div>
             
             <div className="space-y-12">
               {milestones.map((milestone, index) => (
                 <div key={milestone.year} className={`relative flex items-center ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
                   <div className={`w-5/12 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}>
                     <div className="bg-gray-50 rounded-lg p-6">
-                      <div className="text-2xl font-bold text-green mb-2">{milestone.year}</div>
+                      <div className="text-2xl font-bold text-accent mb-2">{milestone.year}</div>
                       <h3 className="text-xl font-bold text-navy mb-2">{milestone.title}</h3>
                       <p className="text-gray-600 font-semibold">{milestone.description}</p>
                     </div>
                   </div>
                   
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green rounded-full border-4 border-white"></div>
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-accent rounded-full border-4 border-white"></div>
                 </div>
               ))}
             </div>
@@ -359,7 +359,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {values.map((value) => (
               <div key={value.title} className="bg-white rounded-2xl p-8">
-                <div className="w-16 h-16 bg-green rounded-full flex items-center justify-center mb-6">
+                <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mb-6">
                   <value.icon className="h-8 w-8 text-white" />
                 </div>
                 
@@ -386,7 +386,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {achievements.map((achievement) => (
               <div key={achievement.label} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-green mb-2">
+                <div className="text-4xl md:text-5xl font-bold text-accent mb-2">
                   {achievement.number}
                 </div>
                 <div className="text-gray-300 font-semibold">{achievement.label}</div>

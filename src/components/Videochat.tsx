@@ -9,6 +9,12 @@ import ZoomVideo, {
 import { PhoneOff } from "lucide-react";
 import { CameraButton, MicButton } from "./MicButton";
 
+const videoPlayerStyle: CSSProperties = {
+  width: '100%',
+  height: '400px',
+  backgroundColor: '#000',
+};
+
 const Videocall = (props: { slug: string; JWT: string }) => {
   const session = props.slug;
   const jwt = props.JWT;
@@ -66,14 +72,14 @@ const Videocall = (props: { slug: string; JWT: string }) => {
     <div>
       <h1>Session: {session}</h1>
       <div style={inSession ? {} : { display: "none" }}>
-        <video-player-container
+        <div
           ref={videoContainerRef}
           style={videoPlayerStyle}
         />
       </div>
       {!inSession ? (
         <div>
-          <button onClick={startCall}>Join</button>
+          <button onClick={joinSession}>Join</button>
         </div>
       ) : (
         <div>
