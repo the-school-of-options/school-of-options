@@ -20,6 +20,7 @@ type AuthMode = 'login' | 'signup' | 'forgot' | 'reset' | 'otp';
 
 export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: AuthModalProps) {
   const [mode, setMode] = useState<AuthMode>(defaultMode);
+  const [originalMode, setOriginalMode] = useState<'signup' | 'forgot'>('signup'); // Track original mode for OTP flow
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,6 +65,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: Au
     setShowConfirmPassword(false);
     setOtpSent(false);
     setOtpCountdown(0);
+    setOriginalMode('signup');
   };
 
   const handleClose = () => {
@@ -93,14 +95,17 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: Au
     setError(null);
 
     try {
-      const otpType = mode === 'signup' ? 'signup' : 'forgot_password'; // Only signup and forgot password use OTP
+      const otpType = originalMode === 'signup' ? 'signup' : 'forgot_password';
       const result = await generateOTP(formData.email, otpType);
       
       if (result.success) {
         setOtpSent(true);
         setOtpCountdown(60); // 60 second countdown
-        setSuccess('OTP sent to your email. Please check your inbox.');
-        setMode('otp');
+        const message = mode === 'otp' ? 'OTP resent to your email. Please check your inbox.' : 'OTP sent to your email. Please check your inbox.';
+        setSuccess(message);
+        if (mode !== 'otp') {
+          setMode('otp');
+        }
       } else {
         setError(result.error || 'Failed to send OTP');
       }
@@ -121,7 +126,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: Au
     setError(null);
 
     try {
-      const otpType = mode === 'signup' ? 'signup' : 'forgot_password'; // Only signup and forgot password use OTP
+      const otpType = originalMode === 'signup' ? 'signup' : 'forgot_password';
       const result = await verifyOTP(formData.email, formData.otp, otpType);
       
       if (result.success) {
@@ -129,8 +134,8 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: Au
         
         // After OTP verification, proceed with the actual action
         if (otpType === 'signup') {
-          // Proceed with signup
-          await handleActualSignup();
+          // Complete signup process (account already created, just verify)
+          await handleCompleteSignup();
         } else if (otpType === 'forgot_password') {
           // Switch to reset password mode
           setMode('reset');
@@ -155,13 +160,26 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: Au
     }
   };
 
-  const handleActualSignup = async () => {
+  const handleInitialSignup = async () => {
+    // Call /auth/signup which will send OTP automatically
     const signupResult = await signup(formData.email, formData.password, formData.fullName);
     if (signupResult.success) {
-      handleClose();
+      // Signup initiated successfully, OTP sent by backend
+      setOriginalMode('signup');
+      setOtpSent(true);
+      setOtpCountdown(60); // 60 second countdown
+      setSuccess('Account created! OTP sent to your email. Please check your inbox.');
+      setMode('otp');
     } else {
       setError(signupResult.error || 'Signup failed');
     }
+  };
+
+  const handleCompleteSignup = async () => {
+    // This function is called after OTP verification for signup
+    // At this point, the account should already be created and activated
+    setSuccess('Account verified successfully!');
+    handleClose();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -198,8 +216,8 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: Au
             return;
           }
           
-          // For signup, we need OTP verification first
-          await handleSendOTP();
+          // Call /auth/signup directly which will send OTP automatically
+          await handleInitialSignup();
           break;
 
         case 'forgot':
@@ -209,6 +227,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: Au
           }
           
           // For forgot password, we need OTP verification
+          setOriginalMode('forgot');
           await handleSendOTP();
           break;
 
@@ -350,20 +369,22 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: Au
                   maxLength={6}
                   required
                 />
-                {otpCountdown > 0 && (
-                  <p className="text-sm text-gray-600 mt-2 text-center">
-                    Resend OTP in {otpCountdown} seconds
-                  </p>
-                )}
-                {otpCountdown === 0 && otpSent && (
-                  <button
-                    type="button"
-                    onClick={handleSendOTP}
-                    className="text-sm text-accent hover:text-accent/80 font-semibold mt-2 block mx-auto"
-                  >
-                    Resend OTP
-                  </button>
-                )}
+                <div className="mt-2 text-center">
+                  {otpCountdown > 0 ? (
+                    <p className="text-sm text-gray-600">
+                      Resend OTP in {otpCountdown} seconds
+                    </p>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleSendOTP}
+                      disabled={isLoading}
+                      className="text-sm text-accent hover:text-accent/80 font-semibold underline disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isLoading ? 'Sending...' : 'Resend OTP'}
+                    </button>
+                  )}
+                </div>
               </div>
             )}
 
