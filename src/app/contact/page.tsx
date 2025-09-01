@@ -23,7 +23,7 @@ export default function ContactPage() {
       description: 'For detailed queries and support',
       contact: 'support@schoolofoptions.com',
       action: 'Send Email',
-      color: 'bg-blue-500'
+      color: 'bg-navy'
     },
     {
       icon: PhoneIcon,
@@ -31,7 +31,7 @@ export default function ContactPage() {
       description: 'Speak directly with our team',
       contact: '+91 11 4567 8901',
       action: 'Call Now',
-      color: 'bg-purple-500'
+      color: 'bg-accent'
     }
   ];
 

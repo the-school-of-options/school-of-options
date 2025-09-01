@@ -5,7 +5,8 @@ export const dynamic = 'force-static'
 export const revalidate = false
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://theschoolofoptions.com'
+  const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || 'https://theschoolofoptions.com'
+  
   return [
     {
       url: baseUrl,
@@ -38,10 +39,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     {
-      url: `${baseUrl}/newsletter`,
+      url: `${baseUrl}/terms`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
+      changeFrequency: 'monthly',
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.3,
     },
   ]
 }

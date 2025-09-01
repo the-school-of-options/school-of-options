@@ -250,6 +250,24 @@ nav a:focus:not(:focus-visible) {
   @apply text-center min-h-[48px] flex items-center justify-center transition-all duration-200;
 }
 
+/* Mobile-first newsletter form improvements */
+@media (max-width: 640px) {
+  .newsletter-form-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .newsletter-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 40px;
+  }
+  
+  .newsletter-button {
+    min-height: 40px;
+    font-size: 14px;
+  }
+}
+
 /* Remove default button focus outline and add custom styles */
 .btn-primary:focus,
 .btn-secondary:focus {

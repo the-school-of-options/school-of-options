@@ -91,7 +91,7 @@ export default function FlagshipProgram() {
               
               <Link
                 href="/newsletter"
-                className="border border-green text-green hover:bg-green hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors text-center text-lg w-full sm:w-auto"
+                className="border border-accent text-accent hover:bg-accent hover:text-navy px-8 py-4 rounded-lg font-semibold transition-colors text-center text-lg w-full sm:w-auto"
               >
                 <span className="sm:hidden">Free Resources</span>
                 <span className="hidden sm:inline">Explore Free Resources</span>
@@ -103,7 +103,7 @@ export default function FlagshipProgram() {
           <div className="bg-navy-light rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8">
             <div className="grid grid-cols-1 gap-4 sm:gap-6">
               <div className="flex items-center">
-                <CurrencyRupeeIcon className="h-6 w-6 sm:h-8 sm:w-8 text-green mr-3 sm:mr-4 flex-shrink-0" />
+                <CurrencyRupeeIcon className="h-6 w-6 sm:h-8 sm:w-8 text-accent mr-3 sm:mr-4 flex-shrink-0" />
                 <div>
                   <div className="text-xl sm:text-2xl font-bold">₹35,000</div>
                   <div className="text-gray-300 text-sm sm:text-base font-semibold">Complete Program</div>
@@ -111,7 +111,7 @@ export default function FlagshipProgram() {
               </div>
               
               <div className="flex items-center">
-                <CalendarIcon className="h-6 w-6 sm:h-8 sm:w-8 text-green mr-3 sm:mr-4 flex-shrink-0" />
+                <CalendarIcon className="h-6 w-6 sm:h-8 sm:w-8 text-accent mr-3 sm:mr-4 flex-shrink-0" />
                 <div>
                   <div className="text-xl sm:text-2xl font-bold">6 Months
                   </div>
@@ -120,7 +120,7 @@ export default function FlagshipProgram() {
               </div>
               
               <div className="flex items-center">
-                <UsersIcon className="h-6 w-6 sm:h-8 sm:w-8 text-green mr-3 sm:mr-4 flex-shrink-0" />
+                <UsersIcon className="h-6 w-6 sm:h-8 sm:w-8 text-accent mr-3 sm:mr-4 flex-shrink-0" />
                 <div>
                   <div className="text-xl sm:text-2xl font-bold">Limited Seats</div>
                   <div className="text-gray-300 text-sm sm:text-base font-semibold">Personalised Mentorship</div>
