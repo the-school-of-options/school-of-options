@@ -6,7 +6,7 @@ export default function ThreeStepBlueprint() {
       icon: AcademicCapIcon,
       title: 'Teaching',
       description: 'Live classes, recorded videos, and 1-on-1 sessions with expert instructors.',
-      features: ['Live Zoom Classes', 'Recorded Sessions', 'Personal Guidance', 'Q&A Support']
+      features: ['Live Classes', 'Recorded Sessions', 'Personal Guidance', 'Q&A Support']
     },
     {
       icon: WrenchScrewdriverIcon,

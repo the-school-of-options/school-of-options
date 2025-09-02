@@ -43,7 +43,7 @@ export default function FlagshipProgram() {
 
 
   const features = [
-    'Live Zoom classes with expert instructors',
+    'Live classes with expert instructors',
     'Complete recorded video library',
     'Advanced backtesting and paper trading tools',
     'Trade automation setup and guidance',

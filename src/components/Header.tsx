@@ -35,7 +35,6 @@ export default function Header() {
     { name: 'Home', href: '/' },
     { name: 'Mentorship Program', href: '/mentorship' },
     { name: 'Newsletter', href: '/newsletter' },
-    { name: 'Webinar', href: '/webinar' },
     // { name: 'Knowledge Hub', href: '/knowledge-hub' },
     
     // { name: 'About', href: '/about' },
