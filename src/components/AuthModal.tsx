@@ -177,9 +177,12 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'login' }: Au
 
   const handleCompleteSignup = async () => {
     // This function is called after OTP verification for signup
-    // At this point, the account should already be created and activated
-    setSuccess('Account verified successfully!');
-    handleClose();
+    // At this point, the account should already be created, activated, and user logged in
+    setSuccess('Account verified successfully! You are now logged in.');
+    // Give user a moment to see the success message before closing
+    setTimeout(() => {
+      handleClose();
+    }, 1500);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

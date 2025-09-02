@@ -303,12 +303,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
   ): Promise<OTPResponse> => {
     try {
       const password = localStorage.getItem("pass");
-      return await otpAPI.verify({
+      const result = await otpAPI.verify({
         email,
         otp,
         type,
         password: password ?? "",
       });
+
+      // For signup verification, automatically log the user in after successful OTP verification
+      if (result.success && type === "signup" && password) {
+        console.log("🔐 AuthContext: OTP verified for signup, logging user in...");
+        const loginResult = await login(email, password);
+        if (loginResult.success) {
+          console.log("✅ AuthContext: User automatically logged in after signup verification");
+          // Clean up the temporary password
+          localStorage.removeItem("pass");
+        } else {
+          console.error("❌ AuthContext: Failed to auto-login after signup verification");
+        }
+      }
+
+      return result;
     } catch (error) {
       console.error("Verify OTP error:", error);
       return {
