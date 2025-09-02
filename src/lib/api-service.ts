@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 // Configure axios instance with default settings
 const api = axios.create({
@@ -18,7 +19,7 @@ api.interceptors.request.use(
     // Add Authorization header if access token exists
     const accessToken =
       typeof window !== "undefined"
-        ? localStorage.getItem("accessToken")
+        ? Cookies.get("accessToken")
         : null;
     if (
       accessToken &&
@@ -53,7 +54,7 @@ api.interceptors.response.use(
       try {
         const refreshToken =
           typeof window !== "undefined"
-            ? localStorage.getItem("refreshToken")
+            ? Cookies.get("refreshToken")
             : null;
         if (refreshToken) {
           const refreshResult = await api.post("/auth/refresh-token", {
@@ -70,9 +71,9 @@ api.interceptors.response.use(
 
           if (newAccessToken) {
             // Update stored token
-            localStorage.setItem("accessToken", newAccessToken);
+            Cookies.set("accessToken", newAccessToken);
             if (newRefreshToken) {
-              localStorage.setItem("refreshToken", newRefreshToken);
+              Cookies.set("refreshToken", newRefreshToken);
             }
 
             // Update the original request with new token
@@ -85,9 +86,8 @@ api.interceptors.response.use(
       } catch (refreshError) {
         // Refresh failed, clear auth data
         if (typeof window !== "undefined") {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          localStorage.removeItem("user");
+          Cookies.remove("accessToken");
+          Cookies.remove("refreshToken");
         }
         console.error("Token refresh failed:", refreshError);
       }
