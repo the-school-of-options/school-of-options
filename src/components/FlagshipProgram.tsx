@@ -9,7 +9,7 @@ import {
   CurrencyRupeeIcon,
 } from "@heroicons/react/24/outline";
 import ModalShell from "./ModalShell";
-import axios from "axios";
+import api from "../lib/api-service";
 
 export default function FlagshipProgram() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,18 +31,69 @@ export default function FlagshipProgram() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Basic form validation
+    if (!formData.fullName.trim()) {
+      alert("Please enter your full name.");
+      return;
+    }
+    if (!formData.email.trim()) {
+      alert("Please enter your email address.");
+      return;
+    }
+    if (!formData.mobileNumber.trim()) {
+      alert("Please enter your mobile number.");
+      return;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    
+    // Mobile number validation (basic)
+    const mobileRegex = /^[+]?[\d\s-()]{10,15}$/;
+    if (!mobileRegex.test(formData.mobileNumber)) {
+      alert("Please enter a valid mobile number.");
+      return;
+    }
+
     setIsSubmitting(true);
-    await axios.post(
-      "https://api.theschoolofoptions.com/api/v1/talktous",
-      formData
-    );
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      alert("Thank you! Our counsellor will contact you within 24 hours.");
-      closeModal();
-    } catch (error) {
-      alert("Something went wrong. Please try again.");
+      console.log("Submitting form data:", formData);
+      const response = await api.post("/talktous", formData);
+      
+      console.log("API Response:", response.status, response.data);
+      
+      // Check if the response indicates success
+      if (response.status === 200 || response.status === 201) {
+        alert("Thank you! Our counsellor will contact you within 24 hours.");
+        closeModal();
+      } else {
+        throw new Error(`Unexpected response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error("API Error:", error);
+      
+      // Provide more specific error messages
+      if (error.code === "ECONNABORTED") {
+        alert("Request timeout. Please check your internet connection and try again.");
+      } else if (error.response?.status === 400) {
+        const errorMessage = error.response?.data?.message || error.response?.data?.error;
+        alert(errorMessage || "Please check your information and try again.");
+      } else if (error.response?.status === 409) {
+        alert("This request has already been submitted. Our counsellor will contact you soon.");
+      } else if (error.response?.status >= 500) {
+        alert("Server error. Please try again in a few minutes.");
+      } else if (!error.response) {
+        alert("Network error. Please check your internet connection.");
+      } else {
+        const errorMessage = error.response?.data?.message || error.response?.data?.error;
+        alert(errorMessage || "Something went wrong. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -56,13 +107,6 @@ export default function FlagshipProgram() {
     'Personal mentorship and goal setting',
     '6 months of continuous support',
     'Access to exclusive trading community',
-    "Live Zoom classes with expert instructors",
-    "Complete recorded video library",
-    "Advanced backtesting and paper trading tools",
-    "Trade automation setup and guidance",
-    "Personal mentorship and goal setting",
-    "6 months of continuous support",
-    "Access to exclusive trading community",
   ];
 
   return (
@@ -73,16 +117,12 @@ export default function FlagshipProgram() {
             One Program. One Proven Path.
           </h2>
           <p className="text-base sm:text-lg md:text-xl lg:text-xl text-gray-300 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
-            Our flagship 6-Month Mentorship Program is the only path you need to become a successful options trader.
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
             Our flagship 6-Month Mentorship Program is the only path you need to
             become a successful options trader.
           </p>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
           {/* Program Details */}
           <div>
             <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">
