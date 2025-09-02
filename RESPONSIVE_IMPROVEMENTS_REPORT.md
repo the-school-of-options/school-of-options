@@ -271,3 +271,4 @@ The responsive design improvements have transformed The School of Options websit
 **Risk Level:** Very Low  
 
 *These responsive improvements ensure your website provides an exceptional user experience across all devices and screen sizes.*
+

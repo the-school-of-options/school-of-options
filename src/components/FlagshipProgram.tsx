@@ -1,5 +1,4 @@
 "use client";
-"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -18,9 +17,6 @@ export default function FlagshipProgram() {
     fullName: "",
     email: "",
     mobileNumber: "",
-    fullName: "",
-    email: "",
-    mobileNumber: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -30,7 +26,6 @@ export default function FlagshipProgram() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setFormData({ fullName: "", email: "", mobileNumber: "" });
     setFormData({ fullName: "", email: "", mobileNumber: "" });
   };
 
@@ -66,10 +61,6 @@ export default function FlagshipProgram() {
     }
 
     setIsSubmitting(true);
-    await axios.post(
-      "https://api.theschoolofoptions.com/api/v1/talktous",
-      formData
-    );
 
     try {
       console.log("Submitting form data:", formData);
@@ -146,9 +137,6 @@ export default function FlagshipProgram() {
                   <span className="text-gray-300 text-sm sm:text-base font-semibold">
                     {feature}
                   </span>
-                  <span className="text-gray-300 text-sm sm:text-base font-semibold">
-                    {feature}
-                  </span>
                 </div>
               ))}
             </div>
@@ -185,9 +173,6 @@ export default function FlagshipProgram() {
                   <div className="text-gray-300 text-sm sm:text-base font-semibold">
                     Complete Program
                   </div>
-                  <div className="text-gray-300 text-sm sm:text-base font-semibold">
-                    Complete Program
-                  </div>
                 </div>
               </div>
 
@@ -195,9 +180,6 @@ export default function FlagshipProgram() {
               <div className="flex items-center">
                 <CalendarIcon className="h-6 w-6 sm:h-8 sm:w-8 text-accent mr-3 sm:mr-4 flex-shrink-0" />
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold">6 Months</div>
-                  <div className="text-gray-300 text-sm sm:text-base font-semibold">
-                    Full Mentorship
                   <div className="text-xl sm:text-2xl font-bold">6 Months</div>
                   <div className="text-gray-300 text-sm sm:text-base font-semibold">
                     Full Mentorship
@@ -209,12 +191,6 @@ export default function FlagshipProgram() {
               <div className="flex items-center">
                 <UsersIcon className="h-6 w-6 sm:h-8 sm:w-8 text-accent mr-3 sm:mr-4 flex-shrink-0" />
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold">
-                    Limited Seats
-                  </div>
-                  <div className="text-gray-300 text-sm sm:text-base font-semibold">
-                    Personalised Mentorship
-                  </div>
                   <div className="text-xl sm:text-2xl font-bold">
                     Limited Seats
                   </div>
@@ -244,9 +220,6 @@ export default function FlagshipProgram() {
       <ModalShell
         isOpen={isModalOpen}
         onClose={closeModal}
-      <ModalShell
-        isOpen={isModalOpen}
-        onClose={closeModal}
         title="Talk to Counsellor"
         maxWidth="md"
       >
@@ -257,33 +230,7 @@ export default function FlagshipProgram() {
             counsellor will help you understand the program and answer all your
             questions.
           </p>
-        <form onSubmit={handleSubmit} className="px-6 pb-6">
-          <p className="text-gray-600 mb-6 text-sm">
-            Get personalized guidance for your options trading journey. Our
-            counsellor will help you understand the program and answer all your
-            questions.
-          </p>
 
-          <div className="space-y-4">
-            <div>
-              <label
-                htmlFor="fullName"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Full Name *
-              </label>
-              <input
-                type="text"
-                id="fullName"
-                required
-                value={formData.fullName}
-                onChange={(e) =>
-                  setFormData({ ...formData, fullName: e.target.value })
-                }
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500"
-                placeholder="Enter your full name"
-              />
-            </div>
           <div className="space-y-4">
             <div>
               <label
@@ -324,46 +271,7 @@ export default function FlagshipProgram() {
                 placeholder="Enter your email address"
               />
             </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Email Address *
-              </label>
-              <input
-                type="email"
-                id="email"
-                required
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500"
-                placeholder="Enter your email address"
-              />
-            </div>
 
-            <div>
-              <label
-                htmlFor="phone"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Phone Number *
-              </label>
-              <input
-                type="tel"
-                id="mobileNumber"
-                required
-                value={formData.mobileNumber}
-                onChange={(e) =>
-                  setFormData({ ...formData, mobileNumber: e.target.value })
-                }
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900 bg-white placeholder-gray-500"
-                placeholder="Enter your phone number"
-              />
-            </div>
-          </div>
             <div>
               <label
                 htmlFor="phone"
@@ -398,25 +306,7 @@ export default function FlagshipProgram() {
               {isSubmitting ? "Submitting..." : "Submit Request"}
             </button>
           </div>
-          <div className="mt-6">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`w-full bg-accent text-navy font-semibold py-3 px-6 rounded-lg transition-all duration-200 ${
-                isSubmitting
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-accent/90 hover:shadow-lg transform hover:scale-[1.02]"
-              }`}
-            >
-              {isSubmitting ? "Submitting..." : "Submit Request"}
-            </button>
-          </div>
 
-          <p className="text-xs text-gray-500 mt-4 text-center">
-            We&lsquo;ll contact you within 24 hours to discuss the mentorship
-            program.
-          </p>
-        </form>
           <p className="text-xs text-gray-500 mt-4 text-center">
             We&lsquo;ll contact you within 24 hours to discuss the mentorship
             program.

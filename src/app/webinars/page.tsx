@@ -6,7 +6,6 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import WebinarsClient from '@/components/WebinarsClient';
-import WebinarDataLogger from '@/components/WebinarDataLogger';
 import { backendAPI } from '@/lib/backend-api';
 
 const CANONICAL_ORIGIN = process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || 'https://theschoolofoptions.com';
@@ -96,10 +95,6 @@ export default async function WebinarsPage() {
       {/* Webinars List Section */}
       <section className="py-16 bg-gradient-to-br from-gray-50 to-accent/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <WebinarDataLogger 
-            liveWebinars={liveWebinars}
-            upcomingWebinars={upcomingWebinars}
-          />
           <WebinarsClient
             upcomingWebinars={upcomingWebinars}
             liveWebinars={liveWebinars}
