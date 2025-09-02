@@ -20,7 +20,7 @@ import EnrollCTA from '@/components/EnrollCTA';
 const CANONICAL_ORIGIN = process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || 'https://theschoolofoptions.com';
 
 export const metadata: Metadata = {
-  title: '6-Month Options Trading Mentorship Program - The School of Options',
+  title: 'The School of Options - Learn Options Trading with Expert Mentorship',
   description: 'Master options trading with our comprehensive 6-month mentorship program. Learn from 20+ years of experience with structured guidance, risk management, and disciplined trading strategies.',
   keywords: 'options trading mentorship, trading course, options education, trading program, financial mentorship, options strategies course',
   metadataBase: new URL(CANONICAL_ORIGIN),
@@ -160,10 +160,10 @@ export default function MentorshipPage() {
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-2xl mx-auto">
             <EnrollCTA 
               variant="primary" 
-              size="md"
+              size="lg"
               className="w-full sm:w-auto text-center"
             />
-            <Link href="/newsletter" className="border border-accent text-accent hover:bg-accent hover:text-navy px-6 py-3 rounded-lg font-semibold transition-colors text-base w-full sm:w-auto text-center">
+            <Link href="/newsletter" className="border border-accent text-accent hover:bg-accent hover:text-navy px-8 py-4 rounded-lg font-semibold transition-colors text-lg w-full sm:w-auto text-center">
               <span className="sm:hidden">Free Newsletter</span>
               <span className="hidden sm:inline">Explore Free Resources First</span>
             </Link>

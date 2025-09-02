@@ -53,18 +53,18 @@ export default function FlagshipProgram() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 bg-navy text-white">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-navy text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-10 lg:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 md:mb-8">
             One Program. One Proven Path.
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
+          <p className="text-base sm:text-lg md:text-xl lg:text-xl text-gray-300 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
             Our flagship 6-Month Mentorship Program is the only path you need to become a successful options trader.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
           {/* Program Details */}
           <div>
             <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">

@@ -76,25 +76,43 @@ w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-accent rounded-full flex items-cent
 
 ## Layout Patterns
 
-### Section Spacing
+### Section Spacing (Enhanced)
 ```css
-py-12 sm:py-16 lg:py-24
+/* Standard sections */
+py-12 sm:py-16 md:py-20 lg:py-24
+
+/* Hero sections */
+py-12 sm:py-16 md:py-20 lg:py-28 xl:py-40
+
+/* Compact sections */
+py-8 sm:py-12 md:py-16 lg:py-20
 ```
 
-### Container
+### Container (Consistent)
 ```css
 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
 ```
 
-### Grid Layouts
-- **3 Column**: `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8`
-- **2 Column**: `grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12`
+### Grid Layouts (Improved)
+- **3 Column**: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-6 lg:gap-8`
+- **2 Column**: `grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16`
+- **Testimonials**: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-6 lg:gap-8`
 
-### Responsive Breakpoints
-- **sm**: 640px
-- **md**: 768px
-- **lg**: 1024px
-- **xl**: 1280px
+### Responsive Breakpoints (Enhanced)
+- **sm**: 640px (Small tablets, landscape phones)
+- **md**: 768px (Tablets - CRITICAL breakpoint)
+- **lg**: 1024px (Desktop)
+- **xl**: 1280px (Large desktop)
+
+### Typography Scale (Consistent)
+- **H1**: `text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl`
+- **H2**: `text-2xl sm:text-3xl md:text-4xl lg:text-5xl`
+- **H3**: `text-xl sm:text-2xl md:text-3xl lg:text-4xl`
+- **Body**: `text-base sm:text-lg md:text-xl lg:text-xl`
+
+### Button Sizing (Improved)
+- **Standard**: `px-6 sm:px-8 md:px-10 lg:px-12 py-4 sm:py-5 md:py-6`
+- **Large**: `px-8 sm:px-10 md:px-12 lg:px-16 py-4 sm:py-5 md:py-6 lg:py-8`
 
 ## Animation & Transitions
 

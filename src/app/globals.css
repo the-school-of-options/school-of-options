@@ -167,29 +167,56 @@ nav a:focus:not(:focus-visible) {
   }
 }
 
-/* Tablet responsive adjustments (768px breakpoint focus) */
-@media (min-width: 641px) and (max-width: 1024px) {
-  .text-6xl {
-    font-size: 3.5rem;
-  }
-  
-  .text-7xl {
-    font-size: 4rem;
-  }
-}
+/* Enhanced responsive breakpoint system */
 
-/* Specific tablet optimizations at 768px */
-@media (min-width: 768px) and (max-width: 1023px) {
-  /* Better text scaling for tablets */
+/* Small tablets and landscape phones (641px - 767px) */
+@media (min-width: 641px) and (max-width: 767px) {
   .text-4xl {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   
   .text-5xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-6xl {
     font-size: 3rem;
   }
   
-  /* Improved spacing for tablet */
+  .text-7xl {
+    font-size: 3.5rem;
+  }
+}
+
+/* Tablets (768px - 1023px) - Most critical breakpoint */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Consistent text scaling for tablets */
+  .text-3xl {
+    font-size: 1.75rem;
+  }
+  
+  .text-4xl {
+    font-size: 2.25rem;
+  }
+  
+  .text-5xl {
+    font-size: 2.75rem;
+  }
+  
+  .text-6xl {
+    font-size: 3.25rem;
+  }
+  
+  .text-7xl {
+    font-size: 3.75rem;
+  }
+  
+  /* Consistent spacing for tablets */
+  .py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
   .py-16 {
     padding-top: 4rem;
     padding-bottom: 4rem;
@@ -205,19 +232,36 @@ nav a:focus:not(:focus-visible) {
     padding-bottom: 6rem;
   }
   
-  /* Better container spacing */
+  /* Better container spacing for tablets */
   .px-4 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .px-6 {
     padding-left: 2rem;
     padding-right: 2rem;
   }
   
-  /* Grid improvements */
+  /* Consistent grid gaps for tablets */
+  .gap-4 {
+    gap: 1rem;
+  }
+  
+  .gap-6 {
+    gap: 1.25rem;
+  }
+  
   .gap-8 {
     gap: 1.5rem;
   }
   
-  .gap-16 {
+  .gap-12 {
     gap: 2rem;
+  }
+  
+  .gap-16 {
+    gap: 2.5rem;
   }
 }
 
@@ -248,6 +292,25 @@ nav a:focus:not(:focus-visible) {
 .btn-primary,
 .btn-secondary {
   @apply text-center min-h-[48px] flex items-center justify-center transition-all duration-200;
+}
+
+/* Tablet button optimizations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .btn-primary,
+  .btn-secondary {
+    min-height: 52px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-size: 1rem;
+  }
+  
+  .btn-primary-lg,
+  .btn-secondary-lg {
+    min-height: 56px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    font-size: 1.125rem;
+  }
 }
 
 /* Mobile-first newsletter form improvements */
@@ -336,6 +399,13 @@ nav a:focus:not(:focus-visible) {
   .btn-primary,
   .btn-secondary {
     @apply w-full px-4 py-3 text-base;
+    min-height: 48px;
+  }
+  
+  .btn-primary-lg,
+  .btn-secondary-lg {
+    @apply w-full px-6 py-4 text-lg;
+    min-height: 52px;
   }
 }
 
@@ -358,7 +428,7 @@ nav a:focus:not(:focus-visible) {
 }
 
 /* Enhanced grid responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .grid-cols-1.md\:grid-cols-2 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
@@ -366,9 +436,26 @@ nav a:focus:not(:focus-visible) {
   .grid-cols-1.md\:grid-cols-3 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
-  
+}
+
+@media (max-width: 1023px) {
   .grid-cols-1.lg\:grid-cols-2 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  
+  .grid-cols-1.lg\:grid-cols-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+/* Tablet-specific grid optimizations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -388,22 +475,43 @@ nav a:focus:not(:focus-visible) {
   animation: fadeInUp 0.6s ease-out;
 }
 
-/* Custom scrollbar */
+/* Navy Blue Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: rgba(0, 53, 102, 0.1);
+  border-radius: 6px;
+  margin: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 4px;
+  background: var(--navy);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  min-height: 40px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-dark);
+  background: var(--navy-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--navy-light);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(0, 53, 102, 0.1);
+}
+
+/* Firefox scrollbar support */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--navy) rgba(0, 53, 102, 0.1);
 }
 
 /* Modal animations */
@@ -445,5 +553,42 @@ nav a:focus:not(:focus-visible) {
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* Enhanced Header/Navbar Responsive Styles */
+@media (min-width: 640px) and (max-width: 1023px) {
+  /* Tablet-specific header optimizations */
+  header nav {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  /* Better mobile menu positioning for tablets */
+  header .mobile-menu {
+    max-height: calc(100vh - 5rem);
+    overflow-y: auto;
+  }
+}
+
+/* Header height transitions */
+@media (min-width: 640px) {
+  header {
+    transition: all 0.3s ease;
+  }
+}
+
+/* Mobile menu improvements */
+@media (max-width: 1023px) {
+  /* Ensure mobile menu doesn't interfere with content */
+  header + main {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Mobile menu backdrop */
+  header .mobile-menu {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
   }
 }

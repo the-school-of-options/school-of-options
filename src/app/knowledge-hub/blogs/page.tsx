@@ -145,16 +145,16 @@ export default async function BlogsPage() {
           <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8 font-semibold">
             Join our comprehensive mentorship program and learn from experienced traders.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
             <Link
               href="/mentorship"
-              className="bg-accent text-navy px-8 py-4 rounded-lg font-semibold hover:bg-accent-light transition-colors text-center"
+              className="bg-accent text-navy px-8 py-4 rounded-xl font-semibold hover:bg-accent-light transition-colors text-center text-lg"
             >
               Join Mentorship Program
             </Link>
             <Link
               href="/newsletter"
-              className="border border-white text-white hover:bg-white hover:text-navy px-8 py-4 rounded-lg font-semibold transition-colors text-center"
+              className="border-2 border-white text-white hover:bg-white hover:text-navy px-8 py-4 rounded-xl font-semibold transition-colors text-center text-lg"
             >
               Explore Free Resources
             </Link>
