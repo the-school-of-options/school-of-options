@@ -6,7 +6,7 @@ export default function ThreeStepBlueprint() {
       icon: AcademicCapIcon,
       title: 'Teaching',
       description: 'Live classes, recorded videos, and 1-on-1 sessions with expert instructors.',
-      features: ['Live Classes', 'Recorded Sessions', 'Personal Guidance', 'Q&A Support']
+      features: ['Live Zoom Classes', 'Recorded Sessions', 'Personal Guidance', 'Q&A Support']
     },
     {
       icon: WrenchScrewdriverIcon,
@@ -23,18 +23,18 @@ export default function ThreeStepBlueprint() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+    <section className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-4 sm:mb-6 md:mb-8">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-navy mb-3 sm:mb-4 lg:mb-6">
             Our Proven Success Formula
           </h2>
-          <p className="text-base sm:text-lg md:text-xl lg:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
             A systematic 3-step approach that transforms beginners into confident options traders
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-6 lg:gap-8 mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8 lg:mb-12">
           {steps.map((step, index) => (
             <div key={step.title} className="relative">
               {/* Connection Line - only show on large screens */}

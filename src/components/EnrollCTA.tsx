@@ -40,7 +40,7 @@ export default function EnrollCTA({
 
   // CSS classes based on variant and size
   const getClasses = () => {
-    const baseClasses = 'font-semibold transition-colors flex items-center justify-center gap-2 group';
+    const baseClasses = 'font-semibold transition-colors inline-flex items-center gap-2 group';
     
     const sizeClasses = {
       sm: 'px-4 py-2 text-sm rounded-md',

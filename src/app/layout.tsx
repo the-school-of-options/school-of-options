@@ -3,7 +3,6 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
-import DynamicScrollbar from "@/components/DynamicScrollbar";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
@@ -21,7 +20,6 @@ export default function RootLayout({
     <html lang="en" data-scroll-behavior="smooth">
       <body className="antialiased">
         <AuthProvider>
-          <DynamicScrollbar />
           <Header />
           <main className="min-h-screen">
             {children}
