@@ -1,18 +1,18 @@
 export default function IronySection() {
   return (
-    <section className="py-8 sm:py-12 md:py-16 lg:py-20 bg-gray-50">
+    <section className="py-6 sm:py-8 lg:py-12 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-4 sm:mb-6">
+        <div className="text-center mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-3 sm:mb-4">
             The Great Options Paradox
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
             A striking contradiction that reveals the gap between knowledge and application
           </p>
         </div>
         
-        <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-stretch mb-6 sm:mb-8 md:mb-10">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-6 lg:p-8 shadow-xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-6 lg:gap-8 items-stretch mb-3 sm:mb-4 md:mb-5">
             <div className="text-center md:text-left flex flex-col justify-between">
               <div className="flex flex-col items-center md:items-start">
                 <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-navy-light/10 rounded-full mb-3 md:mb-4">

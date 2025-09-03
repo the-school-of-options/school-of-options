@@ -125,18 +125,18 @@ export default async function BlogsPage() {
           <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8 font-semibold">
             Join our comprehensive mentorship program and learn from experienced traders.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <a
               href="https://rzp.io/rzp/theschoolofoptions"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-accent text-navy px-8 py-4 rounded-xl font-semibold hover:bg-accent/90 transition-colors text-center text-lg"
+              className="btn-primary-lg text-center"
             >
               Enroll Now
             </a>
             <Link
               href="/newsletter"
-              className="border-2 border-white text-white hover:bg-white hover:text-navy px-8 py-4 rounded-xl font-semibold transition-colors text-center text-lg"
+              className="border border-white text-white hover:bg-white hover:text-navy px-8 py-4 rounded-lg font-semibold transition-colors text-center text-lg"
             >
               Get Free Newsletter
             </Link>

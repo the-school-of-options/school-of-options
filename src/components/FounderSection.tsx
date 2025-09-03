@@ -3,18 +3,18 @@ import Image from 'next/image';
 
 export default function FounderSection() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-4 sm:mb-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-navy mb-4">
             A Message from Our Founder
           </h2>
           <div className="w-20 h-1 bg-accent rounded-full mx-auto"></div>
         </div>
 
         {/* Main Content - Symmetrical Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-stretch mb-8 sm:mb-10 md:mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch mb-8">
           
           {/* Left Column - Founder Profile */}
           <div className="flex flex-col">

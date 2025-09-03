@@ -1,231 +1,356 @@
 'use client';
 
-import { useState } from 'react';
-import { XMarkIcon, CalendarIcon, ClockIcon, UsersIcon } from '@heroicons/react/24/outline';
-import { Webinar } from '@/types/webinar';
+import { useState, Fragment } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { 
+  XMarkIcon, 
+  UserIcon,
+  EnvelopeIcon,
+  PhoneIcon,
+  BriefcaseIcon,
+  ExclamationTriangleIcon,
+  CheckCircleIcon,
+  CalendarIcon,
+  ClockIcon
+} from '@heroicons/react/24/outline';
+
+interface Webinar {
+  id: string;
+  topic: string;
+  start_time?: string;
+  duration?: number;
+}
 
 interface WebinarRegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
   webinar: Webinar | null;
-  onRegister: (registrationData: {
-    webinarId: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-  }) => void;
 }
 
-export default function WebinarRegistrationModal({
-  isOpen,
-  onClose,
-  webinar,
-  onRegister
+export default function WebinarRegistrationModal({ 
+  isOpen, 
+  onClose, 
+  webinar 
 }: WebinarRegistrationModalProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  
+  // Form data
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: ''
+    name: '',
+    email: '',
+    phone: '',
+    experience: 'beginner', // beginner, intermediate, advanced
+    interests: '',
+    notifications: true
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  if (!isOpen || !webinar) return null;
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      experience: 'beginner',
+      interests: '',
+      notifications: true
+    });
+    setError(null);
+    setSuccess(false);
+  };
+
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    
+    if (type === 'checkbox') {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData(prev => ({ ...prev, [name]: checked }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+    
+    setError(null);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrors({});
-    
-    // Basic validation
-    const newErrors: Record<string, string> = {};
-    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
-    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
-    if (!formData.email.trim()) newErrors.email = 'Email is required';
-    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
+    setIsLoading(true);
+    setError(null);
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    setIsSubmitting(true);
-    
     try {
-      await onRegister({
-        webinarId: webinar.id,
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(),
-        email: formData.email.trim()
-      });
+      // Validate required fields
+      if (!formData.name || !formData.email) {
+        setError('Please fill in all required fields');
+        return;
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        setError('Please enter a valid email address');
+        return;
+      }
+
+      // Prepare registration data
+      const registrationData = {
+        webinarId: webinar?.id,
+        webinarTopic: webinar?.topic,
+        ...formData,
+        registrationDate: new Date().toISOString()
+      };
+
+      // TODO: Replace with actual API call to your backend
+      // For now, we'll simulate a successful registration
+      console.log('Registration data:', registrationData);
       
-      // Reset form and close modal
-      setFormData({ firstName: '', lastName: '', email: '' });
-      onClose();
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // TODO: Send registration data to your backend
+      // const response = await fetch('/api/webinar/register', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(registrationData)
+      // });
+      // 
+      // if (!response.ok) {
+      //   throw new Error('Registration failed');
+      // }
+      
+      setSuccess(true);
+      
+      // Close modal after 3 seconds
+      setTimeout(() => {
+        handleClose();
+      }, 3000);
+
     } catch (error) {
-      setErrors({ general: 'Registration failed. Please try again.' });
+      setError('Registration failed. Please try again.');
     } finally {
-      setIsSubmitting(false);
+      setIsLoading(false);
     }
   };
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
-    }
-  };
+  if (!webinar) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-        {/* Header */}
-        <div className="flex justify-between items-start p-6 border-b">
-          <div>
-            <h2 className="text-2xl font-bold text-navy mb-2">Register for Webinar</h2>
-            <p className="text-sm text-gray-600">Get instant access to join the live session</p>
-          </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 p-1"
-          >
-            <XMarkIcon className="h-6 w-6" />
-          </button>
-        </div>
+    <Transition appear show={isOpen} as={Fragment}>
+      <Dialog as="div" className="relative z-50" onClose={handleClose}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black bg-opacity-50" />
+        </Transition.Child>
 
-        {/* Webinar Info */}
-        <div className="p-6 bg-gray-50 border-b">
-          <h3 className="font-bold text-navy mb-3">{webinar.title}</h3>
-          <div className="space-y-2 text-sm text-gray-600">
-            <div className="flex items-center">
-              <CalendarIcon className="h-4 w-4 mr-2" />
-              {new Date(webinar.date).toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </div>
-            <div className="flex items-center">
-              <ClockIcon className="h-4 w-4 mr-2" />
-              {webinar.time} IST ({webinar.duration} minutes)
-            </div>
-            <div className="flex items-center">
-              <UsersIcon className="h-4 w-4 mr-2" />
-              {webinar.instructor}
-            </div>
-          </div>
-
-        </div>
-
-        {/* Registration Form */}
-        <form onSubmit={handleSubmit} className="p-6">
-          {errors.general && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{errors.general}</p>
-            </div>
-          )}
-
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="firstName" className="block text-sm font-semibold text-navy mb-2">
-                  First Name *
-                </label>
-                <input
-                  type="text"
-                  id="firstName"
-                  value={formData.firstName}
-                  onChange={(e) => handleInputChange('firstName', e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-accent focus:border-accent ${
-                    errors.firstName ? 'border-red-300' : 'border-gray-300'
-                  }`}
-                  placeholder="Enter first name"
-                />
-                {errors.firstName && (
-                  <p className="text-red-600 text-xs mt-1">{errors.firstName}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="lastName" className="block text-sm font-semibold text-navy mb-2">
-                  Last Name *
-                </label>
-                <input
-                  type="text"
-                  id="lastName"
-                  value={formData.lastName}
-                  onChange={(e) => handleInputChange('lastName', e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-accent focus:border-accent ${
-                    errors.lastName ? 'border-red-300' : 'border-gray-300'
-                  }`}
-                  placeholder="Enter last name"
-                />
-                {errors.lastName && (
-                  <p className="text-red-600 text-xs mt-1">{errors.lastName}</p>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-navy mb-2">
-                Email Address *
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-accent focus:border-accent ${
-                  errors.email ? 'border-red-300' : 'border-gray-300'
-                }`}
-                placeholder="Enter your email address"
-              />
-              {errors.email && (
-                <p className="text-red-600 text-xs mt-1">{errors.email}</p>
-              )}
-              <p className="text-xs text-gray-500 mt-1">
-                We'll send your Zoom join link to this email
-              </p>
-            </div>
-          </div>
-
-          {/* Benefits */}
-          <div className="mt-6 p-4 bg-navy/5 rounded-lg">
-            <h4 className="font-semibold text-navy mb-2">What you'll get:</h4>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>✓ Instant email with Zoom join link</li>
-              <li>✓ Calendar invite with webinar details</li>
-              <li>✓ Pre-webinar preparation materials</li>
-              <li>✓ Live Q&A and interactive sessions</li>
-            </ul>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex gap-3 mt-6">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
             >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="flex-1 bg-accent hover:bg-accent/90 disabled:bg-accent/50 text-navy px-4 py-3 rounded-lg font-semibold transition-colors"
-            >
-              {isSubmitting ? 'Registering...' : 'Register Free'}
-            </button>
-          </div>
+              <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
+                {/* Header */}
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <Dialog.Title className="text-2xl font-bold text-navy mb-2">
+                      Register for Webinar
+                    </Dialog.Title>
+                    <div className="text-lg font-semibold text-gray-800 mb-3">
+                      {webinar.topic}
+                    </div>
+                    <div className="flex items-center space-x-4 text-sm text-gray-600">
+                      <div className="flex items-center">
+                        <CalendarIcon className="h-4 w-4 mr-1" />
+                        {webinar.start_time ? new Date(webinar.start_time).toLocaleDateString() : 'TBD'}
+                      </div>
+                      <div className="flex items-center">
+                        <ClockIcon className="h-4 w-4 mr-1" />
+                        {webinar.start_time ? new Date(webinar.start_time).toLocaleTimeString() : 'TBD'}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleClose}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    <XMarkIcon className="h-6 w-6" />
+                  </button>
+                </div>
 
-          <p className="text-xs text-gray-500 mt-4 text-center">
-            By registering, you agree to receive webinar-related communications. 
-            You can unsubscribe at any time.
-          </p>
-        </form>
-      </div>
-    </div>
+                {success ? (
+                  /* Success State */
+                  <div className="text-center py-8">
+                    <CheckCircleIcon className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold text-navy mb-2">Registration Successful!</h3>
+                    <p className="text-gray-600 mb-4">
+                      You've been registered for this webinar. You'll receive a confirmation email shortly with joining instructions.
+                    </p>
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                      <p className="text-green-800 text-sm">
+                        📧 Check your email for the webinar link and calendar invite
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {/* Error Message */}
+                    {error && (
+                      <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center">
+                        <ExclamationTriangleIcon className="h-5 w-5 text-red-500 mr-2" />
+                        <span className="text-red-700 text-sm">{error}</span>
+                      </div>
+                    )}
+
+                    {/* Form */}
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      {/* Personal Information */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-navy mb-2">
+                            Full Name <span className="text-red-500">*</span>
+                          </label>
+                          <div className="relative">
+                            <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                            <input
+                              type="text"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleInputChange}
+                              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+                              placeholder="Enter your full name"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-navy mb-2">
+                            Email Address <span className="text-red-500">*</span>
+                          </label>
+                          <div className="relative">
+                            <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                            <input
+                              type="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleInputChange}
+                              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+                              placeholder="Enter your email"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Contact & Experience */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-navy mb-2">
+                            Phone Number
+                          </label>
+                          <div className="relative">
+                            <PhoneIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                            <input
+                              type="tel"
+                              name="phone"
+                              value={formData.phone}
+                              onChange={handleInputChange}
+                              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+                              placeholder="Enter your phone number"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-navy mb-2">
+                            Trading Experience
+                          </label>
+                          <div className="relative">
+                            <BriefcaseIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                            <select
+                              name="experience"
+                              value={formData.experience}
+                              onChange={handleInputChange}
+                              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+                            >
+                              <option value="beginner">Beginner (0-1 year)</option>
+                              <option value="intermediate">Intermediate (1-3 years)</option>
+                              <option value="advanced">Advanced (3+ years)</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Interests */}
+                      <div>
+                        <label className="block text-sm font-semibold text-navy mb-2">
+                          What topics are you most interested in learning about?
+                        </label>
+                        <textarea
+                          name="interests"
+                          value={formData.interests}
+                          onChange={handleInputChange}
+                          rows={3}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors resize-none"
+                          placeholder="e.g., Options strategies, Risk management, Technical analysis..."
+                        />
+                      </div>
+
+                      {/* Notifications */}
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          name="notifications"
+                          checked={formData.notifications}
+                          onChange={handleInputChange}
+                          className="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded"
+                        />
+                        <label className="ml-2 text-sm text-gray-700">
+                          Send me email notifications about upcoming webinars and trading insights
+                        </label>
+                      </div>
+
+                      {/* Submit Button */}
+                      <div className="flex space-x-4 pt-4">
+                        <button
+                          type="button"
+                          onClick={handleClose}
+                          className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-semibold transition-colors"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={isLoading}
+                          className="flex-1 bg-accent hover:bg-accent/90 text-navy px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isLoading ? 'Registering...' : 'Register for Webinar'}
+                        </button>
+                      </div>
+                    </form>
+                  </>
+                )}
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition>
   );
 }
