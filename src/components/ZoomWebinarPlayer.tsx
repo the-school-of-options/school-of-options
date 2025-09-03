@@ -16,6 +16,7 @@ import {
   ExclamationTriangleIcon,
   SignalIcon
 } from '@heroicons/react/24/outline';
+import axios from "axios";
 
 // Zoom SDK types
 declare global {
@@ -215,26 +216,21 @@ export default function ZoomWebinarPlayer({
   // Get signature for webinar
   const getWebinarSignature = useCallback(async (meetingNumber: string, role: number = 0) => {
     try {
-      console.log('[DEBUG] Fetching signature for meeting:', meetingNumber, 'with role:', role);
+      console.log('[DEBUG] Fetching signature for meeting:', meetingNumber);
       
-      const response = await fetch('/api/zoom/webinar-signature', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          meetingNumber,
-          role // Allow different roles
-        })
-      });
+      const response = await axios.post('https://api.theschoolofoptions.com/api/v1/zoom/webinar-signature',{
+        meetingNumber,
+      })
 
       console.log('[DEBUG] Signature fetch response status:', response.status);
 
-      if (!response.ok) {
-        const text = await response.text();
+      if (response.status !== 200) {
+        const text = await response.data;
         console.error('[DEBUG] Signature fetch failed. Body:', text);
         throw new Error(`Authentication failed: ${response.status}`);
       }
 
-      const data = await response.json();
+      const data = await response.data
       console.log('[DEBUG] Signature response JSON:', data);
       
       if (!data.signature || !data.sdkKey) {
