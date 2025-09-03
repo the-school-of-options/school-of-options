@@ -29,18 +29,18 @@ export default function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 bg-white">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy mb-4 sm:mb-6">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-4 sm:mb-6 md:mb-8">
             Real Stories, Real Results
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
+          <p className="text-base sm:text-lg md:text-xl lg:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 font-semibold">
             See how our students transformed their trading journey from consistent losses to profitable strategies
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-6 lg:gap-8">
           {testimonials.map((testimonial) => (
             <div key={testimonial.name} className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 h-full flex flex-col shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-accent/20 group">
               {/* Author at top */}

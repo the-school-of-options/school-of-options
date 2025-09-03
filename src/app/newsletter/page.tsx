@@ -14,7 +14,7 @@ import EnrollCTA from '@/components/EnrollCTA';
 const CANONICAL_ORIGIN = process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || 'https://theschoolofoptions.com';
 
 export const metadata: Metadata = {
-  title: 'Free Options Trading Newsletter - The School of Options',
+  title: 'The School of Options - Learn Options Trading with Expert Mentorship',
   description: 'Get a weekly newsletter covering the most important aspects of Options Trading for traders in India. Join 10,000+ traders receiving market insights, strategies, and analysis every Tuesday.',
   keywords: 'options trading newsletter, trading insights, weekly newsletter, options education, financial newsletter, market analysis, trading strategies',
   metadataBase: new URL(CANONICAL_ORIGIN),
@@ -164,15 +164,15 @@ export default async function NewsletterPage() {
           <p className="text-sm sm:text-base md:text-lg text-gray-400 mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed px-2 sm:px-0">
             Get personalized guidance, live trading sessions, one-on-one mentorship, and access to our exclusive trading community. Transform your trading journey with proven strategies and expert support.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
             <EnrollCTA 
               variant="primary" 
-              size="md"
+              size="lg"
               className="text-center"
             />
             <Link
               href="/newsletter"
-              className="border border-white text-white hover:bg-white hover:text-navy px-6 py-3 rounded-lg font-semibold transition-colors text-center text-base"
+              className="border-2 border-white text-white hover:bg-white hover:text-navy px-8 py-4 rounded-xl font-semibold transition-colors text-center text-lg"
             >
               Get Free Newsletter
             </Link>
