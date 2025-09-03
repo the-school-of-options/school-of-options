@@ -124,6 +124,7 @@ export default function ZoomWebinarPlayer({
   });
 
   const zoomClientRef = useRef<any | null>(null);
+  const zoomContainerRef = useRef<HTMLDivElement | null>(null);
   const initializationRef = useRef(false);
 
   // Parse webinar join URL to get meeting number and password
@@ -264,9 +265,15 @@ export default function ZoomWebinarPlayer({
       zoomClientRef.current = client;
       console.log('[DEBUG] Zoom client created');
 
-      // Initialize the client with full-screen optimized settings
+      // Initialize the client within the modal container
       console.log('[DEBUG] Initializing Zoom client...');
-      const zoomRoot = document.body; // Use body instead of container for full screen
+      const zoomRoot = zoomContainerRef.current;
+      if (!zoomRoot) throw new Error("Zoom container not ready");
+      
+      // Use the full container dimensions (modal is already 80% of viewport)
+      const containerRect = zoomRoot.getBoundingClientRect();
+      const videoWidth = Math.floor(containerRect.width);
+      const videoHeight = Math.floor(containerRect.height);
       
       await client.init({
         language: 'en-US',
@@ -277,8 +284,8 @@ export default function ZoomWebinarPlayer({
             isResizable: true,
             viewSizes: {
               default: {
-                width: window.innerWidth,
-                height: window.innerHeight
+                width: videoWidth,
+                height: videoHeight
               }
             }
           },
@@ -353,6 +360,79 @@ export default function ZoomWebinarPlayer({
 
 
 
+  // Add CSS for modal container approach
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      /* Remove scroll bars and ensure clean layout */
+      body {
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      
+      /* Style for the modal container */
+      .zoom-modal-container {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 80vw !important;
+        height: 80vh !important;
+        background: #000 !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+        z-index: 1000 !important;
+      }
+      
+      /* Zoom content should fill the modal container */
+      .zoom-modal-container .zm-video-container,
+      .zoom-modal-container [class*="video-container"],
+      .zoom-modal-container [class*="zm-video"] {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+      }
+      
+      /* Video elements should fill container */
+      .zoom-modal-container video,
+      .zoom-modal-container canvas {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+      }
+      
+      /* Any nested containers */
+      .zoom-modal-container > div,
+      .zoom-modal-container [class*="canvas-container"] {
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
+
   // Initialize webinar on mount
   useEffect(() => {
     initializeWebinar();
@@ -388,58 +468,73 @@ export default function ZoomWebinarPlayer({
   };
 
   return (
-    <div className="fixed inset-0 bg-black z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center">
       {/* Loading State */}
       {state.isConnecting && (
-        <div className="absolute inset-0 bg-gray-900 flex items-center justify-center z-50">
-          <div className="text-center text-white">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500 mx-auto mb-6"></div>
-            <h3 className="text-xl font-semibold mb-2">Connecting to webinar...</h3>
-            <p className="text-gray-300">Please wait while we set up your session</p>
-            <button
-              onClick={leaveWebinar}
-              className="mt-6 px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg font-semibold transition-colors"
-            >
-              Cancel
-            </button>
-          </div>
+        <div className="text-center text-white">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500 mx-auto mb-6"></div>
+          <h3 className="text-xl font-semibold mb-2">Connecting to webinar...</h3>
+          <p className="text-gray-300">Please wait while we set up your session</p>
+          <button
+            onClick={leaveWebinar}
+            className="mt-6 px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg font-semibold transition-colors"
+          >
+            Cancel
+          </button>
         </div>
       )}
 
       {/* Error State */}
       {state.hasError && (
-        <div className="absolute inset-0 bg-gray-900 flex items-center justify-center z-50">
-          <div className="text-center text-white max-w-md mx-auto p-6">
-            <ExclamationTriangleIcon className="h-16 w-16 text-red-500 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Connection Failed</h3>
-            <p className="text-gray-300 mb-6">{state.errorMessage}</p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <button
-                onClick={() => {
-                  setState(prev => ({ ...prev, hasError: false }));
-                  initializationRef.current = false;
-                  initializeWebinar();
-                }}
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors"
-              >
-                Try Again
-              </button>
-              <button
-                onClick={leaveWebinar}
-                className="px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg font-semibold transition-colors"
-              >
-                Close
-              </button>
-            </div>
+        <div className="text-center text-white max-w-md mx-auto p-6">
+          <ExclamationTriangleIcon className="h-16 w-16 text-red-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold mb-2">Connection Failed</h3>
+          <p className="text-gray-300 mb-6">{state.errorMessage}</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              onClick={() => {
+                setState(prev => ({ ...prev, hasError: false }));
+                initializationRef.current = false;
+                initializeWebinar();
+              }}
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors"
+            >
+              Try Again
+            </button>
+            <button
+              onClick={leaveWebinar}
+              className="px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg font-semibold transition-colors"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
+
+      {/* Modal Container for Zoom Player */}
+      <div 
+        ref={zoomContainerRef}
+        className="zoom-modal-container"
+        style={{
+          width: '80vw',
+          height: '80vh',
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          background: '#000',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
+          zIndex: 1000
+        }}
+      />
 
       {/* Close button for when connected */}
       {state.isConnected && (
         <button
           onClick={leaveWebinar}
-          className="absolute top-4 right-4 z-50 p-2 bg-red-600 hover:bg-red-700 rounded-lg text-white transition-colors"
+          className="fixed top-4 right-4 z-[1100] p-3 bg-red-600 hover:bg-red-700 rounded-full text-white transition-colors shadow-lg"
           title="Leave webinar"
         >
           ✕
