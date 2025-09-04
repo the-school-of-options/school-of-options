@@ -14,6 +14,7 @@
     "production": "npm run lint && npm run type-check && npm run build"
   },
   "dependencies": {
+    "@cloudflare/stream-react": "^1.9.3",
     "@headlessui/react": "^2.2.7",
     "@heroicons/react": "^2.2.0",
     "@zoom/meetingsdk": "^3.8.10",

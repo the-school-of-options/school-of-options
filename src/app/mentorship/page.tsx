@@ -1,4 +1,6 @@
-import { Metadata } from 'next';
+
+"use client"
+  // import { Metadata } from 'next';
 import { 
   CheckIcon, 
   CalendarIcon, 
@@ -16,44 +18,46 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import EnrollCTA from '@/components/EnrollCTA';
+import CloudflareVideoPlayer from '@/components/CloudflareVideoPlayer';
+import { useCloudFlare } from '@/hooks/cloudflare.hook';
 
 const CANONICAL_ORIGIN = process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || 'https://theschoolofoptions.com';
 
-export const metadata: Metadata = {
-  title: '6-Month Options Trading Mentorship Program - The School of Options',
-  description: 'Master options trading with our comprehensive 6-month mentorship program. Learn from 20+ years of experience with structured guidance, risk management, and disciplined trading strategies.',
-  keywords: 'options trading mentorship, trading course, options education, trading program, financial mentorship, options strategies course',
-  metadataBase: new URL(CANONICAL_ORIGIN),
-  alternates: {
-    canonical: '/mentorship',
-  },
-  openGraph: {
-    title: '6-Month Options Trading Mentorship Program - The School of Options',
-    description: 'Master options trading with our comprehensive 6-month mentorship program. Learn structured guidance, risk management, and disciplined trading strategies.',
-    url: `${CANONICAL_ORIGIN}/mentorship`,
-    siteName: 'The School of Options',
-    locale: 'en_US',
-    type: 'website',
-    images: [
-      {
-        url: '/images/founder-kundan-kishore.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Options Trading Mentorship Program - The School of Options',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: '6-Month Options Trading Mentorship Program',
-    description: 'Master options trading with structured guidance, risk management, and disciplined trading strategies.',
-    images: ['/images/founder-kundan-kishore.jpg'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+// export const metadata: Metadata = {
+//   title: '6-Month Options Trading Mentorship Program - The School of Options',
+//   description: 'Master options trading with our comprehensive 6-month mentorship program. Learn from 20+ years of experience with structured guidance, risk management, and disciplined trading strategies.',
+//   keywords: 'options trading mentorship, trading course, options education, trading program, financial mentorship, options strategies course',
+//   metadataBase: new URL(CANONICAL_ORIGIN),
+//   alternates: {
+//     canonical: '/mentorship',
+//   },
+//   openGraph: {
+//     title: '6-Month Options Trading Mentorship Program - The School of Options',
+//     description: 'Master options trading with our comprehensive 6-month mentorship program. Learn structured guidance, risk management, and disciplined trading strategies.',
+//     url: `${CANONICAL_ORIGIN}/mentorship`,
+//     siteName: 'The School of Options',
+//     locale: 'en_US',
+//     type: 'website',
+//     images: [
+//       {
+//         url: '/images/founder-kundan-kishore.jpg',
+//         width: 1200,
+//         height: 630,
+//         alt: 'Options Trading Mentorship Program - The School of Options',
+//       },
+//     ],
+//   },
+//   twitter: {
+//     card: 'summary_large_image',
+//     title: '6-Month Options Trading Mentorship Program',
+//     description: 'Master options trading with structured guidance, risk management, and disciplined trading strategies.',
+//     images: ['/images/founder-kundan-kishore.jpg'],
+//   },
+//   robots: {
+//     index: true,
+//     follow: true,
+//   },
+// };
 
 export default function MentorshipPage() {
   const learningRoadmap = [
@@ -141,6 +145,16 @@ export default function MentorshipPage() {
       icon: CogIcon
     }
   ];
+
+  const {isUploading,
+      uploadProgress,
+      uploadResult,
+      error,
+      fileInputRef,
+      handleFileSelect,
+      handleFileUpload,  } = useCloudFlare()
+
+      console.log("Upload Result:", uploadResult);  
 
   return (
     <div>
@@ -440,7 +454,6 @@ export default function MentorshipPage() {
 
       {/* Final CTA */}
       <section className="py-16 bg-gradient-to-br from-navy to-navy-dark text-white relative overflow-hidden">
-        {/* Background pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-accent/20 to-transparent"></div>
         </div>
@@ -491,6 +504,28 @@ export default function MentorshipPage() {
             />
           </div>
         </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Watch Our Mentorship Program in Action
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              See how our structured approach to options trading education transforms beginners into confident traders
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <CloudflareVideoPlayer
+              videoId="eec7ae3b26fa405d96352bf105deae4f"
+              hlsUrl="https://customer-7rtovmkzy70zi3se.cloudflarestream.com/eec7ae3b26fa405d96352bf105deae4f/manifest/video.m3u8"
+              title="Mentorship Program Overview"
+              className="shadow-2xl"
+            />
+          </div>
         </div>
       </section>
 
