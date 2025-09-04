@@ -288,32 +288,22 @@ export default function WebinarsPage() {
         </div>
       ) : (
         <>
-          {/* Live/Ongoing Webinars Section */}
-          <section className="py-12 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-8">
-                <div className="flex items-center justify-center mb-4">
-                  <div className="w-3 h-3 bg-accent rounded-full mr-3 animate-pulse"></div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-navy">Live Webinars</h2>
-                </div>
-                <p className="text-xl text-gray-600 font-semibold">
-                  {isAuthenticated 
-                    ? "Join ongoing sessions - Click to enter immediately" 
-                    : "Sign in to join live sessions"}
-                </p>
-              </div>
-
-              {liveWebinars.length === 0 ? (
-                <div className="text-center py-8">
-                  <div className="max-w-md mx-auto bg-white rounded-2xl p-6 shadow-lg">
-                    <VideoCameraIcon className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                    <h3 className="text-lg font-bold text-navy mb-2">No Live Sessions</h3>
-                    <p className="text-gray-600 font-semibold text-sm">
-                      There are no webinars currently live. Check back during scheduled session times or browse upcoming webinars below.
-                    </p>
+          {/* Live/Ongoing Webinars Section - Only show if there are live webinars */}
+          {liveWebinars.length > 0 && (
+            <section className="py-12 bg-gray-50">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-8">
+                  <div className="flex items-center justify-center mb-4">
+                    <div className="w-3 h-3 bg-accent rounded-full mr-3 animate-pulse"></div>
+                    <h2 className="text-3xl md:text-4xl font-bold text-navy">Live Webinars</h2>
                   </div>
+                  <p className="text-xl text-gray-600 font-semibold">
+                    {isAuthenticated 
+                      ? "Join ongoing sessions - Click to enter immediately" 
+                      : "Sign in to join live sessions"}
+                  </p>
                 </div>
-              ) : (
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {liveWebinars.map((webinar) => (
                     <div key={webinar.id} className="bg-white rounded-2xl p-6 shadow-lg border-2 border-accent/20 hover:shadow-xl transition-all duration-300">
@@ -351,9 +341,9 @@ export default function WebinarsPage() {
                     </div>
                   ))}
                 </div>
-              )}
-            </div>
-          </section>
+              </div>
+            </section>
+          )}
 
           {/* Upcoming Webinars Section */}
           <section className="py-12 bg-white">
