@@ -1,4 +1,1 @@
-{
-  "version": 1,
-  "functions": {}
-}
+{"version":1,"functions":{"/sitemap.xml":{},"/knowledge-hub/blogs/[slug]":{},"/knowledge-hub/blogs/category/[category]":{},"/knowledge-hub/blogs":{},"/knowledge-hub":{},"/mentorship":{},"/newsletter/blogs/[slug]":{},"/newsletter/blogs":{},"/newsletter":{},"/newsletter/blogs/category/[category]":{},"/":{},"/privacy-policy":{},"/terms-and-conditions":{}}}

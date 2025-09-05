@@ -1,11 +1,7 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   output: "standalone",
-
-  // Optimize for production
-  swcMinify: true,
-
+  // Optimize for production - swcMinify removed as it's deprecated
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -29,7 +25,6 @@ const nextConfig: NextConfig = {
   },
   compress: true,
   poweredByHeader: false,
-
   // Redirects for old routes
   async redirects() {
     return [
@@ -70,7 +65,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-
   async headers() {
     return [
       {
@@ -107,4 +101,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
