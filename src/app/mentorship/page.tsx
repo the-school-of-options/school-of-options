@@ -520,8 +520,8 @@ export default function MentorshipPage() {
           
           <div className="max-w-4xl mx-auto">
             <CloudflareVideoPlayer
-              videoId="eec7ae3b26fa405d96352bf105deae4f"
-              hlsUrl="https://customer-7rtovmkzy70zi3se.cloudflarestream.com/eec7ae3b26fa405d96352bf105deae4f/manifest/video.m3u8"
+              videoId="ef399c1fb2af4223985967566a53d54b"
+              hlsUrl="https://customer-7rtovmkzy70zi3se.cloudflarestream.com/ef399c1fb2af4223985967566a53d54b/manifest/video.m3u8"
               title="Mentorship Program Overview"
               className="shadow-2xl"
             />
