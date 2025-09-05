@@ -2,25 +2,20 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { 
-  XMarkIcon,
-  SpeakerWaveIcon,
-  SpeakerXMarkIcon,
-  VideoCameraIcon,
-  VideoCameraSlashIcon,
-  ArrowsPointingOutIcon,
-  ArrowsPointingInIcon,
-  Cog6ToothIcon,
-  UsersIcon,
-  ChatBubbleLeftIcon,
-  HandRaisedIcon,
   ExclamationTriangleIcon,
   SignalIcon
 } from '@heroicons/react/24/outline';
+import axios from "axios";
 
 // Zoom SDK types
 declare global {
   interface Window {
     ZoomMtgEmbedded?: any;
+    ZoomMtg?: any;
+    _?: any; // Lodash
+    React?: any;
+    ReactDOM?: any;
+    Redux?: any;
   }
 }
 
@@ -36,17 +31,13 @@ interface ZoomWebinarPlayerProps {
 interface WebinarState {
   isConnecting: boolean;
   isConnected: boolean;
-  isFullscreen: boolean;
-  audioMuted: boolean;
-  videoMuted: boolean;
-  participantCount: number;
   connectionQuality: 'excellent' | 'good' | 'poor' | 'unknown';
   hasError: boolean;
   errorMessage: string;
 }
 
 // Keep a singleton so we don't reload scripts on every join
-let ZoomMtgEmbeddedSingleton: any = null;
+let ZoomMtgSingleton: any = null;
 
 /**
  * Dynamically load a script exactly once.
@@ -82,14 +73,13 @@ function loadScriptOnce(src: string): Promise<void> {
 }
 
 /**
- * Loads Zoom Embedded Meeting SDK (UMD) + its vendor React(18)/ReactDOM(18) that the SDK expects.
- * This avoids the ESM path that touches removed React 19 internals.
+ * Loads Zoom Embedded Meeting SDK with better full-screen configuration
  */
 async function loadZoomEmbeddedSDK() {
   if (typeof window === "undefined") {
     throw new Error("Zoom SDK can only be loaded on the client side");
   }
-  if (ZoomMtgEmbeddedSingleton) return ZoomMtgEmbeddedSingleton;
+  if (ZoomMtgSingleton) return ZoomMtgSingleton;
 
   try {
     // Pin to a single version family; keep all three URLs in sync.
@@ -109,8 +99,8 @@ async function loadZoomEmbeddedSDK() {
       throw new Error("Zoom UMD not available on window");
     }
 
-    ZoomMtgEmbeddedSingleton = window.ZoomMtgEmbedded;
-    return ZoomMtgEmbeddedSingleton;
+    ZoomMtgSingleton = window.ZoomMtgEmbedded;
+    return ZoomMtgSingleton;
   } catch (error) {
     console.error("Failed to load Zoom SDK:", error);
     throw new Error("Unable to load Zoom webinar player. Please check your internet connection and try again.");
@@ -128,10 +118,6 @@ export default function ZoomWebinarPlayer({
   const [state, setState] = useState<WebinarState>({
     isConnecting: true,
     isConnected: false,
-    isFullscreen: false,
-    audioMuted: true,
-    videoMuted: true,
-    participantCount: 0,
     connectionQuality: 'unknown',
     hasError: false,
     errorMessage: ''
@@ -139,7 +125,6 @@ export default function ZoomWebinarPlayer({
 
   const zoomClientRef = useRef<any | null>(null);
   const zoomContainerRef = useRef<HTMLDivElement | null>(null);
-  const playerContainerRef = useRef<HTMLDivElement | null>(null);
   const initializationRef = useRef(false);
 
   // Parse webinar join URL to get meeting number and password
@@ -215,26 +200,21 @@ export default function ZoomWebinarPlayer({
   // Get signature for webinar
   const getWebinarSignature = useCallback(async (meetingNumber: string, role: number = 0) => {
     try {
-      console.log('[DEBUG] Fetching signature for meeting:', meetingNumber, 'with role:', role);
+      console.log('[DEBUG] Fetching signature for meeting:', meetingNumber);
       
-      const response = await fetch('/api/zoom/webinar-signature', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          meetingNumber,
-          role // Allow different roles
-        })
-      });
+      const response = await axios.post('https://api.theschoolofoptions.com/api/v1/zoom/webinar-signature',{
+        meetingNumber,
+      })
 
       console.log('[DEBUG] Signature fetch response status:', response.status);
 
-      if (!response.ok) {
-        const text = await response.text();
+      if (response.status !== 200) {
+        const text = await response.data;
         console.error('[DEBUG] Signature fetch failed. Body:', text);
         throw new Error(`Authentication failed: ${response.status}`);
       }
 
-      const data = await response.json();
+      const data = await response.data
       console.log('[DEBUG] Signature response JSON:', data);
       
       if (!data.signature || !data.sdkKey) {
@@ -248,7 +228,7 @@ export default function ZoomWebinarPlayer({
     }
   }, []);
 
-  // Initialize and join webinar
+  // Initialize and join webinar with embedded SDK optimized for full screen
   const initializeWebinar = useCallback(async () => {
     if (initializationRef.current) return;
     initializationRef.current = true;
@@ -271,7 +251,7 @@ export default function ZoomWebinarPlayer({
         throw new Error('User name is required to join the webinar');
       }
 
-      // Load Zoom SDK
+      // Load Zoom Embedded SDK
       console.log('[DEBUG] Loading Zoom Embedded SDK...');
       const ZoomMtgEmbedded = await loadZoomEmbeddedSDK();
       console.log('[DEBUG] Zoom Embedded loaded:', !!ZoomMtgEmbedded);
@@ -285,149 +265,55 @@ export default function ZoomWebinarPlayer({
       zoomClientRef.current = client;
       console.log('[DEBUG] Zoom client created');
 
-      // Initialize the client first, then set up event listeners
+      // Initialize the client within the modal container
       console.log('[DEBUG] Initializing Zoom client...');
       const zoomRoot = zoomContainerRef.current;
       if (!zoomRoot) throw new Error("Zoom container not ready");
-      console.log('[DEBUG] Zoom container ready:', zoomRoot);
-
+      
+      // Use the full container dimensions (modal is already 80% of viewport)
+      const containerRect = zoomRoot.getBoundingClientRect();
+      const videoWidth = Math.floor(containerRect.width);
+      const videoHeight = Math.floor(containerRect.height);
+      
       await client.init({
         language: 'en-US',
         zoomAppRoot: zoomRoot,
-        patchJsMedia: true, // Important for webinar compatibility
+        patchJsMedia: true,
         customize: {
           video: {
             isResizable: true,
-            popper: {
-              disableDraggable: false
+            viewSizes: {
+              default: {
+                width: videoWidth,
+                height: videoHeight
+              }
             }
           },
-          meetingInfo: [
-            'topic',
-            'host',
-            'mn',
-            'participant',
-            'dc',
-            'enctype'
-          ],
+          meetingInfo: ['topic', 'host', 'mn', 'participant'],
           toolbar: { buttons: [] }
         }
       });
       console.log('[DEBUG] Zoom client initialized');
 
-      // Set up event listeners after initialization
-      try {
-        client.on('connection-change', (payload: any) => {
-          console.log('Connection status:', payload);
-          if (payload && payload.state) {
-            // Only update connection quality for successful connections
-            // Ignore intermediate failure states during connection process
-            if (payload.state === 'Connected') {
-              setState(prev => ({
-                ...prev,
-                connectionQuality: 'excellent',
-                isConnected: true,
-                isConnecting: false,
-                hasError: false
-              }));
-            } else if (payload.state === 'Fail' && payload.reason && !payload.reason.includes('Meeting Passcode wrong')) {
-              // Only treat as error if it's not a password retry scenario
-              setState(prev => ({
-                ...prev,
-                connectionQuality: 'poor'
-              }));
-            }
-          }
-        });
-        console.log('[DEBUG] Event listeners set up');
-      } catch (e) {
-        console.warn('Could not set up event listeners:', e);
-      }
-
       // Join the webinar
-      console.log('[DEBUG] Attempting to join meeting:', meetingNumber);
-      
-      // Join webinar using the correct parameters for webinars
-      // According to Zoom docs, userEmail is mandatory for webinars
       const joinParams = {
         signature: authData.signature,
-        sdkKey: authData.sdkKey, // Required for embedded SDK
-        meetingNumber: meetingNumber, // Ensure this matches the signature
+        sdkKey: authData.sdkKey,
+        meetingNumber: meetingNumber,
         userName: userName,
-        userEmail: userEmail, // Mandatory for webinars
-        password: password, // Use 'password' parameter (not 'passWord')
+        userEmail: userEmail,
+        password: password,
       };
       
-      console.log('[DEBUG] Join parameters:', {
-        ...joinParams,
-        signature: '[REDACTED]',
-        password: password ? '[REDACTED]' : 'none',
-        passwordLength: password ? password.length : 0,
-        passwordPreview: password ? password.substring(0, 3) + '...' : 'none',
-        // fullPassword: password // Removed for security
-      });
-      
-      // Join the webinar with fallback strategies
-      try {
-        await client.join(joinParams);
-      } catch (joinError: any) {
-        console.log('[DEBUG] Initial join failed:', joinError);
-        
-        if (joinError.errorCode === 3004 && password) {
-          console.log('[DEBUG] Password error, trying with passWord parameter...');
-          
-          // Try with 'passWord' as fallback (some Zoom versions use this)
-          const joinParamsAltPassword = {
-            ...joinParams,
-            passWord: password,
-          };
-          delete (joinParamsAltPassword as any).password;
-          
-          try {
-            await client.join(joinParamsAltPassword);
-          } catch (altPasswordError: any) {
-            if (altPasswordError.errorCode === 3004) {
-              console.log('[DEBUG] Both password formats failed, trying without password...');
-              const joinParamsNoPassword = {
-                signature: authData.signature,
-                sdkKey: authData.sdkKey,
-                meetingNumber: meetingNumber,
-                userName: userName,
-                userEmail: userEmail,
-              };
-              await client.join(joinParamsNoPassword);
-            } else {
-              throw altPasswordError;
-            }
-          }
-        } else if (joinError.errorCode === 3008) {
-          console.log('[DEBUG] Meeting not started error. Trying with webinar-specific parameters...');
-          
-          // Get a new signature for panelist role (role 1)
-          const panelistAuthData = await getWebinarSignature(meetingNumber, 1);
-          
-          const webinarJoinParams = {
-            signature: panelistAuthData.signature,
-            sdkKey: panelistAuthData.sdkKey,
-            meetingNumber: meetingNumber,
-            userName: userName,
-            userEmail: userEmail,
-            password: password,
-            role: 1, // Try as panelist instead of attendee
-          };
-          
-          console.log('[DEBUG] Trying webinar join as panelist with role 1 signature...');
-          await client.join(webinarJoinParams);
-        } else {
-          throw joinError;
-        }
-      }
+      console.log('[DEBUG] Joining webinar...');
+      await client.join(joinParams);
 
       console.log('[DEBUG] Successfully joined webinar');
       setState(prev => ({
         ...prev,
         isConnecting: false,
-        isConnected: true
+        isConnected: true,
+        connectionQuality: 'excellent'
       }));
 
     } catch (error: any) {
@@ -435,27 +321,7 @@ export default function ZoomWebinarPlayer({
       
       let errorMessage = 'Failed to join webinar. Please try again.';
       
-      // Handle specific Zoom error codes
-      if (error.errorCode) {
-        switch (error.errorCode) {
-          case 3706:
-            errorMessage = 'The webinar meeting number is invalid or the webinar is not currently active. Please check the meeting number and try again.';
-            break;
-          case 3707:
-            errorMessage = 'The webinar password is incorrect. Please check the password and try again.';
-            break;
-          case 3708:
-            errorMessage = 'The webinar has not started yet or has already ended.';
-            break;
-          case 3709:
-            errorMessage = 'You are not authorized to join this webinar.';
-            break;
-          default:
-            errorMessage = `Webinar join failed: ${error.reason || error.message || 'Unknown error'}`;
-        }
-      } else if (error.reason) {
-        errorMessage = `Connection failed: ${error.reason}`;
-      } else if (error.message) {
+      if (error.message) {
         errorMessage = error.message;
       }
       
@@ -474,7 +340,6 @@ export default function ZoomWebinarPlayer({
   const leaveWebinar = useCallback(async () => {
     try {
       if (zoomClientRef.current) {
-        // Check if methods exist before calling them
         if (typeof zoomClientRef.current.leave === 'function') {
           await zoomClientRef.current.leave();
         }
@@ -491,32 +356,81 @@ export default function ZoomWebinarPlayer({
     }
   }, [onClose]);
 
-  // Toggle fullscreen
-  const toggleFullscreen = useCallback(() => {
-    if (!playerContainerRef.current) return;
 
-    if (!document.fullscreenElement) {
-      playerContainerRef.current.requestFullscreen().then(() => {
-        setState(prev => ({ ...prev, isFullscreen: true }));
-      }).catch(console.error);
-    } else {
-      document.exitFullscreen().then(() => {
-        setState(prev => ({ ...prev, isFullscreen: false }));
-      }).catch(console.error);
-    }
-  }, []);
 
-  // Handle fullscreen change
+
+
+  // Add CSS for modal container approach
   useEffect(() => {
-    const handleFullscreenChange = () => {
-      setState(prev => ({
-        ...prev,
-        isFullscreen: !!document.fullscreenElement
-      }));
+    const style = document.createElement('style');
+    style.textContent = `
+      /* Remove scroll bars and ensure clean layout */
+      body {
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      
+      /* Style for the modal container */
+      .zoom-modal-container {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 80vw !important;
+        height: 80vh !important;
+        background: #000 !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+        z-index: 1000 !important;
+      }
+      
+      /* Zoom content should fill the modal container */
+      .zoom-modal-container .zm-video-container,
+      .zoom-modal-container [class*="video-container"],
+      .zoom-modal-container [class*="zm-video"] {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+      }
+      
+      /* Video elements should fill container */
+      .zoom-modal-container video,
+      .zoom-modal-container canvas {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+      }
+      
+      /* Any nested containers */
+      .zoom-modal-container > div,
+      .zoom-modal-container [class*="canvas-container"] {
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
     };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
 
   // Initialize webinar on mount
@@ -554,147 +468,77 @@ export default function ZoomWebinarPlayer({
   };
 
   return (
-    <div 
-      ref={playerContainerRef}
-      className={`fixed inset-0 bg-black z-50 flex flex-col ${
-        state.isFullscreen ? 'p-0' : 'p-1 sm:p-2'
-      }`}
-    >
-      {/* Header Controls */}
-      <div className={`flex items-center justify-between bg-gray-900/90 text-white p-3 rounded-t-lg ${
-        state.isFullscreen ? 'absolute top-0 left-0 right-0 z-10' : ''
-      }`}>
-        <div className="flex items-center space-x-4">
-          <h3 className="font-semibold text-sm sm:text-base truncate max-w-xs sm:max-w-md">
-            {webinarTitle}
-          </h3>
-          <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-300">
-            {getConnectionIcon()}
-            <span className="hidden sm:inline">
-              {state.connectionQuality === 'unknown' ? 'Connecting...' : state.connectionQuality}
-            </span>
-          </div>
-          {state.participantCount > 0 && (
-            <div className="flex items-center space-x-1 text-xs text-gray-300">
-              <UsersIcon className="h-4 w-4" />
-              <span>{state.participantCount}</span>
-            </div>
-          )}
-        </div>
-
-        <div className="flex items-center space-x-2">
-          {/* Fullscreen Toggle */}
-          <button
-            onClick={toggleFullscreen}
-            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-            title={state.isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-          >
-            {state.isFullscreen ? (
-              <ArrowsPointingInIcon className="h-5 w-5" />
-            ) : (
-              <ArrowsPointingOutIcon className="h-5 w-5" />
-            )}
-          </button>
-
-          {/* Close Button */}
+    <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center">
+      {/* Loading State */}
+      {state.isConnecting && (
+        <div className="text-center text-white">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500 mx-auto mb-6"></div>
+          <h3 className="text-xl font-semibold mb-2">Connecting to webinar...</h3>
+          <p className="text-gray-300">Please wait while we set up your session</p>
           <button
             onClick={leaveWebinar}
-            className="p-2 hover:bg-red-600 rounded-lg transition-colors"
-            title="Leave webinar"
+            className="mt-6 px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg font-semibold transition-colors"
           >
-            <XMarkIcon className="h-5 w-5" />
+            Cancel
           </button>
         </div>
-      </div>
+      )}
 
-      {/* Main Webinar Container */}
-      <div className={`flex-1 bg-gray-100 relative ${
-        state.isFullscreen ? 'mt-16' : 'rounded-lg mt-2'
-      } overflow-hidden`}>
-        
-        {/* Loading State */}
-        {state.isConnecting && (
-          <div className="absolute inset-0 bg-gray-900/95 flex items-center justify-center z-20">
-            <div className="text-center text-white">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500 mx-auto mb-6"></div>
-              <h3 className="text-xl font-semibold mb-2">Connecting to webinar...</h3>
-              <p className="text-gray-300">Please wait while we set up your session</p>
-            </div>
-          </div>
-        )}
-
-        {/* Error State */}
-        {state.hasError && (
-          <div className="absolute inset-0 bg-gray-900/95 flex items-center justify-center z-20">
-            <div className="text-center text-white max-w-md mx-auto p-6">
-              <ExclamationTriangleIcon className="h-16 w-16 text-red-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Connection Failed</h3>
-              <p className="text-gray-300 mb-6">{state.errorMessage}</p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <button
-                  onClick={() => {
-                    setState(prev => ({ ...prev, hasError: false }));
-                    initializationRef.current = false;
-                    initializeWebinar();
-                  }}
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors"
-                >
-                  Try Again
-                </button>
-                <button
-                  onClick={leaveWebinar}
-                  className="px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg font-semibold transition-colors"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Zoom SDK Container */}
-        <div 
-          ref={zoomContainerRef}
-          className="w-full h-full"
-          style={{ 
-            minHeight: state.isFullscreen ? '100vh' : '70vh',
-            height: state.isFullscreen ? '100vh' : '70vh'
-          }}
-        />
-      </div>
-
-      {/* Bottom Controls (when not in fullscreen) */}
-      {!state.isFullscreen && state.isConnected && (
-        <div className="bg-gray-900/90 text-white p-3 rounded-b-lg flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-300">
-              Webinar Controls
-            </span>
-          </div>
-          
-          <div className="flex items-center space-x-2">
+      {/* Error State */}
+      {state.hasError && (
+        <div className="text-center text-white max-w-md mx-auto p-6">
+          <ExclamationTriangleIcon className="h-16 w-16 text-red-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold mb-2">Connection Failed</h3>
+          <p className="text-gray-300 mb-6">{state.errorMessage}</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
-              className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-              title="Settings"
+              onClick={() => {
+                setState(prev => ({ ...prev, hasError: false }));
+                initializationRef.current = false;
+                initializeWebinar();
+              }}
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors"
             >
-              <Cog6ToothIcon className="h-5 w-5" />
+              Try Again
             </button>
-            
             <button
-              className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-              title="Chat"
+              onClick={leaveWebinar}
+              className="px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg font-semibold transition-colors"
             >
-              <ChatBubbleLeftIcon className="h-5 w-5" />
-            </button>
-            
-            <button
-              className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-              title="Raise hand"
-            >
-              <HandRaisedIcon className="h-5 w-5" />
+              Close
             </button>
           </div>
         </div>
+      )}
+
+      {/* Modal Container for Zoom Player */}
+      <div 
+        ref={zoomContainerRef}
+        className="zoom-modal-container"
+        style={{
+          width: '80vw',
+          height: '80vh',
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          background: '#000',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
+          zIndex: 1000
+        }}
+      />
+
+      {/* Close button for when connected */}
+      {state.isConnected && (
+        <button
+          onClick={leaveWebinar}
+          className="fixed top-4 right-4 z-[1100] p-3 bg-red-600 hover:bg-red-700 rounded-full text-white transition-colors shadow-lg"
+          title="Leave webinar"
+        >
+          ✕
+        </button>
       )}
     </div>
   );
