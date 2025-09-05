@@ -1,0 +1,12 @@
+User-Agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dev/
+Disallow: /preview/
+Disallow: /_next/
+Disallow: /knowledge-hub
+Disallow: /about
+Disallow: /contact
+
+Sitemap: https://theschoolofoptions.com/sitemap.xml

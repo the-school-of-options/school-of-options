@@ -1,0 +1,247 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    },
+    {
+      "source": "/knowledge-hub",
+      "destination": "/newsletter",
+      "statusCode": 308,
+      "regex": "^(?!/_next)/knowledge-hub(?:/)?$"
+    },
+    {
+      "source": "/knowledge-hub/blogs",
+      "destination": "/newsletter/blogs",
+      "statusCode": 308,
+      "regex": "^(?!/_next)/knowledge-hub/blogs(?:/)?$"
+    },
+    {
+      "source": "/knowledge-hub/blogs/:slug*",
+      "destination": "/newsletter/blogs/:slug*",
+      "statusCode": 308,
+      "regex": "^(?!/_next)/knowledge-hub/blogs(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
+    },
+    {
+      "source": "/knowledge-hub/blogs/archive",
+      "destination": "/newsletter/blogs/archive",
+      "statusCode": 308,
+      "regex": "^(?!/_next)/knowledge-hub/blogs/archive(?:/)?$"
+    },
+    {
+      "source": "/knowledge-hub/blogs/category/:category*",
+      "destination": "/newsletter/blogs/category/:category*",
+      "statusCode": 308,
+      "regex": "^(?!/_next)/knowledge-hub/blogs/category(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
+    },
+    {
+      "source": "/about",
+      "destination": "/",
+      "statusCode": 308,
+      "regex": "^(?!/_next)/about(?:/)?$"
+    },
+    {
+      "source": "/contact",
+      "destination": "/",
+      "statusCode": 308,
+      "regex": "^(?!/_next)/contact(?:/)?$"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ],
+      "regex": "^(?:/(.*))(?:/)?$"
+    }
+  ],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/knowledge-hub/blogs/category/[category]",
+      "regex": "^/knowledge\\-hub/blogs/category/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcategory": "nxtPcategory"
+      },
+      "namedRegex": "^/knowledge\\-hub/blogs/category/(?<nxtPcategory>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/knowledge-hub/blogs/[slug]",
+      "regex": "^/knowledge\\-hub/blogs/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/knowledge\\-hub/blogs/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/newsletter/blogs/category/[category]",
+      "regex": "^/newsletter/blogs/category/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcategory": "nxtPcategory"
+      },
+      "namedRegex": "^/newsletter/blogs/category/(?<nxtPcategory>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/newsletter/blogs/[slug]",
+      "regex": "^/newsletter/blogs/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/newsletter/blogs/(?<nxtPslug>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/about",
+      "regex": "^/about(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about(?:/)?$"
+    },
+    {
+      "page": "/contact",
+      "regex": "^/contact(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/contact(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/knowledge-hub",
+      "regex": "^/knowledge\\-hub(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/knowledge\\-hub(?:/)?$"
+    },
+    {
+      "page": "/knowledge-hub/blogs",
+      "regex": "^/knowledge\\-hub/blogs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/knowledge\\-hub/blogs(?:/)?$"
+    },
+    {
+      "page": "/knowledge-hub/blogs/archive",
+      "regex": "^/knowledge\\-hub/blogs/archive(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/knowledge\\-hub/blogs/archive(?:/)?$"
+    },
+    {
+      "page": "/mentorship",
+      "regex": "^/mentorship(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/mentorship(?:/)?$"
+    },
+    {
+      "page": "/newsletter",
+      "regex": "^/newsletter(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/newsletter(?:/)?$"
+    },
+    {
+      "page": "/newsletter/blogs",
+      "regex": "^/newsletter/blogs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/newsletter/blogs(?:/)?$"
+    },
+    {
+      "page": "/newsletter/blogs/archive",
+      "regex": "^/newsletter/blogs/archive(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/newsletter/blogs/archive(?:/)?$"
+    },
+    {
+      "page": "/privacy-policy",
+      "regex": "^/privacy\\-policy(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/privacy\\-policy(?:/)?$"
+    },
+    {
+      "page": "/robots.txt",
+      "regex": "^/robots\\.txt(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/robots\\.txt(?:/)?$"
+    },
+    {
+      "page": "/sitemap.xml",
+      "regex": "^/sitemap\\.xml(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sitemap\\.xml(?:/)?$"
+    },
+    {
+      "page": "/terms-and-conditions",
+      "regex": "^/terms\\-and\\-conditions(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/terms\\-and\\-conditions(?:/)?$"
+    },
+    {
+      "page": "/webinar",
+      "regex": "^/webinar(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/webinar(?:/)?$"
+    },
+    {
+      "page": "/webinar/room",
+      "regex": "^/webinar/room(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/webinar/room(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}
